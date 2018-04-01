@@ -1,2 +1,0 @@
-wget "https://github.com/clbr/fifth/releases" -q -O-  \
-	| sed -n '0,/.*\/archive\/v\([0-9.]*\)\.tar\.gz.*/ s//\1/p'

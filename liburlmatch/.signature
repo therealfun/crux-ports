@@ -1,6 +1,0 @@
-untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8nzT0zGlm4Z7ee3ZTcQojPGd64GEwPuAzKG9E7a6sgMTJRznQ9HvQX7MiTkt5Wz994TVGEfttAEp7fzgk/c4EQM=
-SHA256 (Pkgfile) = 0645050a77b56ba349cff57dd74f5ec58712a67dd39861937f9e872df9f68435
-SHA256 (.footprint) = ed3c1f51b739310626c78fd48e8d707d459f6f352b685d4f1e9445ecd2c890b4
-SHA256 (liburlmatch-1.0.tar.gz) = 013e051da28ace46a13fd7bb8c70807221098ebb939975df74eeca8c728daa89
-SHA256 (.watch) = 8209596ecc15805c5f01d7c49595438688c3ba399fd6aff7498b5e42b2634ab7
