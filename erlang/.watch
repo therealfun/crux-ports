@@ -1,0 +1,6 @@
+mver=$(wget "https://www.erlang.org/downloads" -q -O- \
+	| sed -n '0,/.*\/\/erlang\.org\/download\/otp_src_\([0-9a-z.-]*\)\.tar.*/ s//\1/p')
+
+wget "https://github.com/erlang/otp/releases" -q -O-                           \
+	| grep $mver                                                           \
+	| sed -n '0,/.*\/archive\/OTP-\([0-9.]*\)\.tar\.gz.*/ s//\1/p'

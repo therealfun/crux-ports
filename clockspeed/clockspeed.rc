@@ -1,0 +1,85 @@
+#!/bin/sh
+
+ip() {
+	NTP=$(awk -v FS== '$1 == "NTP" {print $2}' /etc/rc.conf)
+	getent hosts ${NTP:-pool.ntp.org} | head -1 | awk '{print $1}'
+}
+
+sntpclock() {
+	while ! /usr/bin/sntpclock $(ip)
+	do
+		sleep 5
+	done
+}
+
+log() {
+	{
+		echo "=== $*"
+		$0 show          2>/dev/null
+	} >> /var/log/clockspeed 2>&1
+}
+
+case $1 in
+	start)
+		log start $(ip)
+
+		# Who knows what hwclock did with the system clock ?
+		#  - system crashed before calling hwclock --systohc
+		#  - started without a proper drift (in /etc/adjtime)
+		#    after a long shutdown
+		#
+		# Sync the system clock from where it is (slowly).
+		# Start clockspeed after this first sync.
+
+		{
+			sntpclock | /usr/bin/clockfix >> /var/log/clockspeed 2>&1
+
+			log initial sync finished with $?
+			
+			/sbin/hwclock --systohc
+
+			/usr/bin/clockspeed &
+
+			log clockspeed started with pid $!
+
+			# Without the drift file, clockspeed needs two adjustments 
+			# to start calling adjtime(). We make one call now, since the
+			# clock is almost synced, and the second one after 12 seconds.
+			if [ ! -f /var/lib/clockspeed/etc/atto ]; then
+				{ sleep  1s; $0 adjust; } &
+				{ sleep 12s; $0 adjust; } &
+				{ sleep  1h; $0 adjust; } &
+				{ sleep 24h; $0 adjust; } &
+			fi
+		} &
+		;;
+	stop)
+		log stop
+		# this should kill background jobs started with 'start'
+		killall clockspeed clockfix >/dev/null 2>&1
+		true
+		;;
+	restart)
+		$0 stop
+		sleep 2
+		$0 start
+		;;
+	set)
+		log set $(ip)
+		sntpclock | /usr/bin/clockadd
+		/sbin/hwclock --systohc
+		;;
+	adjust)
+		log adjust $(ip)
+		pgrep -f /usr/bin/clockspeed > /dev/null \
+			&& sntpclock         > /var/lib/clockspeed/adjust
+		;;
+	show)
+		sntpclock | /usr/bin/clockview
+		;;
+	*)
+		echo "Usage: $0 [start|stop|restart|show|adjust]"
+		;;
+esac
+
+# End of file

@@ -1,0 +1,2 @@
+wget "https://cr.yp.to/clockspeed.html" -q -O-  \
+	| sed -n '0,/.*clockspeed-\([0-9.]*\)\.tar\.gz.*/ s//\1/p'

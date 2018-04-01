@@ -1,0 +1,22 @@
+# Description:  Erlang manuals.
+# URL:          https://www.erlang.org/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+
+name=erlang-man
+version=20.3
+release=1
+source=(https://www.erlang.org/download/otp_doc_man_$version.tar.gz .watch)
+
+build() {
+	cd $SRC/man
+
+	find -type d -exec chmod 755 '{}' +
+	find -type f -exec chmod 644 '{}' +
+
+	# rename .3 to .3erl in order to avoid conflicts with other manuals:
+	#   inet, queue, rand, random, rpc, string, zlib
+	find man3 -type f -name '*.3' -exec mv '{}' '{}erl' ';'
+
+	install  -dm755 $PKG/usr/share/man
+	mv            * $PKG/usr/share/man/
+}

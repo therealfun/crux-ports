@@ -1,0 +1,2 @@
+wget "https://www.gnu.org/software/indent/manual/html_node/index.html" -q -O-  \
+	| sed -n '0,/.*Indent[ ]*Version[ ]*\([0-9.]*\).*/ s//\1/p'

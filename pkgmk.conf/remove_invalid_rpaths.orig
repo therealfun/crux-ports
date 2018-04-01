@@ -1,0 +1,67 @@
+# !!! This patch needs more testing !!!
+#
+# Remove any path which is not in (/usr/lib /usr/lib64 /lib or $ORIGIN)
+# from RPATH/RUNPATH 
+#
+# See:
+#	https://crux.nu/bugs/index.php?do=details&task_id=1586
+#	https://crux.nu/bugs/index.php?do=details&task_id=1587
+
+find_executables() {
+	find $PKG -not -type d -exec file '{}' '+'           \
+	| awk -F : '
+		$0 ~ /\<ELF\>.*(executable|shared object)/ { \
+			print $1
+		}'
+}
+
+get_rpath_or_runpath() {
+	readelf -d "$1" | gawk '
+		($2 == "(RPATH)" || $2 == "(RUNPATH)") && 
+		$3 == "Library"                        &&
+		($4 == "rpath:" || $4 == "runpath:")   &&
+		match($0, /\[(.*)\]/, found) {
+			split(found[1], parts, ":")
+			for (i in parts) print parts[i]
+		}'
+}
+
+sanityze_rpath() {
+	local patchelf=$(command -v patchelf 2>/dev/null)
+	[[ $patchelf ]] || return
+
+	local re="^(/usr/lib(64)?(/.*)?|/lib(/.*)?|\$ORIGIN(/.*)?)$"
+	local file
+	while read -r file
+	do
+		local -a old
+		readarray -t old < <( get_rpath_or_runpath "$file" )
+		(( ${#old[@]} == 0 )) && continue
+
+		local path
+		local -a new=()
+		for path in "${old[@]}"
+		do
+			[[ $path =~ $re ]] && new+=( "$path" )
+		done
+
+		(( ${#old[@]} == ${#new[@]} )) && continue
+
+		printf "WARNING: change rpath '%s' -> '%s'\n" "${old[*]}" "${new[*]}" >&2
+
+		if (( ${#new[@]} == 0 )); then
+			$patchelf --remove-rpath "$file"
+		else
+			local new_rpath=$(IFS=:; echo "${new[*]}")
+			$patchelf --set-rpath "$new_rpath" "$file"
+		fi
+	done < <( find_executables )
+}
+
+#
+# insert the call between strip_files() and compress_manpages() calls
+#
+. <(
+	declare -f build_package \
+	| sed -e 's/\(compress_manpages\)/sanityze_rpath; \1/'
+)

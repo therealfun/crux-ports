@@ -1,0 +1,145 @@
+#!/bin/bash
+# upkg-update `upkg-diff -n`
+# upkg-update `upkg-diff | awk '{print $1}; $4 == "error" { exit 1 }'`
+
+PORTS_DIR=/usr/ports
+ pref_dir="$HOME/.config/upkg/pref"
+build_dir="$HOME/.cache/upkg/build"
+   libdir=${BASH_SOURCE%/*}
+     nice=(nice -n19 ionice --class idle)
+ 
+to_remove=()
+to_update=()
+declare -A new_versions=()
+
+print_portdir() {
+	shopt -s nullglob
+	pkgfiles0=( "$build_dir/$1/Pkgfil"[e] "$pref_dir"/*/"$1/Pkgfile" "$PORTS_DIR"/*/"$1/Pkgfile" )
+	readarray -t pkgfiles < <( readlink -f "${pkgfiles0[@]}" 2>/dev/null )
+	[[ -e $pkgfiles ]] \
+		&& printf '%s\n' "${pkgfiles%/*}"
+}
+
+print_version() {
+	awk -v FS== '
+		$1 == "version" { version = $2 }
+		$1 == "release" { release = $2 }
+		END { if (version && release) print version "-" release }
+	' "$1" | sed 's/\s//g'
+}
+
+parse_arguments() {
+	local port new_ver
+
+	for port
+	do
+		if [[ -f "$port/Pkgfile" ]]
+		then
+			port=$(readlink  -f  "$port")
+		else
+			port=$(print_portdir "$port")
+			[[ $port ]] || exit 1
+		fi
+
+		new_ver=$( print_version "$port/Pkgfile" )
+
+		if [[ $new_ver != "" ]]; then
+			new_versions["$port"]=$new_ver
+			to_update+=( "$port" )
+		else
+			to_remove+=(  "$port" )
+		fi
+	done
+}
+
+should_install() {
+	# input: port
+	# output: yes/no + rebuild
+
+	local yes=0 no=1 new_ver
+	local name=${port##*/}
+	local inst_ver=$(pkginfo -i | awk -v "NAME=$name" '$1 == NAME { print $2; exit }')
+
+	[[ $inst_ver == "" ]] && {
+		printf 'Install new port "%s"\n' "$port"
+		return $yes
+	}
+
+	if [[ ${new_versions["$port"]+defined} ]]
+	then
+		new_ver=${new_versions["$port"]}
+	else
+		new_ver=$( print_version "$port/Pkgfile" )
+	fi
+
+	[[ $new_ver == "" ]] && {
+		printf 'ERROR: port '%s' may need an update, but the new version is unknown\n' "$port" >&2
+		exit 1
+	}
+	
+	[[ $inst_ver != $new_ver ]] && {
+		printf 'Upgrade/downgrade "%s" %s -> %s\n' "$port" "$inst_ver" "$new_ver"
+		return $yes
+	}
+
+	[[ "$(revdep "$name")" != "" ]] && {
+		rebuild=-r
+		printf 'Rebuild/reinstall "%s" %s because of revdep\n' "$port" "$inst_ver"
+		return $yes
+	}
+
+	return $no
+}
+
+parse_arguments "${@:-$PWD}"
+(( ${#to_remove[@]} )) && printf 'REMOVING: %s\n' "${to_remove[*]}"
+(( ${#to_update[@]} )) && printf 'UPDATING: %s\n' "${to_update[*]}"
+
+(( ! ${#to_update[@]} )) && (( ! ${#to_remove[@]} )) \
+	&& exit 0
+
+for port in "${to_remove[@]}"
+do
+	read -p "Remove missing port '$port'? [y/N]"
+	[[ ${REPLY,} == y* ]] \
+		&& ${nice[@]} "$libdir/upkg-rm" "$port"
+done	
+
+readarray -t ports < <( $libdir/upkg-deporder "${to_update[@]}" )
+wait $! || exit 1
+
+confirmed=()
+for port in "${ports[@]}"
+do
+	rebuild=
+	[[ $port != "group/|" ]]                   \
+		&& should_install                  \
+		&& "$libdir/upkg-mk" -a "$port"    \
+		&& confirmed+=( "$rebuild|$port" )
+done
+
+for spec in "${confirmed[@]}"
+do
+	rebuild=${spec%%|*}
+	port=${spec#*|}
+	${nice[@]} $libdir/upkg-install $rebuild "$port"
+done
+
+readarray -t names < <( set -x; revdep -i libreoffice )
+wait $! || exit 1
+
+for name in "${names[@]}"
+do
+	printf 'Rebuild/reinstall "%s" because of revdep\n' "$name"
+
+	${nice[@]} "$libdir/upkg-install" -r "$name"
+done
+
+[[ -t 0 ]] && {
+	tail -20 "$HOME/.local/upkg/log/all"
+
+	               sudo=
+	(( $EUID )) && sudo=sudo
+
+	( set -x; $sudo rejmerge )
+}

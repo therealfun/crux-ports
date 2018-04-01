@@ -1,0 +1,15 @@
+# Description: Fast URL matcher library.
+# URL:         https://github.com/clbr/urlmatch
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+
+name=liburlmatch
+version=1.0
+release=1
+source=(
+	https://github.com/clbr/urlmatch/archive/v$version/$name-$version.tar.gz
+	.watch
+)
+
+build() {
+	make -C */ install DESTDIR=$PKG
+}

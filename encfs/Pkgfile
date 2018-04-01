@@ -1,0 +1,14 @@
+# Description: Encrypting filesystem for FUSE.
+# URL:         https://github.com/vgough/encfs
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  cmake fuse
+
+name=encfs
+version=1.9.4
+release=1
+source=(https://github.com/vgough/$name/archive/v$version/$name-$version.tar.gz .watch)
+
+build() {
+	cmake */ -DENABLE_NLS=OFF -DCMAKE_INSTALL_PREFIX=/usr
+	cmake --build . --target install -- DESTDIR=$PKG
+}

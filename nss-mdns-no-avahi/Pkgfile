@@ -1,0 +1,17 @@
+# Description: NSS module for mDNS hostname resolution.
+# URL:         http://0pointer.de/lennart/projects/nss-mdns/
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+
+name=nss-mdns-no-avahi
+version=0.10
+release=1
+source=(
+	http://0pointer.de/lennart/projects/nss-mdns/nss-mdns-$version.tar.gz
+	.watch
+)
+
+build() {
+	cd */
+	./configure --prefix=/usr --enable-legacy --disable-avahi
+	make install DESTDIR=$PKG
+}

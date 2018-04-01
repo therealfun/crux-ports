@@ -1,0 +1,28 @@
+# Description: All the CRUX ports I could find.
+# URL:         https://github.com/therealfun/crux-ports/ports-contrib
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+
+name=ports-contrib
+version=1.83
+release=1
+source=(
+	portdb-dl
+	portdb-dl.pod
+	portdb-pack
+	ports.archive
+	post-install
+	post-install
+)
+
+build() {
+	install -Dm755 {$SRC,$PKG/usr/bin}/portdb-pack
+
+	install -d $PKG/usr/share/man/man1
+	install -Dm755 {$SRC,$PKG/usr/bin}/portdb-dl
+	pod2man --utf8 --center $name --release $version-$release \
+			portdb-dl.pod $PKG/usr/share/man/man1/portdb-dl.1
+
+	install -d $PKG/usr/lib/ports-contrib
+	bsdtar -C  $PKG/usr/lib/ports-contrib -xf $SRC/ports.archive
+	find       $PKG/usr/lib/ports-contrib -type f -exec chmod 644 '{}' +
+}

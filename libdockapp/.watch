@@ -1,0 +1,2 @@
+wget "https://repo.or.cz/dockapps.git/tags" -q -O-  \
+	| sed -n '0,/.*libdockapp-\([0-9.]*\).*/ s//\1/p'

@@ -1,0 +1,14 @@
+# Set auth information for samba network resource. If share name is 
+# omited then the auth data applied to all computer "computer" shares.
+# Omit "computer/share" to specify default auth patameters.
+# 
+# PS: You can use "cd mountpoint/domain:user:password@computer" 
+# command to enter to remote computer as domain/workgroup 
+# "domain_or_workgroup" user "user" with password "password".
+#
+# Syntax:
+#	auth [computer[/share]] [domain_or_workgroup/]user password
+#	auth [workgroup]        [domain_or_workgroup/]user password
+#
+# Default:
+#	auth "user_login_name" ""

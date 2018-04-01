@@ -1,0 +1,33 @@
+# Description:  Linux kernel tools.
+# URL:          https://perf.wiki.kernel.org/index.php/Main_Page
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   libaudit libunwind xmlto
+# Nice to have: 
+
+name=linux-tools
+version=4.15
+release=3
+
+source=(
+	https://www.kernel.org/pub/linux/kernel/v4.x/linux-$version.tar.xz
+	.watch
+)
+
+build() {
+	cd */tools
+
+	ed -s perf/Makefile.config <<-EOF
+		/^perfexecdir =/s/libexec/lib/
+		/^lib =/s/lib64/lib/
+		w
+	EOF
+
+	make -C perf install install-man DESTDIR=$PKG prefix=/usr "EXTRA_CFLAGS=$CFLAGS"
+	make tmon turbostat x86_energy_perf_policy
+
+	install -Dm755 kvm/kvm_stat/kvm_stat         $PKG/usr/bin/kvm_stat
+	install -Dm755 thermal/tmon/tmon             $PKG/usr/bin/tmon
+	install -Dm755 power/x86/turbostat/turbostat $PKG/usr/bin/turbostat
+	install -Dm755 power/x86/x86_energy_perf_policy/x86_energy_perf_policy \
+						     $PKG/usr/bin/x86_energy_perf_policy
+}

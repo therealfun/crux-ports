@@ -1,0 +1,6 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8mNzwuQjneICpTpd+csCJAIcFbWUwWj/xrrcbUhMG1gjwi4mu0Ph5NpzQJ18TIqedMiPI5hMwS/tX1el/hXdBgE=
+SHA256 (Pkgfile) = 782e6ca8fa05c9291b334e7eea04f1b7fce107c693141e074919a47870c0231c
+SHA256 (.footprint) = 9e1824b4744c2ea9e1753c67140a242e1dbb84694ebdaca846d462ef26acd5ba
+SHA256 (autossh-1.4f.tgz) = 0172e5e1bea40c642e0ef025334be3aadd4ff3b4d62c0b177ed88a8384e2f8f2
+SHA256 (.watch) = 74ebfba9598f19da7a642f6b867ef4e888eb0d59154e7deed51a7e6ec883a9f3

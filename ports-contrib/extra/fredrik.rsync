@@ -1,0 +1,10 @@
+# A couple of ports that I use every day.
+#
+# This file should be saved as:
+# /etc/ports/fredrik.rsync
+#
+
+host=crux.guru
+collection=ports/
+destination=/usr/ports/fredrik
+

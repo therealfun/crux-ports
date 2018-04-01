@@ -1,0 +1,28 @@
+# Description:  A fast, feature rich, easy to configure, and easy to use window manager.
+# URL:          https://windowmaker.org
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   libwebp xorg-libxft xorg-libxinerama xorg-libxmu xorg-libxpm
+# Nice to have: docker-tray windowmaker-dockapps
+
+name=windowmaker
+version=0.95.8
+release=4
+source=(
+	https://windowmaker.org/pub/source/release/WindowMaker-0.95.8.tar.gz
+	https://windowmaker.org/pub/source/release/WindowMaker-extra-0.1.tar.gz
+	.watch
+)
+
+build() {
+	(cd *extra*;   ./configure --prefix=/usr)
+	(cd *$version; ./configure --prefix=/usr --disable-magick)
+
+	# WindowMaker doesn't properly detect the imagemagick wand headers
+
+	make install DESTDIR=$PKG -C *extra*
+	make install DESTDIR=$PKG -C *$version
+
+	rm -f $PKG/usr/share/WindowMaker/menu.*
+	rm -f $PKG/usr/share/WindowMaker/plmenu.*
+	rmdir $PKG/usr/share/locale
+}

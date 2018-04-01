@@ -1,0 +1,3 @@
+NAME=baguette
+URL=git://github.com/baguette/crux-ports
+BRANCH=master

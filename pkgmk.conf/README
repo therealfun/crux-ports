@@ -1,0 +1,81 @@
+Execute the post-install script or
+
+	Add the following line in /etc/pkgmk.conf
+
+		for i in /etc/pkgmk.conf.d/*.enabled; do [ ! -e "$i" ] || . "$i"; done
+
+	Add the following line in /etc/pkgadd.conf
+
+		INSTALL ^etc/pkgmk.conf.d$ NO
+
+From now on, any *.enabled file from your /etc/pkgmk.conf.d/ directory
+can have complete control over your build process (pkgmk).
+
+Add your own files in the /etc/pkgmk.conf.d/ directory and/or copy some
+of mine from /usr/lib/pkgmk.conf/. Make sure you read the comments from
+these files before using them.
+
+The anatomy of a pkgmk process
+==============================
+
+ -------------------------------------------------------------
+| cd /usr/ports/core/acl
+|
+|   -------------------------------------------------------
+|  | /usr/bin/pkgmk                                        |
+|  |                                                       |
+|  | ... all the other functions                           |
+|  | ... that could be overwritten                         |
+|  |                                                       |
+|  | main() {                                              |
+|  |                                                       |
+|  |   parse_options "$@"                                  |
+|  |   . Pkgfile                                           |
+|  |      -------------------------------                  |
+|  |     | /usr/ports/core/acl/Pkgfile   |                 |
+|  |     |                               |                 |
+|  |     | ... could override functions  |                 |
+|  |     | ... defined in /usr/bin/pkgmk |                 |
+|  |     |                               |                 |
+|  |     | build() {                     |                 |
+|  |     |   ...                         |                 |
+|  |     | }                             |                 |
+|  |      -------------------------------                  |
+|  |  . /etc/pkgmk.conf                                    |
+|  |      ----------------------------------------------   |
+|  |     | /etc/pkgmk.conf                              |  |
+|  |     |                                              |  |
+|  |     | ...                                          |  |
+|  |     | export CFLAGS="-O2 -march=x86-64 -pipe"      |  |
+|  |     | ...                                          |  |
+|  |     |                                              |  |
+|  |     | for i in /etc/pkgmk.conf.d/*.enabled         |  |
+|  |     | do                                           |  |
+|  |     |   if [ -e "$i" ]; then                       |  |
+|  |     |     . "$i"                                   |  |
+|  |     |         ----------------------------------   |  |
+|  |     |        | /etc/pkgmk.conf.d/FS1367.enabled |  |  |
+|  |     |        |                                  |  |  |
+|  |     |        | . <(                             |  |  |
+|  |     |        |     declare -f make_work_dir \   |  |  |
+|  |     |        |     | sed 's/export //'          |  |  |
+|  |     |        | )                                |  |  |
+|  |     |         ----------------------------------   |  |
+|  |     |        ... all the other files               |  |
+|  |     |        ... from /etc/pkgmk.conf.d/           |  |
+|  |     |   fi                                         |  |
+|  |     | done                                         |  |
+|  |     | # End of file                                |  |
+|  |      ----------------------------------------------   |
+|  |   ... acting on /usr/bin/pkgmk options                |
+|  |   ... (download, build, install, ...)                 |
+|  | } # end of main()                                     |
+|  |                                                       |
+|  | ...                                                   |
+|  | PKGMK_PRIVATEKEY=""                                   |
+|  | PKGMK_NO_STRIP="no"                                   |
+|  | PKGMK_CLEAN="no"                                      |
+|  |                                                       |
+|  | main "$@"                                             |
+|   -------------------------------------------------------
+|

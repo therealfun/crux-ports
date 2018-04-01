@@ -1,0 +1,148 @@
+#!/bin/bash
+#
+# /etc/ports/drivers/rsync.local: rsync driver script for uports(1)
+#
+#  L - user files (locals)
+#  ---------------------
+# |                     |
+# |        ----------------------
+# |       | r           .        |
+# |       |     /---\   .        | N - checkouts (new)
+#  -------|... |  u  | ..   n    |
+# |       |    |     |  .        |
+# |       |     \---/   .        |
+# |       | o           .        |
+# |        ----------------------
+# |                     |
+# |                     |
+#  ---------------------
+#  O - checkouts (old)
+#
+# L - list of user (local) files (currently untracked)
+# O - old list from server (last time we've synced)
+# N - new list from server (r + o + n)
+# N/r - new files from server replacing user files (previously untracked)
+# N/o - same files (old and new) from server (with or without changes)
+# N/n - new files from server
+# N/u - up to date
+#
+# The process:
+#  - sort 'O' -> $checkouts (because it may be (un)sorted from the old driver)
+#  - run rsync (without --delete) and create two lists on the fly:
+#		- 'u' -> $uptodate (some from 'o' and some from 'r')
+#               - 'N' -> $new (checkouts)
+#  - remove the files no longer on the server ('O' - 'o') and empty directories.
+#		We make the (O-o) list by comparing 'N' and 'O', and considering
+#               only the files unique to 'O' (-2) and suppressing
+#		new (-1 / N / $new) and common to 'N' and 'O' (-3 / o)
+#			comm -13 "$new" "$checkouts"
+#  - display the new files (Checkout) = n = N - O - L
+#		and not in 'O' (-2) or common to 'O' (o / -3)
+#			comm -23 "$new" "$checkouts"
+#		nor in 'L (-2) or common to 'L' (r / -3)
+#			comm -23 <(comm -23 "$new" "$checkouts") "$locals"
+#  - display the modifications (Edit) = r + o - u
+#		r = comm -12 "$new" "$locals"
+#		o = comm -12 "$new" "$checkouts"
+#		r+o-u
+#			comm -23 <(comm -12 "$new" "$locals"; comm -12 "$new" "$checkouts") "$uptodate"
+#  - finally, remove $uptodate, $locals and move $new (N) to $checkouts (O)
+
+error() { printf 'Error: %s\nUpdate failed\n' "$*" >&2; exit 1; }
+
+read -r host collection destination < <(gawk '
+	match($1, "^host=([[:alnum:]][[:alnum:]._-]*)", m) {
+		host = m[1]
+	}
+	match($1, "^collection=([[:alnum:]][[:alnum:]._/-]*)", m) {
+		collection = m[1]
+		gsub("[.][.]+", "", collection)
+	}
+	match($1, "^destination=([[:alnum:]/][[:alnum:]._/-]*)", m) {
+		destination = m[1]
+		sub(".*/", "", destination)
+		gsub("[.][.]+", "", destination)
+	}
+	END { print host " " collection " " destination }
+' "${1?usage: $BASH_SOURCE <file>}")
+
+[[ $host        == "" ]] && error        "Host field not set in $driver"
+[[ $collection  == "" ]] && error  "Collection field not set in $driver"
+[[ $destination == "" ]] && error "Destination field not set in $driver"
+
+echo "Updating from $host::$collection"
+echo "Updating collection $destination"
+
+[[ $PORTS_DIR == /* ]] || error "Strange PORTS_DIR=$PORTS_DIR"
+destination="$PORTS_DIR/$destination"
+[[ -d $destination ]] || mkdir -p "$destination"
+
+checkouts="$destination/.checkouts"
+      new="$destination/.checkouts2"
+ uptodate="$destination/.checkouts3"
+   locals="$destination/.checkouts4"
+
+# Make sure we have a sorted filelist, with the same locale.
+# Mostly useful when switching from the old driver.
+touch "$checkouts"
+sort -u "$checkouts" > "$new"       || error "sort $checkouts > $new"
+mv      "$new"         "$checkouts" || error "mv   $new   $checkouts"
+
+comm -13 "$checkouts" <(find "$destination" -type f -not -name '.checkouts*' -printf '%P\n' | sort) > "$locals"
+
+set -o pipefail
+
+rsync                                                  \
+	--checksum --recursive --compress              \
+	--no-human-readable --log-format "%o %n"       \
+	--info=name2                                   \
+	'--exclude=.checkouts*'                        \
+	"$host::$collection" "$destination/"           \
+| tee  >(
+		sed -n '/\(.*\) is uptodate$/ s//\1/p' \
+		| sort > "$uptodate"
+	)                                              \
+| sed                                                  \
+	-e '/\/$/d'                                    \
+	-e 's/ is uptodate$//g'                        \
+	-e 's/send //g'                                \
+	-e 's/recv //g'                                \
+| sort > "$new"
+
+(( $? )) && error "rsync failed $host::$collection $destination"
+
+is_dir_empty() {
+	shopt -s nullglob dotglob
+	f=("$1"/*)
+	shopt -u nullglob dotglob
+	(( ${#f[@]} == 0 ))
+}
+
+# Remove deleted files and dangling/empty directories
+# '$destination' cannot be one of them because it has .checkouts
+while read -r old
+do
+	oldabs="$destination/$old"
+	if [[ -f $oldabs ]]
+	then
+		echo " Delete $old"
+		rm "$oldabs" || error "rm $oldabs"
+
+		parent=${oldabs%/*}
+		if is_dir_empty "$parent"
+		then
+			echo " Delete ${old%/*}"
+			rmdir "$parent" || error "rmdir $parent"
+		fi
+	fi
+done < <( comm -13 "$new" "$checkouts" ) || error "removing old files from $destination"
+
+{
+	comm -23 <(comm -23 "$new" "$checkouts")                            "$locals"   | sed "s/^/ Checkout /"
+	comm -23 <(comm -12 "$new" "$checkouts"; comm -12 "$new" "$locals") "$uptodate" | sed "s/^/ Edit /"
+} | sort -k2,2
+
+rm "$uptodate" "$locals"
+mv -f "$new" "$checkouts" || error "mv $new $checkouts"
+
+echo "Finished successfully"

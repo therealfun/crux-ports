@@ -1,0 +1,22 @@
+# Description: C source code indentation.
+# URL:         https://www.gnu.org/software/indent
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+
+name=indent
+version=2.2.10
+release=4
+source=(
+	https://ftpmirror.gnu.org/gnu/$name/$name-$version.tar.gz
+	.watch
+)
+
+build() {
+	cd */
+
+	./configure --prefix=/usr --disable-nls
+
+	make install DESTDIR=$PKG
+
+	rm -rf $PKG/usr/share/info
+	rm     $PKG/usr/bin/texinfo2man
+}

@@ -1,0 +1,3 @@
+NAME=ola
+URL=git://github.com/ola/crux-ports
+BRANCH=master

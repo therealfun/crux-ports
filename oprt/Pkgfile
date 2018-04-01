@@ -1,0 +1,15 @@
+# Description:  Next generation port utilities.
+# URL:          https://github.com/therealfun/oprt
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+
+name=oprt
+version=1.99.2
+release=1
+
+source=(
+	https://github.com/therealfun/$name/archive/$version/$name-$version.tar.gz
+)
+
+build() {
+	make install -C */ DESTDIR=$PKG
+}

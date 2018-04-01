@@ -1,0 +1,20 @@
+#!/bin/sh
+
+case $1 in
+	start)
+		/usr/bin/bluealsa &
+		;;
+	stop)
+		pkill bluealsa
+		;;
+	restart)
+		$0 stop
+		sleep 2
+		$0 start
+		;;
+	*)
+		echo "usage: $0 [start|stop|restart]"
+		;;
+esac
+
+# End of file

@@ -1,0 +1,56 @@
+#!/bin/bash
+
+keep_dir="$HOME/.local/upkg/keep"
+  libdir=${BASH_SOURCE%/*}
+    nice=(nice -n19 ionice --class idle)
+
+confirm_keep_list() {
+	readarray -t installed < <( pkginfo -i | awk '{print $1}' )
+
+	tmp=/tmp/upkg-cleanup
+
+	echo "Checking dependencies for ${#installed[@]} packages..."
+
+	"$libdir/upkg-deptree" -s "${installed[@]}" 2>/dev/null \
+		| grep -v '(unknown)'                           \
+		| grep -v ' install -> '                        \
+		> $tmp
+
+	readarray -t deps < <( grep '^   ' $tmp | awk '{print $1}' | sort -u )
+
+	readarray -t no_dependent < <(
+		comm -23 <( grep '^  [^ ]' $tmp | grep -v '/core)' | awk '{print $1}' | sort) \
+			 <( printf '%s\n' "${deps[@]}" )
+	)
+
+	for name in "${no_dependent[@]}"
+	do
+		[[ -f "$keep_dir/$name" ]] && continue
+	
+		"$libdir/upkg-info" "$name"
+		read -p ">>> Uninstall '$name'? [y/N] "
+		if [[ $REPLY == y* ]]; then
+			"$libdir/upkg-rm" "$name" && {
+				confirm_keep_list
+				return
+			}
+		else
+			touch "$keep_dir/$name"
+		fi
+	done
+
+	# rm $tmp
+}
+
+[[ -d $keep_dir ]] || mkdir -p "$keep_dir" || exit 1
+confirm_keep_list
+
+readarray -t names < <( set -x; revdep -i libreoffice )
+wait $! || exit 1
+
+for name in "${names[@]}"
+do
+	printf 'Rebuild/reinstall "%s" because of revdep\n' "$name"
+
+	${nice[@]} "$libdir/upkg-install" -r "$name"
+done

@@ -1,0 +1,23 @@
+=pod
+
+=head1 NAME
+
+update-prt-get - update prt-get.conf
+
+=head1 SYNOPSIS
+
+update-prt-get
+
+=head1 DESCRIPTION
+
+B<update-prt-get> updates /etc/prt-get.conf (if started as root) or just display an update version (is started as non-root), based on the ports active in /etc/ports/.
+
+=head1 SEE ALSO
+
+prt-get.conf(5), ports(8)
+
+=head1 LICENSE
+
+Public domain
+
+=cut

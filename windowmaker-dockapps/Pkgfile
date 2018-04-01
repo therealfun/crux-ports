@@ -1,0 +1,61 @@
+# Description:  Window Maker dockapps collection.
+# URL:          https://www.dockapps.net/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   alsa-lib libdockapp lm_sensors upower
+
+name=windowmaker-dockapps
+version=20171004
+release=5
+commit=6434c272b3e7a8bca26be90417eabfd26bcce554
+source=(http://repo.or.cz/dockapps.git/snapshot/$commit.tar.gz .watch)
+
+build() {
+	cd */
+
+	install -dm755 $PKG/usr/bin
+	install -dm755 $PKG/usr/share/man/man1
+
+	make -C AlsaMixer.app;  install -Dm755 AlsaMixer.app/AlsaMixer.app $PKG/usr/bin/
+	make -C pclock;         install -Dm755 pclock/src/pclock           $PKG/usr/bin/
+	make -C wmapm/wmapm;    install -Dm755 wmapm/wmapm/wmapm           $PKG/usr/bin/
+	make -C wmCalClock/Src; install -Dm755 wmCalClock/Src/wmCalClock   $PKG/usr/bin/
+	make -C wmcalendar/Src; install -Dm755 wmcalendar/Src/wmCalendar   $PKG/usr/bin/
+	make -C wmdots;         install -Dm755 wmdots/wmdots               $PKG/usr/bin/
+	make -C wmfortune;      install -Dm755 wmfortune/wmfortune         $PKG/usr/bin/
+	make -C wmfu;           install -Dm755 wmfu/wmfu                   $PKG/usr/bin/
+	make -C wmload;         install -Dm755 wmload/wmload               $PKG/usr/bin/
+	make -C wmMatrix;       install -Dm755 wmMatrix/wmMatrix           $PKG/usr/bin/
+	make -C wmsupermon;     install -Dm755 wmsupermon/wmsupermon       $PKG/usr/bin/
+
+	make -C wmacpi                  install PREFIX=$PKG/usr/
+	make -C wmcalc wmcalc           install DESTDIR=$PKG PREFIX=/usr CONF=/usr/etc
+	make -C wmcliphist all          install DESTDIR=$PKG PREFIX=/usr
+	make -C wmhexaclock all         install INSPATH=$PKG/usr/bin
+	make -C wmSMPmon/wmSMPmon all   install BINDIR=$PKG/usr/bin/ MANDIR=$PKG/usr/share/man/
+
+	echo "$PKG/usr" > wmcalclockkbd/PREFIX
+	make -C wmcalclockkbd/pixmaps install
+	make -C wmcalclockkbd/src     install DESTDIR=$PKG/usr
+
+	make -C wmckgmail/wmckgmail
+	install -Dm755 wmckgmail/wmckgmail/wmckgmail   $PKG/usr/bin/
+	install -Dm644 wmckgmail/wmckgmail/wmckgmail.1 $PKG/usr/share/man/man1/
+
+	for dir in wmail
+	do
+		pushd $dir
+		autoreconf -i
+		./configure --bindir=$PKG/usr/bin
+		make install
+		popd
+	done
+
+	for dir in cnslock wmacpiload wmbatteries wmbattery wmbiff wmbutton wmclock wmcpuload wmget wmgtemp
+	do
+		pushd $dir
+		autoreconf -i
+		./configure --prefix=/usr
+		make install DESTDIR=$PKG
+		popd
+	done
+}

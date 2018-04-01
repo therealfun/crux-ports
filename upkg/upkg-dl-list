@@ -1,0 +1,283 @@
+#!/usr/bin/perl
+#
+# Extract URLs from untrusted Pkgfiles.
+#
+
+use strict;
+use warnings FATAL => 'all';
+use diagnostics;
+
+sub main
+{
+	my $pkgfile = shift;
+
+	my $content = read_file($pkgfile);
+	$content =~ / ^ \s* source=\( (?<sources>.+?) \) /xms;
+
+	my @raw = extract_raw_urls($+{sources}) if $+{sources};
+	my @url;
+	my %vars;
+	eval {
+		@url = map { expand_url($_, \$content, \%vars) } @raw
+	};
+
+	if ($@) {
+		print STDERR "$pkgfile: $@";
+		die $@;
+	}
+
+	map { print $_, "\n" } @url;
+}
+
+sub read_file
+{
+	my $name = shift;
+	open my $f, '<', $name or die "open($name): $!";
+	my $c = join '', <$f>;
+	close $f;
+	return $c;
+}
+
+sub extract_raw_urls
+{
+	my $c = shift;
+
+	# remove comments
+	while ($c =~ s/^ (.*\s) \# .* $/ $1 /xgm) { }
+
+	my @s;
+	while ($c =~ m{ \s* (http | https | ftp) :// ([^\s"']+) }xg) {
+		push @s, "$1://$2";
+	}
+	return @s;
+}
+
+sub expand_url
+{
+	my ($raw, $content, $vars) = @_;
+
+	die "Unsupported shell execution: $raw" if $raw =~ /(\$\(|`)/;
+
+	return expand_string($raw, $content, $vars) if not $raw =~ m{^
+		(?<pre> .+? [^\$] )
+		{ (?<brace> .*? , .*) }
+		(?<post> .* )
+	$}x;
+
+	# we have brace expansion
+	# {a,b,c} {,a} {,a}
+	return map { expand_url($+{pre} . $_ . $+{post}, $content, $vars) }
+	    split /,/, $+{brace};
+}
+
+sub expand_string
+{
+	my ($raw, $content, $vars) = @_;
+	my @pieces = split /\$/, $raw;
+	my @url = shift @pieces;
+	for my $p (@pieces) {
+		my ($expr, $clear) = ($p =~ /^ { (.+?) } (.*) $/x);
+		($expr, $clear) = ($p =~ /^      (\w+)   (.*) $/x) if not $expr;
+		die "Can't handle $raw" if not $expr and not $clear;
+		$clear =~ s/\\([_-])/$1/g if $clear;    # $name\_$var
+		push @url, eval_expr($expr, $content, $vars), $clear;
+	}
+	return join '', @url;
+}
+
+sub bash_substring
+{
+	my ($v, $off, $len) = @_;
+
+	$off = 0 if not defined $off or not length($off);
+
+	return substr($v, $off) if not defined $len or not length($len);
+	return substr($v, $off, $len);
+}
+
+sub bash_case_modification
+{
+	my ($v, $how) = @_;
+	my %h = (
+		'^'  => sub { return ucfirst shift },
+		'^^' => sub { return uc shift },
+		','  => sub { return lcfirst shift },
+		',,' => sub { return lc shift },
+	);
+	die "unknown case for $v: $how" if not defined $h{$how};
+	my $fct = $h{$how};
+	return &$fct($v);
+}
+
+sub quote_from_bash
+{
+	my $bash = shift;
+	$bash =~ s|\\||g;
+	return quotemeta $bash;
+}
+
+sub bash_re_to_perl_re
+{
+	my ($bash, $greedy) = @_;
+
+	my ($perl, $last) = ('', '');
+
+	while ($bash =~ /(?!\\)(?:[\*\?]|\[0-9\])/pg) {
+		$perl .= quote_from_bash ${^PREMATCH} if length ${^PREMATCH};
+
+		$perl .= '.'       if ${^MATCH} eq '?';
+		$perl .= '.*'      if ${^MATCH} eq '*' and $greedy;
+		$perl .= '.*?'     if ${^MATCH} eq '*' and not $greedy;
+		$perl .= ${^MATCH} if ${^MATCH} eq '[0-9]';
+
+		$last = ${^POSTMATCH};
+	}
+
+	$perl .= quote_from_bash $last if length $last;
+	$perl .= quote_from_bash $bash if length($perl) == 0;
+
+	return $perl;
+}
+
+sub bash_substring_removal
+{
+	my ($v, $what, $where, $greedy) = @_;
+
+	my $remove = bash_re_to_perl_re($what, $greedy);
+
+	$v =~ s/^$remove//       if $where eq 'prefix';
+	$v =~ s/$remove$//       if $where eq 'suffix' and $greedy;
+	$v =~ s/(.*)$remove$/$1/ if $where eq 'suffix' and not $greedy;
+
+	# version=1.2.3
+	# ${version%.*} -> remove=\..*?
+	#	s/$remove$//        -> 1
+	#	s/(.*?)$remove$/$1/ -> 1
+	#	s/(.*)$remove$/$1/  -> 1.2
+
+	return $v;
+}
+
+sub bash_search_and_replace
+{
+	my ($v, $from, $to, $times, $where, $greedy) = @_;
+
+	# ${version/_*}
+	# ${version/*_}
+	if (not defined $to and $where !~ '^(prefix|suffix)$') {
+		$where = 'suffix' if substr($from, -1, 1) eq '*';
+		$where = 'prefix' if substr($from, 0,  1) eq '*';
+	}
+
+	$from = bash_re_to_perl_re($from, $greedy);
+
+	$from = '^' . $from if $where eq 'prefix';
+	$from = $from . '$' if $where eq 'suffix';
+
+	$to = quote_from_bash $to if length $to;
+	$to = '' if not defined $to;
+
+	$v =~ s/$from/$to/g if $times eq 'all';
+	$v =~ s/$from/$to/  if $times eq 'once';
+
+	return $v;
+}
+
+sub eval_expr
+{
+	my ($e, $content, $vars) = @_;
+
+	return expand_var($e, $content, $vars) if $e =~ /^\w+$/;
+
+	#
+	# String::Bash is not safe enough
+	#
+
+	if ($e =~ m{^ (?<name> \w+ ) : (?<off> [0-9]* ) : (?<len> [0-9]+ ) $}x)
+	{
+		#
+		# {var:[off]:len}
+		#
+
+		my $v = expand_var($+{name}, $content, $vars);
+		return bash_substring($v, $+{off}, $+{len});
+	} elsif ($e =~ m{^ (?<name> \w+ ) : (?<off> [0-9]+ ) $}x) {
+		#
+		# {var:off}
+		#
+
+		my $v = expand_var($+{name}, $content, $vars);
+		return bash_substring($v, $+{off});
+	} elsif ($e =~ m{^ (?<name> \w+ ) (?<how> (?: \^{1,2} | ,{1,2} ) ) $}x)
+	{
+		#
+		# {var:^[^]} {var:,[,]}
+		#
+
+		my $v = expand_var($+{name}, $content, $vars);
+		return bash_case_modification($v, $+{how});
+	} elsif (
+		$e =~ m{^
+			(?<name>  \w+ )
+			(?<where> (?: \#{1,2} | \%{1,2} ) )
+			(?<what>  [\w\.\?\*\+\\\[\]_-]+ )
+			$}x
+	    ) {
+		#
+		# {var#[#]prefix} || {var%[%]suffix}
+		#
+
+		my $greedy = length($+{where}) - 1;
+		my $where  = 'suffix';
+		$where = 'prefix' if substr($+{where}, 0, 1) eq '#';
+
+		my $v = expand_var($+{name}, $content, $vars);
+		return bash_substring_removal($v, $+{what}, $where, $greedy);
+	} elsif (
+		$e =~ m{^ 
+			(?<name>     \w+ )
+			(?<times>    /{1,2} )
+			(?<where>    (?: \#{0,2} | \%{0,2} ) )
+			(?<from>     [\w\.\?\*\+\\\[\]_-]+ )
+			(?: / (?<to> [\w\._-]* ) ){0,1}
+			$}x
+	    ) {
+		#
+		# {var/[/][#%]{0,2}from[/[to]]/}
+		#
+
+		my $times  = length($+{times}) == 1 ? 'once' : 'all';
+		my $where  = 'everywhere';
+		my $greedy = 0;
+
+		if (length $+{where}) {
+			$greedy = length($+{where}) - 1;
+			$where  = 'suffix';
+			$where  = 'prefix' if substr($+{where}, 0, 1) eq '#';
+		}
+
+		my $v = expand_var($+{name}, $content, $vars);
+		return bash_search_and_replace($v, $+{from}, $+{to}, $times,
+			$where, $greedy);
+	} else {
+		die "unsupported expression: $e";
+	}
+}
+
+sub expand_var
+{
+	my ($name, $content, $vars) = @_;
+
+	if (not exists $vars->{$name}) {
+		$$content =~ / ^ $name = ([^\s]+) /xm
+		    or die "unknown variable: $name";
+		my $value = $1;
+		$value =~ s/^"(.+)"$/$1/;
+		my $v = expand_string($value, $content, $vars);
+		$vars->{$name} = $v;
+	}
+
+	return $vars->{$name};
+}
+
+map { main($_) } @ARGV;

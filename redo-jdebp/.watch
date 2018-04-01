@@ -1,0 +1,2 @@
+wget 'http://jdebp.eu./Softwares/redo/' -q -O-  \
+	| sed -n '0,/.*-\([0-9a-z.]*\)\.tar\..*/ s//\1/p'

@@ -1,0 +1,7 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8pIi8ZwSttGqRIJWHCO9Hw+qJhcjiSnW9R+62k2pAxRZlaQgGqI4IaNGPtUGdCA+3d1o+74y6vhQH6jKEyRS7gQ=
+SHA256 (Pkgfile) = 0d12171f7962842c57727815231b317e9678199af1d6852af4fe707465404c02
+SHA256 (.footprint) = 738763d5ba4be17061ffd4edd2cb1c22fe8b535ef181cbb9d2973957079dcbad
+SHA256 (httpfs2-0.1.5.tar.gz) = 01cb4bb38deb344f540da6f1464dc7edbdeb51213ad810b8c9c282c1e17e0fc1
+SHA256 (Makefile) = 0c8fd4a9acc0a8e4397be12b3402cc21ce63ee654929874b1d9fd7b153e62f75
+SHA256 (.watch) = 4e48ea35392f1091c90029e9c8ae5ec8e34825cdcb203726715795f5ab2bac6b

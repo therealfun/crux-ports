@@ -1,0 +1,4 @@
+#!/bin/sh
+export APP_DIR=/usr/share/ROX-Filer
+export BIN=ROX-Filer
+exec $APP_DIR/$BIN "$@"

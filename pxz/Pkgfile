@@ -1,0 +1,15 @@
+# Description: Parallel lzma.
+# URL:         https://github.com/jnovy/pxz
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+
+name=pxz
+version=20151029
+commit=fcfea93957d96b7661d1439cf4b767ecfd341eed
+release=1
+source=(https://github.com/jnovy/pxz/archive/$commit/$name-$version.tar.gz punxz .watch)
+
+build() {
+	cd */
+	make install DESTDIR=$PKG
+	install -Dm755 $SRC/punxz $PKG/usr/bin/punxz
+}

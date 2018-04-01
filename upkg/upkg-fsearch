@@ -1,0 +1,14 @@
+#!/bin/bash
+
+PORTS_DIR=/usr/ports
+shopt -s nullglob
+
+grep -il -e "${1?nothing to search for}" "$PORTS_DIR"/*/*/.footprint \
+| sed   -e 's|/.footprint||'                                         \
+| xargs -r -L1 -I{} sh -c "
+	'${BASH_SOURCE%/*}/upkg-info' '{}'
+	awk '{print \"/\"\$3}'        '{}/.footprint' \
+	| grep -i -e '$1' --ignore-case               \
+	| sed 's/^/Match:        /'
+	echo
+"

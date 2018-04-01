@@ -1,0 +1,3 @@
+NAME=lfs-ports
+URL=git://github.com/emmett1/lfs-ports
+BRANCH=master

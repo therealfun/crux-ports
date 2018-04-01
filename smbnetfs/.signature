@@ -1,0 +1,8 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8s3X/Gyubdumj6gbngfoD2J8zaDXP3xOu+kLnsxQynj/pJd0gNUJl7aM15j4rlGig8pkwAUh96dKo7j2dWZs5A4=
+SHA256 (Pkgfile) = c273ef619d8a6fe6e475460309a605851d5688e1787bb0ad4ea91a013f5aff24
+SHA256 (.footprint) = e11287f6a3370676511cbe2ebc9e29cfc252785476db6e450fa5ca828dd1a584
+SHA256 (smbnetfs-0.6.1.tar.bz2) = 848b8ee4c1b5cc4c83ee35736cb28e1ddcd5789cca948f060e8cb76baa95380a
+SHA256 (smbnetfs.auth) = 3719ca60e4a3d3c0e77cac4ab792c7f4cb0f7f9bcf3421614f721b7330892c83
+SHA256 (smbnetfs.patch) = 8f6f78af2dbbe2ace35e502403d73ffaf3c793d95f7d72e4804d52d00600293b
+SHA256 (.watch) = bc8bb00dc5cd84cb64eefd14d06ab0aff32170c07e454b4da3e010f20b91015f

@@ -1,0 +1,9 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/include/
+drwxr-xr-x	root/root	usr/include/webkitfltk/
+-rw-r--r--	root/root	usr/include/webkitfltk/webkit.h
+-rw-r--r--	root/root	usr/include/webkitfltk/webview.h
+drwxr-xr-x	root/root	usr/lib/
+-rw-r--r--	root/root	usr/lib/libwebkitfltk.a
+drwxr-xr-x	root/root	usr/lib/pkgconfig/
+-rw-r--r--	root/root	usr/lib/pkgconfig/webkitfltk.pc

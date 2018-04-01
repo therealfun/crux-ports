@@ -1,0 +1,22 @@
+# Description: Simple tool for doing everyday things with PDF documents.
+# URL:         https://www.pdflabs.com/tools/pdftk-server/
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  gcj-jdk
+
+name=pdftk
+version=2.02
+release=1
+source=(
+	https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/$name-$version-src.zip
+	Makefile.Crux
+	.watch
+)
+
+build() {
+	cp Makefile.Crux $name-$version-dist/$name/
+
+	make install                         \
+		DESTDIR=$PKG                 \
+		-C $name-$version-dist/$name \
+		-f Makefile.Crux
+}

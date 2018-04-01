@@ -1,0 +1,2 @@
+wget 'https://github.com/GNOME/pygobject/releases' -q -O-  \
+	| sed -n '0,/.*\/archive\/\([0-9]\.[0-9][0,2,4,6,8]\.[0-9]\)\.tar\.gz.*/ s//\1/p'

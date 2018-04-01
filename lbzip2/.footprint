@@ -1,0 +1,11 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/bin/
+lrwxrwxrwx	root/root	usr/bin/lbunzip2 -> lbzip2
+lrwxrwxrwx	root/root	usr/bin/lbzcat -> lbzip2
+-rwxr-xr-x	root/root	usr/bin/lbzip2
+drwxr-xr-x	root/root	usr/share/
+drwxr-xr-x	root/root	usr/share/man/
+drwxr-xr-x	root/root	usr/share/man/man1/
+-rw-r--r--	root/root	usr/share/man/man1/lbunzip2.1.gz
+-rw-r--r--	root/root	usr/share/man/man1/lbzcat.1.gz
+-rw-r--r--	root/root	usr/share/man/man1/lbzip2.1.gz

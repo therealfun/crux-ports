@@ -1,0 +1,2 @@
+wget "http://0pointer.de/lennart/projects/nss-mdns" -q -O-  \
+	| sed -n '0,/.*nss-mdns-\([0-9.]*\)\.tar\.gz.*/ s//\1/p'

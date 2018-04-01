@@ -1,0 +1,2 @@
+wget "http://t-sato.in.coocan.jp/xvkbd/" -q -O-  \
+	| sed -n '0,/.*xvkbd-\([0-9.]*\)\.tar\.gz.*/ s//\1/p'

@@ -1,0 +1,23 @@
+#
+# With the official pkgmk, the settings from /etc/pkgmk.conf
+# (eg. PKGMK_KEEP_WORK) take precedence over the command line options
+# (eg. --keep-work). This patch switch this order.
+#
+# The current order in which the PKGMK_ variables are set is:
+#   a) defaults hard-coded in pkgmk
+#   b) options from the command line (parse_options() is called)
+#   c) settings from /etc/pkgmk.conf
+# This patch adds another call to parse_options(). Because this is done
+# in step (c), this script should be the last one sourced/included
+# by /etc/pkgmk.conf, to avoid missing some settings.
+#
+# It was inspired from Alan's patch:
+#   makes command-line options take priority over pkgmk.conf options
+#
+# http://www.mizrahi.com.ve/crux/ports/pkgutils/0001-New-features-and-small-improvements-in-pkgmk.patch
+#
+
+if [[ ${BASH_SOURCE[-1]} == pkgmk ]] && declare -f parse_options >/dev/null 2>&1
+then
+	parse_options "$@"
+fi

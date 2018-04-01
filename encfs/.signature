@@ -1,0 +1,6 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8lFIpwYds9JDX0ol4YL3mQb4ScXhh1kTiyPM+X8kDtMgNT1nGtiEtuupbDyJMd+FtLvpvMDgOSJhmfkC0H9nNgY=
+SHA256 (Pkgfile) = a49023f2684b3f38eaf877913e43b945b08374e5ffff5c166ce6273adaa391cb
+SHA256 (.footprint) = 7d5cd8efb10f4f5e82511464bce3283e93abd53f26a8dbfc53a8cbb28e6f1398
+SHA256 (encfs-1.9.4.tar.gz) = 20656b4ead58ebd8d5f49a5c346b59e70dc2dc31220159e5b5a115bfa1bc40d6
+SHA256 (.watch) = 9a15444b0db0b3fe3ba1fd2091c7fb425917defb26a9880a85d78fc1ea0bfe17

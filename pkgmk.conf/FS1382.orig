@@ -1,0 +1,47 @@
+# https://crux.nu/bugs/index.php?do=details&task_id=1382
+# pkgmk checks of directory permissions are too strict 
+
+check_directory() {
+	# Do nothing when called from main()
+	local caller=( $(caller 0) )
+	[[ ${caller[1]} == main ]] && return
+
+	if [ ! -d $1 ]; then
+		error "Directory '$1' does not exist."
+		exit $E_DIR_PERM
+	elif [ ! -w $1 ]; then
+		error "Directory '$1' not writable."
+		exit $E_DIR_PERM
+	elif [ ! -x $1 ] || [ ! -r $1 ]; then
+		error "Directory '$1' not readable."
+		exit $E_DIR_PERM
+	fi
+}
+
+check_file() {
+	if [ -e $1 ] && [ ! -w $1 ]; then
+		error "File '$1' is not writable."
+		exit 1
+	fi
+	if [ ! -e $1 ]; then
+		check_directory `dirname $1`
+	fi
+}
+
+. <(
+	declare -f download_source \
+	| sed 's/^{/{\n check_directory "$PKGMK_SOURCE_DIR"/'
+)
+. <(
+	declare -f clean \
+	| sed -e 's/\(rm -f $TARGET\)/ check_directory "$PKGMK_PACKAGE_DIR" \n \1/' \
+	      -e 's/\(for FILE in\)/check_directory "$PKGMK_SOURCE_DIR"\n\1/' 
+)
+. <(
+	declare -f update_footprint \
+	| sed 's/\(touch $TARGET\)/echo \1/'
+)
+. <(
+	declare -f make_work_dir \
+	| sed 's/^{/{\n check_directory "$PKGMK_PACKAGE_DIR" \n check_directory "`dirname $PKGMK_WORK_DIR`" \n/'
+)

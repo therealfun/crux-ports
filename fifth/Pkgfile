@@ -1,0 +1,19 @@
+# Description:  Web browser done right.
+# URL:          https://github.com/clbr/fifth
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   webkitfltk liburlmatch physfs
+
+name=fifth
+version=0.5
+release=1
+source=(
+	https://github.com/clbr/$name/archive/v$version/$name-$version.tar.gz
+	.watch
+)
+
+build() {
+	cd */
+	autoreconf -i
+	./configure
+	make install DESTDIR=$PKG
+}

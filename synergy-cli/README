@@ -1,0 +1,26 @@
+config_file
+-----------
+section: screens
+	server:
+	client:
+end
+section: links
+	server:
+		left = client
+	client:
+		right = server
+end
+-----------
+
+If we can ssh without password from server to client
+	autossh -M0 -f -N -R 24800:localhost:24800 client
+else if we can ssh without password from client to server
+	autossh -M0 -f -N -L 24800:localhost:24800 server
+
+on the server (where the mouse/kb is):
+	synergys --config config_file --address localhost --name server
+
+on the client:
+	synergyc --name client localhost
+
+https://github.com/symless/synergy/wiki/

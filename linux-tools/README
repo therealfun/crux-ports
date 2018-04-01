@@ -1,0 +1,35 @@
+Perf events
+	CONFIG_PERF_EVENTS
+	CONFIG_HW_PERF_EVENTS
+
+Tracepoints (Documentation/trace/tracepoints.txt)
+	CONFIG_TRACEPOINTS
+
+Kernel dynamic tracing (Documentation/trace/kprobetrace.txt)
+	CONFIG_KPROBES
+	CONFIG_KPROBE_EVENTS
+
+User-level dynamic tracing (Documentation/trace/uprobetrace.txt)
+	CONFIG_UPROBES
+	CONFIG_UPROBE_EVENTS
+
+Kernel function trace (Documentation/trace/ftrace.txt)
+	CONFIG_FTRACE
+	CONFIG_FUNCTION_TRACER
+	CONFIG_FUNCTION_GRAPH_TRACER
+	CONFIG_STACK_TRACER
+	CONFIG_DYNAMIC_FTRACE
+
+Better kernel stack traces
+	CONFIG_FRAME_POINTER
+
+Kernel-level symbols
+	CONFIG_KALLSYMS
+
+Kernel variables
+	CONFIG_DEBUG_INFO
+
+Kernel lock tracing
+	CONFIG_LOCKDEP CONFIG_LOCK_STAT
+
+CONFIG_AUDIT

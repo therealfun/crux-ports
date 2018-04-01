@@ -1,0 +1,14 @@
+# Description: Command line download accelerator.
+# URL:         https://github.com/eribertomota/axel
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+
+name=axel
+version=2.16.1
+release=1
+source=(.watch https://github.com/axel-download-accelerator/axel/releases/download/v$version/axel-$version.tar.xz)
+
+build() {
+	cd */
+	CFLAGS="-O0 -g" ./configure --prefix=/usr --disable-nls
+	make install DESTDIR=$PKG
+}

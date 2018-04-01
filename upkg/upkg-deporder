@@ -1,0 +1,13 @@
+#!/bin/bash
+
+"${BASH_SOURCE%/*}/upkg-deptree" -f "$@" \
+| sed 's/  /0 /g'                        \
+| sort                                   \
+| sed 's/0 //g'                          \
+| awk '
+{
+	if ( $1 && !seen[$1] ) {
+		print $1
+		seen[$1]=1
+	}
+}'

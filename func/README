@@ -1,0 +1,33 @@
+I see 3 use cases:
+
+1) To have unattended builds, without a chroot
+   and almost without touching the real root /
+
+	sysupc(1)
+	FUNC_ROOT=/ depinstc...
+	FUNC_ROOT=/ func pkgmk...
+
+2) To build a chroot from crux.nu (by the root user)
+
+	func-create(8)
+	func-configure(8)
+	func-upgrade(8)
+
+3) To test ports inside the above chroot
+
+	depinstc
+	func prt-get...
+	func pkgmk...
+
+	unionfs-fuse
+	proot - optional if 
+
+(2) doesn't needs a special dependency installed
+(1) and (3) need unionfs-fuse + (proot or namespace support)
+
+Proot is slower, can't enforce read-only mounts, but works with ports
+like dcron or dbus (which create files owned by special users).
+
+The minimal namespace support is:
+ - mount_namespaces(7) (check /proc/self/ns/mnt, probably already enabled)
+ - user_namespaces(7)  (check /proc/self/ns/user, probably not enabled)

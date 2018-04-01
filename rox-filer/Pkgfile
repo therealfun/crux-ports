@@ -1,0 +1,38 @@
+# Description:  Graphical file manager.
+# URL:          https://rox.sf.net/desktop/ROX-Filer/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   gtk
+
+name=rox-filer
+version=2.11
+release=6
+source=(
+	https://downloads.sourceforge.net/rox/$name-$version.tar.bz2
+	rox.desktop
+	rox
+	.watch
+)
+
+build() {
+	cd */
+
+	ROX-Filer/AppRun --compile LIBS="-ldl -lm"
+
+	# remove unused while saving the manual
+	cp ROX-Filer/Help/Manual.html .
+	rm -rf ROX-Filer/{ROX-Filer.dbg,build,src,Messages,Help}
+
+	install -Dm755 $SRC/rox         $PKG/usr/bin/rox
+	install -Dm644 $SRC/rox.desktop $PKG/usr/share/applications/rox.desktop
+	install -Dm644 rox.1            $PKG/usr/share/man/man1/rox.1
+
+	find ROX-Filer -type d -exec chmod 755 '{}' +
+	find ROX-Filer -type f -exec chmod 644 '{}' +
+	chmod 755 ROX-Filer/{AppRun,ROX-Filer}
+	mv ROX-Filer $PKG/usr/share/
+
+	install -Dm644 Manual.html $PKG/usr/share/ROX-Filer/Help/Manual.html
+
+	install -d $PKG/usr/share/pixmaps
+	ln -s ../ROX-Filer/.DirIcon $PKG/usr/share/pixmaps/rox.png
+}

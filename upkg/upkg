@@ -1,0 +1,10 @@
+#!/bin/bash
+
+   (( $# ))                        \
+&& [[ -x "$BASH_SOURCE-$1" ]]      \
+&& exec  "$BASH_SOURCE-$1" "${@:2}"
+
+whatis --long --wildcard "${BASH_SOURCE##*/}-*" \
+| sed 's/ (/(/'
+
+[[ $1 == help ]]

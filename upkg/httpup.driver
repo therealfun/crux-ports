@@ -1,0 +1,28 @@
+#!/usr/bin/gawk -f
+#
+# /etc/ports/drivers/httpup.local: httpup driver script for uports(1)
+# 
+
+BEGIN {
+	if ( match(ENVIRON["PORTS_DIR"], "^/") )
+		PORTS_DIR = ENVIRON["PORTS_DIR"]
+}
+match($1, "^ROOT_DIR=([[:alnum:]/][[:alnum:]._/-]*)", m) {
+	name = m[1]
+	sub(".*/", "", name)
+	gsub("[.][.]+", "", name)
+}
+match($1, "^URL=(http|https|ftp)://([[:alnum:]._/~-]*)", m) {
+		url = m[1] "://" m[2]
+}
+END {
+	if (!PORTS_DIR)
+		exit 1
+	if (!name) { print "ROOT_DIR not set in " FILENAME > "/dev/stderr"; exit 1 }
+	if (!url)  { print "URL not set in " FILENAME      > "/dev/stderr"; exit 1 }
+
+	dest = PORTS_DIR "/" name
+	cmd  = sprintf("sh -c \"{ test -d '%s' || mkdir -p '%s' ; } && httpup sync '%s' '%s'\" ",
+					   dest,            dest,                   url, dest)
+	system(cmd)
+}

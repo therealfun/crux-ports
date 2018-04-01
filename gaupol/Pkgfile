@@ -1,0 +1,19 @@
+# Description:  Subtitle editor.
+# URL:          https://otsaloma.io/gaupol/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   py3gobject intltool
+# Nice to have: adwaita-icon-theme python3-chardet gst-libav gst-plugins-good gst-python
+
+name=gaupol
+version=1.2
+release=4
+source=(
+	https://github.com/otsaloma/$name/archive/$version/$name-$version.tar.gz
+	.watch
+)
+
+build() {
+	cd gaupol*/
+	rm -rf po
+	python3 setup.py install --root=$PKG
+}

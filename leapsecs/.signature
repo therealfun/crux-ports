@@ -1,0 +1,6 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8g2udr12zlTP7YLkwL4yY4Irss8JCVVHd7Y+GnC/BjPCu8zWJcaR6WCRjRUOA8laAPRKoHCqAHIEM2wgtnAdgQs=
+SHA256 (Pkgfile) = 168cc2d2c09d107b15d64caa7a2707c6248c8e7465b42ea28d401e29e01f582e
+SHA256 (.footprint) = 9296ceb130794dad7d9a127817413436fa74caa453d5b73c8994d6df67144f78
+SHA256 (leapsecs.dat) = 2b3ca6b881c84aa53ab7b704ec8d453f7ea99996807ce37cfcf2da1f2c4b7349
+SHA256 (.watch) = 6e037bb40b5883a54756bceae73282b9beeaec2110c8fa5412154cdb49018884

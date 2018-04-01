@@ -1,0 +1,18 @@
+# Description: redo build system (C++, Jonathan de Boyne Pollard).
+# URL:         http://jdebp.eu./Softwares/redo/
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+
+name=redo-jdebp
+version=1.4
+release=1
+source=(http://jdebp.eu./Repository/debian/dists/stable/main/source/redo-$version.tar.bz2 .watch)
+
+build() {
+	package/compile
+	install -Dm644 -t $PKG/usr/share/man/man1 manual/*
+	install -Dm755 command/redo $PKG/usr/bin/redo
+	for p in redo-ifcreate redo-ifchange cubehash
+	do
+		ln -sr $PKG/usr/bin/{redo,$p}
+	done
+}

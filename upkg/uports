@@ -1,0 +1,55 @@
+#!/bin/bash
+
+if (( $EUID == 0 )) || [[ ! -d $PORTS_DIR ]] || [[ ! -d $conf_dir ]]
+then
+	PORTS_DIR=/usr/ports
+	 conf_dir=/etc/ports
+fi
+
+export PORTS_DIR LC_ALL=C LC_COLLATE=C
+
+shopt -s nullglob
+
+cd -- "$PORTS_DIR" || exit 1
+
+ports=( "$conf_dir"/*.{git,rsync,httpup} )
+ports=( "${ports[@]##*/}" )
+ports=( "${ports[@]%.*}"  )
+
+git_func() {
+	{
+		git "$@"
+		while read -r _ name _ ; do
+			( cd "$name" && git "$@" )
+		done < <(git submodule)
+	} | cat
+}
+
+[[ $1 == "--repos" ]] && { printf '%s\n' "${ports[@]}" | sort -u; exit; }
+[[ $1 == "--git"   ]] && { git_func "${@:2}"; exit; }
+[[ $1 == "--last"  ]] && {
+	git_func diff "$(cat .uportstag)..."
+	git describe --abbrev=0 --tags > .uportstag
+	exit
+}
+
+[[ -d .git ]] || "${BASH_SOURCE%/*}/uports-init" || exit 1
+
+(( $# )) && ports=( "$@" )
+
+printf '%s\n' "${ports[@]}" | sort -u | shuf | while read -r port
+do
+	pf=( "$conf_dir/$port"[.]{git,rsync,httpup} )
+	(( ${#pf[@]} )) \
+		&& printf 'timeout 10m nice -n19 ionice -c idle "%s" "%s" >> "%s" 2>&1 \n' \
+			"$conf_dir/drivers/${pf##*.}.local" "$pf" ".update.$port"
+done | xargs -L1 -P$(( $(nproc) + 1 )) -I{} sh -c '{} || true'
+
+logs=( .update.* )
+(( ! ${#logs[@]} )) || {
+	git add -A
+	{ echo "$(date)"; echo; for log in "${logs[@]}"; do echo ">>> ${log#.update.} <<<"; cat "$log"; done ; } \
+		| { tee --output-error >(git commit -q -a -F -) || exit 1; }
+	git_func tag uports-$(date +%s)
+	rm .update.*
+}

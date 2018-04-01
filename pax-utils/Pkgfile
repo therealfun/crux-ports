@@ -1,0 +1,25 @@
+# Description: Utilities for peforming security checks.
+# URL:         https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  libpcap libseccomp
+
+name=pax-utils
+version=1.2.2
+release=1
+source=(
+	https://github.com/gentoo/$name/archive/v$version/$name-$version.tar.gz
+	.watch
+)
+
+build() {
+	cd */
+
+	bins=( scanelf dumpelf pspax )
+
+	make "${bins[@]}" USE_CAP=y USE_SECCOMP=y
+
+	for b in "${bins[@]}"
+	do
+		install -Dm755 $b $PKG/usr/bin/$b
+	done
+}

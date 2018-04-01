@@ -1,0 +1,94 @@
+# https://crux.nu/bugs/index.php?do=details&task_id=1484
+# pkgmk: parallel compression/decompression
+
+return_bsdtar_compress_option() {
+	return=
+	case $1 in
+		lz)
+			command -v plzip  >/dev/null && return=plzip
+			;;
+		xz)
+			command -v pxz    >/dev/null && return=pxz
+			command -v xz     >/dev/null && return="xz -z -T0"
+			;;
+		gz)
+			command -v pigz   >/dev/null && return=pigz
+			;;
+	esac
+}
+return_bsdtar_decompress_option() {
+	return=
+	case $1 in
+		lz|tlz)
+			command -v plzip     >/dev/null && return=plzip
+			;;
+		xz|txz|lzma)
+			command -v punxz    >/dev/null && return=punxz
+			command -v xz       >/dev/null && return="xz -T0"
+			;;
+		bz2|tbz2)
+			command -v pbunzip2 >/dev/null && return=pbunzip2
+			command -v lbunzip2 >/dev/null && return=lbunzip2
+			;;
+		gz|tgz)
+			command -v unpigz   >/dev/null && return=unpigz
+			;;
+	esac
+}
+bsdtar_create() {
+	local compress=$1
+	local archive=$2
+	local return=
+	case $compress in
+		--lzip) return_bsdtar_compress_option lz ;;
+		-J)     return_bsdtar_compress_option xz ;;
+		-z)     return_bsdtar_compress_option gz ;;
+	esac
+	if [[ $return ]]; then
+		( set -o pipefail; set -x; bsdtar -c -f - * | $return -c > "$archive" )
+	else
+		bsdtar -c $compress -f "$archive" *
+	fi
+}
+bsdtar_extract() {
+	local dir=$1
+	local archive=$2
+	local return=
+	return_bsdtar_decompress_option ${archive##*.}
+	if [[ $return ]]; then
+		( set -o pipefail; set -x; $return -dc "$archive" | bsdtar -p -o -C "$dir" -x -f - )
+	else
+		bsdtar -p -o -C "$dir" -xf "$archive"
+	fi
+}
+bsdtar_test() {
+	local archive=$1
+	local return=
+	return_bsdtar_decompress_option ${archive##*.}
+	if [[ $return ]]; then
+		( set -o pipefail; set -x; $return -dc "$archive" | bsdtar -t -v -f - )
+	else
+		bsdtar -t -v -f "$archive"
+	fi
+}
+
+# The match might fail in Pkgfile
+if ! grep unpack_source Pkgfile >/dev/null 2>&1
+then
+. <(
+	declare -f unpack_source \
+	| sed -e '/bsdtar/{
+			s/ -p -o -C/_extract/
+			s/ -xf / /
+		}'
+)
+fi
+
+. <(
+	declare -f build_package \
+	| sed -e '/bsdtar/{
+			s/ -c /_create /
+			s/ -f / /g
+			s/ -t -v /_test /
+		}'
+)

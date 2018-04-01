@@ -1,0 +1,24 @@
+# Description: DockApp Development Standard Library.
+# URL:         https://www.dockapps.net/
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  xorg-libxpm xorg-font-util xorg-mkfontdir xorg-mkfontscale
+
+name=libdockapp
+version=0.7.2
+release=1
+source=(
+	http://repo.or.cz/dockapps.git/snapshot/db83d64e1ce66dfde2ae4adc62f9710924543a1c.tar.gz
+	.watch
+)
+
+build() {
+	cd */libdockapp
+
+	autoreconf -if
+	./configure --prefix=/usr
+
+	make install DESTDIR=$PKG
+
+	rm -rf $PKG/usr/share/doc
+	rm  -f $PKG/usr/share/fonts/X11/misc/fonts.dir
+}

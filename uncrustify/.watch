@@ -1,0 +1,2 @@
+wget "https://github.com/uncrustify/uncrustify/releases" -q -O-  \
+	| sed -n '0,/.*\/archive\/uncrustify-\([0-9.]*\)\.tar\.gz.*/ s//\1/p'

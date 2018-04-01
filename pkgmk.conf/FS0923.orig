@@ -1,0 +1,160 @@
+#
+# This patch will rename sources from $src_name 
+# to $port_name-$src_name if src_name looks like
+# a version number.
+#
+# If this is not smart enough for some particular port, 
+# the map_remote_source() function can be redefined in Pkgfile.
+#
+# The .md5sum and the .signature files won't change,
+# so this is safe to use with any ports.
+#
+
+# https://crux.nu/bugs/index.php?do=details&task_id=923
+# pkgmk able to change the name of downloaded tarballs
+
+#
+# This is our get_filename() function,
+# which doesn't just blindly use:
+#    $PKGMK_SOURCE_DIR/$src_name
+# but calls map_remote_source() to do that, making it
+# easy for ports to overwrite just this.
+#
+get_filename() {
+	local ABSOLUTE=""
+	if [ "$1" = "-a" ]; then
+		ABSOLUTE=1
+		shift
+	fi
+
+	if [[ $1 =~ ^(http|https|ftp|file)://.*/(.+) ]]; then
+		map_remote_source "${BASH_REMATCH[2]}" "${BASH_REMATCH[0]}"
+	else
+		if [ "$ABSOLUTE" ]; then
+			echo $PKGMK_ROOT/$1
+		else
+			echo $1
+		fi
+	fi
+}
+
+#
+# Our map_remote_source() function uses $port_name-$src_name
+# for sources named with version numbers only.
+#
+# The source name must also be an archive file in order to mangle
+# its name (to avoid renaming patches starting with dates?)
+#
+xxx_map_remote_source() {
+	local src=$1
+	local re="^v?[0-9]*[0-9_.-]*(\.tar|\.tar\.gz|\.tar\.Z|\.tgz|\.tar\.bz2|\.tbz2|\.tar\.xz|\.txz|\.tar\.lzma|\.tar\.lz|\.zip|\.rpm)$"
+
+	[[ $src =~ $re ]] \
+		&& src="$name-$src"
+
+	echo "$PKGMK_SOURCE_DIR/$src"
+}
+
+#
+# We run md5sum on sources as we have saved them 
+# (possibly as $port_name-$src_name), but we change the filenames 
+# to what we have in source=() just before we sort them.
+#
+make_md5sum() {
+	(( ${#source[@]} > 0 )) || return
+
+	local ORIG_FILE NICE_FILE
+	declare -A LOCAL_SOURCES
+	declare -a LOCAL_SOURCES_ORDERED
+
+	for ORIG_FILE in "${source[@]}"; do
+		NICE_FILE=$(get_filename "$ORIG_FILE")
+
+		LOCAL_SOURCES["$NICE_FILE"]=${ORIG_FILE##*/}
+		LOCAL_SOURCES_ORDERED+=( "$NICE_FILE" )
+	done
+
+	local MD5
+	while read -r MD5 NICE_FILE; do
+		echo "$MD5  ${LOCAL_SOURCES["$NICE_FILE"]}"
+	done < <(
+		md5sum "${LOCAL_SOURCES_ORDERED[@]}"
+	) \
+	| sort -k 2
+}
+
+#
+# We run sha256sum on sources as we have saved them 
+# (possibly as $port_name-$src_name), but we change the filenames 
+# to what we have in source=() just before feeding signify.
+#
+make_signature() {
+	local ORIG_FILE NICE_FILE
+	declare -A LOCAL_SOURCES
+	declare -a LOCAL_SOURCES_ORDERED
+	local REPO
+
+	for ORIG_FILE in "$PKGMK_PKGFILE" "$PKGMK_FOOTPRINT" "${source[@]}"; do
+		NICE_FILE=$(get_filename "$ORIG_FILE")
+
+		LOCAL_SOURCES["$NICE_FILE"]=${ORIG_FILE##*/}
+		LOCAL_SOURCES_ORDERED+=( "$NICE_FILE" )
+	done
+
+	if [ ! "$PKGMK_PRIVATEKEY" ]; then
+		REPO=${PWD%/*}
+		REPO=${REPO##*/}
+		REPO=${REPO%.git}
+	fi
+
+	if [ "$REPO" ]; then
+		PKGMK_PRIVATEKEY="/etc/ports/${REPO}.sec"
+	fi
+
+	local SHA256
+	while read -r SHA256 NICE_FILE; do
+		echo "SHA256 (${LOCAL_SOURCES["$NICE_FILE"]}) = $SHA256"
+	done < <(
+		sha256sum "${LOCAL_SOURCES_ORDERED[@]}"
+	)                                                   \
+	| signify -S -e -x - -q -s "$PKGMK_PRIVATEKEY" -m - \
+	> "${PKGMK_SIGNATURE}.tmp"
+	
+	if [ $? -ne 0 ]; then
+		rm "${PKGMK_SIGNATURE}.tmp"
+		error "Creating signature failed"
+		exit $E_SIGNATURE
+	else
+		mv "${PKGMK_SIGNATURE}.tmp" "$PKGMK_SIGNATURE"
+	fi
+}
+
+#
+# In check_signature(), we use
+#    ln -s $PKGMK_SOURCE_DIR/$src_name $orig_src_name
+# instead of
+#    ln -s $PKGMK_SOURCE_DIR/$src_name .
+# because now, $src_name could be:
+#    $port_name-$orig_src_name
+#
+
+. <(
+	declare -f check_signature \
+	| sed 's@\(ln -s .*)\) \.@\1 \$\{FILE##\*\/\}@'
+)
+
+#
+# The map_remote_source() function can be defined already in:
+#   - pkgmk
+#   - Pkgfile
+#
+# If it is defined only in pkgmk, most surely is not smart enough,
+# and we redefine it. If it is defined in Pkgfile, we use that
+# implementation.
+#
+
+if         ! defined -f map_remote_source            >/dev/null 2>&1 \
+        && ! egrep    '^map_remote_source()' Pkgfile >/dev/null 2>&1
+then
+	. <( declare -f xxx_map_remote_source | sed 's/xxx_//')
+fi

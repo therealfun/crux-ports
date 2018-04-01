@@ -1,0 +1,26 @@
+drwxr-xr-x	root/root	etc/
+drwxr-xr-x	root/root	etc/edac/
+-rw-r--r--	root/root	etc/edac/labels.db
+drwxr-xr-x	root/root	etc/rc.d/
+-rwxr-xr-x	root/root	etc/rc.d/edac
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/bin/
+-rwxr-xr-x	root/root	usr/bin/edac-util
+drwxr-xr-x	root/root	usr/include/
+-rw-r--r--	root/root	usr/include/edac.h
+drwxr-xr-x	root/root	usr/lib/
+-rw-r--r--	root/root	usr/lib/libedac.a
+-rwxr-xr-x	root/root	usr/lib/libedac.la
+lrwxrwxrwx	root/root	usr/lib/libedac.so -> libedac.so.1.1.1
+lrwxrwxrwx	root/root	usr/lib/libedac.so.1 -> libedac.so.1.1.1
+-rwxr-xr-x	root/root	usr/lib/libedac.so.1.1.1
+drwxr-xr-x	root/root	usr/sbin/
+-rwxr-xr-x	root/root	usr/sbin/edac-ctl
+drwxr-xr-x	root/root	usr/share/
+drwxr-xr-x	root/root	usr/share/man/
+drwxr-xr-x	root/root	usr/share/man/man1/
+-rw-r--r--	root/root	usr/share/man/man1/edac-util.1.gz
+drwxr-xr-x	root/root	usr/share/man/man3/
+-rw-r--r--	root/root	usr/share/man/man3/edac.3.gz
+drwxr-xr-x	root/root	usr/share/man/man8/
+-rw-r--r--	root/root	usr/share/man/man8/edac-ctl.8.gz

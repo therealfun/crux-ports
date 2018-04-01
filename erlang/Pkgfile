@@ -1,0 +1,46 @@
+# Description:  General-purpose programming language and runtime environment.
+# URL:          https://www.erlang.org/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   port-on-rails
+# Nice to have: lksctp-tools wxgtk xorg-libx11
+
+name=erlang
+version=20.3.2
+release=3
+source=(https://github.com/erlang/otp/archive/OTP-$version.tar.gz .watch)
+
+build() {
+	cd otp*/
+
+	./otp_build autoconf
+	opts=(
+		--prefix=/usr
+		# avoid adding all possible rpath directories to lib/crypto
+		--with-ssl-rpath=/usr/lib
+	)
+	./configure "${opts[@]}"
+
+	MAKEFLAGS="-j${JOBS:-$(nproc)} $MAKEFLAGS" \
+		make
+
+	make install DESTDIR=$PKG
+}
+
+make_footprint() {
+	pkginfo --footprint $TARGET | \
+		sed "s|-[1-9][0-9.]*[0-9]/|-<version>/|g" | \
+		sort -k 3
+}
+
+. /usr/lib/port-on-rails/enable-diff_footprint_filter
+
+diff_footprint_filter() {
+	cat
+	[[ -e /usr/bin/wx-config ]] && {
+		echo "drwxr-xr-x	root/root	usr/lib/erlang/lib/wx-<version>/priv/"
+		echo "-rwxr-xr-x	root/root	usr/lib/erlang/lib/wx-<version>/priv/erl_gl.so"
+		echo "-rw-r--r--	root/root	usr/lib/erlang/lib/wx-<version>/priv/erlang-logo32.png"
+		echo "-rw-r--r--	root/root	usr/lib/erlang/lib/wx-<version>/priv/erlang-logo64.png"
+		echo "-rwxr-xr-x	root/root	usr/lib/erlang/lib/wx-<version>/priv/wxe_driver.so"
+	}
+}

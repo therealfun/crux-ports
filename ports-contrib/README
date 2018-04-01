@@ -1,0 +1,8 @@
+Run update-prt-get to regenerate prt-get.conf
+
+If run as root, it will replace /etc/prt-get.conf. As a non-root user,
+it will just print the new version.
+
+To see the differences, run the following command as a non-root user:
+
+	diff -u /etc/prt-get.conf <(update-prt-get)

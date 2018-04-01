@@ -1,0 +1,13 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/bin/
+lrwxrwxrwx	root/root	usr/bin/cubehash -> redo
+-rwxr-xr-x	root/root	usr/bin/redo
+lrwxrwxrwx	root/root	usr/bin/redo-ifchange -> redo
+lrwxrwxrwx	root/root	usr/bin/redo-ifcreate -> redo
+drwxr-xr-x	root/root	usr/share/
+drwxr-xr-x	root/root	usr/share/man/
+drwxr-xr-x	root/root	usr/share/man/man1/
+-rw-r--r--	root/root	usr/share/man/man1/cubehash.1.gz
+-rw-r--r--	root/root	usr/share/man/man1/redo-ifchange.1.gz
+-rw-r--r--	root/root	usr/share/man/man1/redo-ifcreate.1.gz
+-rw-r--r--	root/root	usr/share/man/man1/redo.1.gz

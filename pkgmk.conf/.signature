@@ -1,0 +1,24 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8jI10esf3v99JYoH+LhuWQ/4OAfpaviWlRpu/ZzGHe94hBXKp578SQDE3gFBiwEwx9uj7S+EQGf86SjZ9o7ppQw=
+SHA256 (Pkgfile) = d4e3822dc91de3af5a353f3b986c87d7d95947107d52980f52be7a01c32b7cac
+SHA256 (.footprint) = fbba1344ba2194ac378ee2fda8a7b2f6a12c1cbf2e3bdb6a8af544ca99c6b8df
+SHA256 (FS0923.orig) = 2e41800528b0dfb502486efdc744cfdff56b121fb206dd6903dc3d23ceae2b0e
+SHA256 (FS1382.orig) = 10d4779bbaf4f8785b393527299c5ec82dbcfe0e96d7cabd3eb7392462919e48
+SHA256 (FS1410.orig) = a16f41ea06fec2df20b4f3f1d31807296bc99c50d8390381bcdf6b6bf3479baa
+SHA256 (FS1476.orig) = 0cbd6cb440bb59bc3850d3882c2061b0c566f1e22d5c153816758dd332a5ace2
+SHA256 (FS1484.orig) = e235e694f3256343506f11c583cc41a01acdf6735ba33d3fd1456e9b6b40f930
+SHA256 (FS1576-footprint-filter.orig) = 1471283cacba7cdb3d06b5a8fbf6ae3f8b06197677c16858a1f49aeeb400d6c2
+SHA256 (axel_download.orig) = cf9e1cab961a81d75b99eba6efb8ceb9d4de4471d7dae0601b45e383b71505e5
+SHA256 (build-stats.orig) = 98d5189861420bc0ad5da244cb1da23bcbc552eb6a44fdc182f4e9243c5b6937
+SHA256 (disable-ccache.orig) = fce66fa8ae20e82cf4ecad09a19dc752014fc6c8db20b10f3b7c8f6486db8e58
+SHA256 (fallback-for-distfiles.orig) = f89e0c313e3e3c93cbf4f4657a397c358d9a666b00eb12747bb4b691ae3476fa
+SHA256 (fallback-for-distfilez-by-hash.orig) = d5eede1179f2582686f7c1b64726b1fd19e5c0d431d1d0f35e39b7600cef9ed3
+SHA256 (hardening.orig) = aee847912c831975e0b92fc90dc53c6d059e447891090ac7d59054552c289c06
+SHA256 (keep_work_if_failed.orig) = 1b4e88905f1933f465a157f5092ad61e66e2fc8672f16c4d7f6403a9afb70b6f
+SHA256 (parallel_make.orig) = a4127b9fe1cd215825c0073c90b356adf48430d6da304e7bc8f0d838faa5b6a7
+SHA256 (remove_invalid_rpaths.orig) = 52c80a9e3fdd078d66d75cd45868fed4eb4dfeaab92ad46c4251abca6532e058
+SHA256 (z-command-line-priority.orig) = 41f8d229716e6571c7530dfbf703f7865b639e0277f19f2c23802f1b799671b7
+SHA256 (getrusage.c) = 37ea76313c3cb37f6a69b130fc5ab2759487ba7d76e721be0bd89198eedeeac5
+SHA256 (hardening-check.bin) = 44158660bec329834258241581d724c92d34b99c0264ac8287bf8911297b69d2
+SHA256 (checksec.bin) = 2a21331e9a4e15804e9d96939b9e6c088766de186db8353d6b315422b98b4473
+SHA256 (post-install) = db9edd39adf9ac87a2088b2c4f81f912fd23f43efefbde1cd66ad7fc53e29253

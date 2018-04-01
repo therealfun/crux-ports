@@ -1,0 +1,283 @@
+# https://crux.nu/bugs/index.php?do=details&task_id=1410
+# add support for binary (prebuilt) packages
+#
+# This patch adds support for binary packages,
+# by trying to download the TARGET (and its signature)
+# before the usual (download sources + build).
+#
+# This behaviour kick in if:
+#   - PKGMK_FORCE/-f/--force was NOT used as a pkgmk argument
+#   - the package name matches in PKGMK_BINARY_PACKAGES
+#   - the package is found in one of the mirrors (regardless the compression)
+#   - the signature is valid (if PKGMK_CHECK_PACKAGE_SIGNATURE is set to yes)
+#
+# Set these variables somewhere and change it to your needs
+#   (here or in another file sourced from pkgmk.conf)
+#
+# declare -A PKGMK_BINARY_PACKAGES=(
+#	["http://crux.ster.zone/packages/3.3/"]="^(firefox|llvm|mesa)#"
+#	["therealfun"]=".*"
+# )
+#
+# The above exampl will make this patch download binary packages
+# for firefox, llvm and mesa from 'http://crux.ster.zone/packages/3.3/'
+# (could be a space separated list of mirrors), and all the packages
+# for ports installed from the 'therealfun' repository (if the repo
+# has 'REPO_PKG_MIRRORS=(...)' in its 'nfo' file).
+#
+# PKGMK_CHECK_PACKAGE_SIGNATURE="yes"
+#        use only signed builds
+#
+# PKGMK_MAKE_PACKAGE_SIGNATURE="no"
+#       yes, if you want to sign all your local builds
+#            or to localy sign the builds you've downloaded
+#       PKGMK_PRIVATEKEY must be set too
+#
+# !! If you already have a package built, but not up to date,
+#    it will be deleted !!
+#
+
+check_package_signature() {
+	[[ $PKGMK_CHECK_PACKAGE_SIGNATURE == yes ]] || return 0
+
+	local URL=$1
+	local SIG=$2
+
+	(
+		download_file_new "$URL" "$SIG" "$PKGMK_PACKAGE_DIR"
+
+		cd "$PKGMK_PACKAGE_DIR" || exit 1
+
+		PUBKEY=""
+		[[ $PKGMK_PUBLICKEY == "" ]] \
+			|| PUBKEY="-p $PKGMK_PUBLICKEY"
+
+		signify -q -C $PUBKEY -x "$SIG"
+	) && return 0
+
+	rm -- "$SIG.partial"
+	return 1
+}
+
+download_package_from_mirror() {
+	local URL=$1
+
+	local EXTENSIONS=( "$PKGMK_COMPRESSION_MODE" gz xz lz )
+	
+	while (( ${#EXTENSIONS[@]} > 0 )); do
+		local     EXT=${EXTENSIONS[0]}
+		local     TGT=${TARGET%.*}.$EXT
+		local     SIG=$TGT.sig
+		local TRY_TGT=${URL%.*}.$EXT
+		local TRY_SIG=${URL%.*}.$EXT.sig
+
+		if [[ -f $TGT ]]; then
+			rm -f -- "$TGT" || return 1
+		fi
+ 
+		( download_file_new        "$TRY_TGT" "$TGT" "$PKGMK_PACKAGE_DIR" ) \
+		&& check_package_signature "$TRY_SIG" "$SIG"                        \
+		&& {
+			[[ $TGT == $TARGET ]] \
+				|| ln -sf "$TGT" "$TARGET"
+			return 0
+		}
+
+		rm -- "$TGT" "$TGT.partial" 2>/dev/null
+
+		EXTENSIONS=( ${EXTENSIONS[@]//$EXT/} )
+	done
+
+	return 1
+}
+
+get_package_mirrors() {
+	declare -p PKGMK_BINARY_PACKAGES >/dev/null 2>&1 \
+		|| return
+
+	local  nfo_file=${PWD%/*}/nfo
+	local this_repo=${PWD%/*}
+	this_repo=${this_repo##*/}
+
+	local where
+	for where in "${!PKGMK_BINARY_PACKAGES[@]}"; do
+		local what=${PKGMK_BINARY_PACKAGES["$where"]}
+		[[ $BASENAME =~ $what ]] || continue
+		case $where in
+		*/*)
+			readarray -t -O ${#mirrors[@]} mirrors < <(
+				printf '%s\n' "$where" \
+				| tr ' ' '\n'          \
+				| shuf
+			)
+			;;
+		$this_repo)
+			[[ -f $nfo_file ]] \
+				&& readarray -t -O ${#mirrors[@]} mirrors < <(
+					. $nfo_file
+					printf '%s\n' "${REPO_PKG_MIRRORS[@]}" \
+					| shuf
+				)
+			;;
+		esac
+	done
+}
+
+download_package() {
+	[[ $PKGMK_FORCE == yes ]] && return 1
+
+	local m
+	local mirrors=()
+	local BASENAME=${TARGET##*/}
+
+	get_package_mirrors
+
+	for m in ${mirrors[@]}; do
+		download_package_from_mirror "$m/${BASENAME//\#/%23}" && {
+			info "Building '$TARGET' succeeded."
+			WE_HAVE_THE_PACKAGE=1
+			return 0
+		}
+	done
+
+	return 1
+}
+
+make_package_signature() {
+	[[ $PKGMK_MAKE_PACKAGE_SIGNATURE == yes ]] || return
+	[[ $PKGMK_PRIVATEKEY             != ""  ]] || return
+
+	sha256sum --tag "$TARGET" \
+		| sed 's|^SHA256 (.*/\(.*\))\(.* = .*\)|SHA256 (\1)\2|' \
+		| signify -S -e -x - -q -s "$PKGMK_PRIVATEKEY" -m - > "$TARGET.tmp"
+
+	(( $? == 0 )) || {
+		rm "$TARGET.tmp"
+		error "Creating package signature failed"
+		exit $E_SIGNATURE
+	}
+
+	[[ $PKGMK_PUBLICKEY == "" ]] || \
+		sed s,${PKGMK_PRIVATEKEY/.sec/.pub},$PKGMK_PUBLICKEY, --in-place "$TARGET.tmp"
+
+	sync "$TARGET.tmp"
+	mv "$TARGET.tmp" "$TARGET.sig"
+}
+
+# refactored from /usr/bin/pkgmk
+download_file_new () {
+	local REMOTE_FILENAME=$1
+	local LOCAL_FILENAME=$2
+	local LOCAL_DIR=$3
+	shift 3
+
+	info "Downloading '$REMOTE_FILENAME'."
+
+	PKGMK_DOWNLOAD_PROG=${PKGMK_DOWNLOAD_PROG:-wget}
+	if [ ! "`type -p ${PKGMK_DOWNLOAD_PROG}`" ]; then
+		error "Command '${PKGMK_DOWNLOAD_PROG}' not found."
+		exit $E_GENERAL
+	fi
+
+	LOCAL_FILENAME_PARTIAL="$LOCAL_FILENAME.partial"
+
+	case ${PKGMK_DOWNLOAD_PROG} in
+		curl)
+			RESUME_CMD="-C -"
+			DOWNLOAD_OPTS="-L --fail --ftp-pasv --retry 3 --retry-delay 3 \
+			-o $LOCAL_FILENAME_PARTIAL $PKGMK_CURL_OPTS"
+			;;
+		wget)
+			RESUME_CMD="-c"
+			DOWNLOAD_OPTS="--passive-ftp --no-directories --tries=3 --waitretry=3 \
+			--directory-prefix=$LOCAL_DIR \
+			--output-document=$LOCAL_FILENAME_PARTIAL $PKGMK_WGET_OPTS"
+			;;
+		axel)
+			RESUME_CMD=
+			DOWNLOAD_OPTS="-o $LOCAL_FILENAME_PARTIAL"
+			;;
+	esac
+
+	if [ -f "$LOCAL_FILENAME_PARTIAL" ]; then
+		info "Partial download found, trying to resume"
+		RESUME_OPTS="$RESUME_CMD"
+	fi
+
+	error=1
+
+	BASENAME=`get_basename $REMOTE_FILENAME`
+	for REPO in $@; do
+		REPO="`echo $REPO | sed 's|/$||'`"
+		$PKGMK_DOWNLOAD_PROG $DOWNLOAD_OPTS $RESUME_OPTS $REPO/$BASENAME 2>/dev/null
+		error=$?
+		if [ $error == 0 ]; then
+			break
+		fi
+	done
+
+	if [ $error != 0 ]; then
+		while true; do
+			$PKGMK_DOWNLOAD_PROG $DOWNLOAD_OPTS $RESUME_OPTS $REMOTE_FILENAME 2>/dev/null
+			error=$?
+			if [ $error != 0 ] && [ "$RESUME_OPTS" ]; then
+				info "Partial download failed, restarting"
+				rm -f "$LOCAL_FILENAME_PARTIAL"
+				RESUME_OPTS=""
+			else
+				break
+			fi
+		done
+	fi
+
+	if [ $error != 0 -o ! -f "$LOCAL_FILENAME_PARTIAL" ]; then
+		error "Downloading '$REMOTE_FILENAME' failed."
+		exit $E_DOWNLOAD
+	fi
+
+	mv -f "$LOCAL_FILENAME_PARTIAL" "$LOCAL_FILENAME"
+}
+
+# Instead of:
+#	download_source
+#	build_package
+# We need something like:
+#	download_package || {
+#		download_source
+#		build_package
+#	}
+# But we can't patch main(), because it is too late.
+# We have to patch download_source() and build_package(),
+# but download_source is also used if: 
+#	"$PKGMK_UPDATE_MD5SUM"    = "yes"
+#	"$PKGMK_UPDATE_SIGNATURE" = "yes"
+#	"$PKGMK_DOWNLOAD_ONLY"    = "yes"
+#	"$PKGMK_EXTRACT_ONLY"     = "yes"
+#	"$PKGMK_CHECK_SIGNATURE"  = "yes"
+
+try_download_package () {
+	[[ $PKGMK_UPDATE_MD5SUM    == yes ]] && return 1
+	[[ $PKGMK_UPDATE_SIGNATURE == yes ]] && return 1
+	[[ $PKGMK_DOWNLOAD_ONLY    == yes ]] && return 1
+	[[ $PKGMK_EXTRACT_ONLY     == yes ]] && return 1
+	[[ $PKGMK_CHECK_SIGNATURE  == yes ]] && return 1
+	[[ $PKGMK_CHECK_MD5SUM     == yes ]] && return 1
+	return 0
+}
+
+# inject download_package() in download_source() (first line)
+
+. <(
+	declare -f download_source \
+	| sed 's/^{/{\n try_download_package \&\& download_package \&\& return/'
+)
+
+# inject make_package_signature() in build_package() to be used when:
+#   - the package was downloaded (first line)
+#   - the package was built from sources (last line)
+
+. <(
+	declare -f build_package \
+	| sed   -e 's/^{/{\n [ -v WE_HAVE_THE_PACKAGE ] \&\& { make_package_signature ; return ; } /' \
+		-e 's/^}/make_package_signature\n}/' 
+)

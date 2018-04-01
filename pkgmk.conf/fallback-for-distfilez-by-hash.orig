@@ -1,0 +1,52 @@
+#
+# This patch uses romster.me/distfiles/hash to locate and download
+# sources temporary unavailable from their original locations.
+#
+
+download_source_from_romster() {
+	local     done=0
+	local not_done=1
+
+	local _DWN_CMD="$PKGMK_DOWNLOAD_PROG $DOWNLOAD_OPTS $RESUME_OPTS"
+	local _REPO=http://romster.me/distfiles/hash
+
+	local _SHA=$(get_checksum_from_signature "$BASENAME")
+	[[ $_SHA != "" ]]                                              \
+		&& $_DWN_CMD "$_REPO/$BASENAME/sha256/$_SHA/$BASENAME" \
+		&& sync  "$LOCAL_FILENAME_PARTIAL"                     \
+		&& mv -f "$LOCAL_FILENAME_PARTIAL" "$LOCAL_FILENAME"   \
+		&& return $done
+
+	local _MD5=$(get_checksum_from_md5sum "$BASENAME")
+	[[ $_MD5 != "" ]]                                            \
+		&& $_DWN_CMD "$_REPO/$BASENAME/md5/$_MD5/$BASENAME"  \
+		&& sync  "$LOCAL_FILENAME_PARTIAL"                   \
+		&& mv -f "$LOCAL_FILENAME_PARTIAL" "$LOCAL_FILENAME" \
+		&& return $done
+
+	return $not_done
+}
+
+get_checksum_from_signature() {
+	[[ -e .signature ]]                                    \
+		&& awk -v "NAME=($1)"                          \
+			'(NF == 4 && $2 == NAME) { print $4 }' \
+			< .signature
+}
+
+get_checksum_from_md5sum() {
+	[[ -e .md5sum ]]                                       \
+		&& awk -v "NAME=$1"                            \
+			'(NF == 2 && $2 == NAME) { print $1 }' \
+			< .md5sum
+}
+
+#
+# We patch the download_file() function 
+# in the same way we do with fallback-for-distfiles.
+#
+
+. <(
+	declare -f download_file \
+	| sed 's/\(error "Downloading\)/download_source_from_romster \&\& return 0; \1/'
+)

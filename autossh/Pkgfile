@@ -1,0 +1,16 @@
+# Description: Automatically restart SSH sessions and tunnels.
+# URL:         http://www.harding.motd.ca/autossh/
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  fuse
+
+name=autossh
+version=1.4f
+release=1
+source=(http://www.harding.motd.ca/$name/$name-$version.tgz .watch)
+
+build() {
+	cd */
+	./configure --prefix=/usr --mandir=/usr/share/man
+	make install DESTDIR=$PKG
+	rm -rf $PKG/usr/share/{doc,examples}
+}

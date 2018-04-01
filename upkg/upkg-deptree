@@ -1,0 +1,132 @@
+#!/bin/bash
+
+PORTS_DIR=/usr/ports
+ pref_dir="$HOME/.config/upkg/pref"
+build_dir="$HOME/.cache/upkg/build"
+
+declare -A deps installed
+
+ deptype=hard
+treedeep=min
+
+print_portdir() {
+	shopt -s nullglob
+	pkgfiles0=( "$build_dir/$1/Pkgfil"[e] "$pref_dir"/*/"$1/Pkgfile" "$PORTS_DIR"/*/"$1/Pkgfile" )
+	readarray -t pkgfiles < <( readlink -f "${pkgfiles0[@]}" 2>/dev/null )
+	[[ -e $pkgfiles ]] \
+		&& printf '%s\n' "${pkgfiles%/*}"
+}
+
+print_header() {
+	awk -v "FS=$1:" 'BEGIN { IGNORECASE=1 } (NF > 1) { print $2; exit 0 }' "$2"
+}
+
+print_version() {
+	awk -v FS== '
+		$1 == "version" { version = $2 }
+		$1 == "release" { release = $2 }
+		END { if (version && release) print version "-" release }
+	' "$1" | sed 's/\s//g'
+}
+
+print_deps() {
+	pkgfile="$1/Pkgfile"
+
+	while read -r port
+	do
+		dir=$(print_portdir "$port")
+		printf '%s\n' "${dir:-unknown}"
+	done < <(
+		{
+			print_header "Depends on" "$pkgfile"
+			[[ $deptype == soft ]] && {
+				print_header "Nice to have" "$pkgfile"
+				print_header "Optional"     "$pkgfile"
+			}
+		} \
+		| sed -e "s/[,']/ /g" -e 's/^\s*//' -e 's/\s*$//' -e 's/\s\s*/ /g' -e 's/^ $//' -e '/^$/d' \
+		| tr ' ' '\n'
+	)
+}
+
+recursive() {
+	local port=$1
+	local name="${1##*/}"
+	lineage+=( "$name" )
+
+	if [[ $treedeep == min ]]; then
+		local from_ver to_ver upgrade
+		[[ $name != "|" ]] && {
+			from_ver=${installed["$name"]}
+			to_ver=$(print_version "$port/Pkgfile")
+			[[ $from_ver != "$to_ver" ]] \
+				&& upgrade="${from_ver:-install} -> $to_ver"
+		}
+		printf '%*s%s %s %s\n' \
+			$(( (${#lineage[@]} - 1) * 2 )) "" "$name" "(${port%/*})" "$upgrade"
+	else
+		printf '%*s%s\n' $(( (${#lineage[@]} - 1) * 2 )) "" "${port}"
+	fi
+
+	if [[ ${deps["$port"]+defined} ]]
+	then
+		[[ $treedeep == min && ${#lineage[@]} != "1" ]] && return
+	else
+		deps["$port"]=$(print_deps "$port")
+	fi
+
+	local dep re_dep
+	for dep in ${deps["$port"]}
+	do
+		re_dep=" $dep "
+		[[ " ${lineage[*]} " =~ $re_dep ]] && {
+			printf 'ERROR: %s + %s = ∞\n' "${lineage[*]// / + }" "$dep" >&2
+			exit 1
+		}
+
+		recursive "$dep"
+		unset -v lineage[-1]
+	done
+}
+
+while [[ $1 == -* ]]
+do
+	case $1 in
+		-s) deptype=soft ;;
+		-f) treedeep=max ;;
+		*)  exit 1       ;;
+	esac
+	shift
+done
+
+(( $# == 0 )) && set -- "$PWD"
+
+readarray -t ports < <(
+	for name
+	do
+		if [[ -f "$name/Pkgfile" ]]
+		then
+			printf '%s\n' "$(readlink -f "$name")"
+		else
+			print_portdir "$name"
+		fi
+	done
+)
+
+(( ${#ports[@]} != $# )) && exit 1
+
+[[ $treedeep == min ]] && {
+	while read -r name version
+	do
+		installed["$name"]="$version"
+	done < <( pkginfo -i )
+}
+
+if (( $# == 1 ))
+then
+	deps["$ports"]=$(print_deps "$ports")
+else
+	deps['group/|']="${ports[*]}"
+fi
+
+recursive "${!deps[@]}"

@@ -1,0 +1,28 @@
+Make sure "/etc/localtime" points to:
+	/usr/share/zoneinfo-leaps/<your-zone>
+instead of:
+	/usr/share/zoneinfo/<your-zone>
+
+Set "NTP=your.ntp" in /etc/rc.conf if you want to use other NTP server
+than "pool.ntp.org". In this case, make sure "getent hosts <your.ntp>"
+prints the proper IP address.
+
+Before starting the service, you may want to:
+	- create a new drift file by removing /var/lib/clockspeed/etc/atto
+	- sync the clock by running "sudo /etc/rc.d/clockspeed set"
+
+Start the service:
+	sudo /etc/rc.d/clockspeed start
+If there is no drift file, it will check the clock after 12 seconds,
+1 hour and 24 hours, to calculate/adjust the drift.
+
+At any time, any user can see the difference between machine time and
+ntp server time by running:
+	/etc/rc.d/clockspeed show
+
+You can trigger another check of ntp server time and adjust the
+drift file by running:
+	sudo /etc/rc.d/clockspeed adjust
+You may want to do this after one month and after one year.
+
+The log file is /var/log/clockspeed

@@ -1,0 +1,2 @@
+wget 'https://developer.gnome.org/gmime/' -q -O- \
+	| sed -n '0,/.*-\([0-9.]*\)\.tar\.gz.*/ s//\1/p'

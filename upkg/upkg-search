@@ -1,0 +1,11 @@
+#!/bin/bash
+
+PORTS_DIR=/usr/ports
+shopt -s nocaseglob nullglob
+
+printf  '%s\n' "$PORTS_DIR"/*/*"${1?nothing to search for}"*/Pkgfile \
+| sed   -e 's|/Pkgfile||'                                            \
+| xargs -r -L1 -I{} sh -c "
+	'${BASH_SOURCE%/*}/upkg-info' '{}'
+	echo
+"

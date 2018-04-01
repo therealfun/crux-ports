@@ -1,0 +1,31 @@
+# Description:  Micro port utilities.
+# URL:          https://github.com/therealfun/crux-ports/upkg
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   git prt-utils
+# Nice to have: pkgmk.conf
+
+name=upkg
+version=0.55
+release=1
+source=(
+	uports uports-init uports.1.pod
+	{git,rsync,httpup}.driver
+	upkg
+	upkg-{cleanup,collections}
+	upkg-{depinst,deporder,depsearch,deptree,diff,dl-list,dsearch}
+	upkg-{fsearch,info,install,keep,mk,rm,search,update,watch}
+)
+
+build() {
+	install -d $PKG/usr/share/man/man1
+
+	for p in "${source[@]}"
+	do
+		case $p in
+		*.driver) install -Dm755 $SRC/$p $PKG/etc/ports/drivers/${p%.*}.local ;;
+		*.pod)    pod2man --utf8 --center $name --release $version-$release \
+				$p $PKG/usr/share/man/man1/${p%.*} ;;
+		*)        install -Dm755 {$SRC,$PKG/usr/bin}/$p ;;
+		esac
+	done
+}

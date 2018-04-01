@@ -1,0 +1,2 @@
+wget "https://www.kernel.org/" -q -O- \
+	| sed -n '0,/.*\/v4.x\/linux-\([0-9]*\.[0-9]*\).*/ s//\1/p'

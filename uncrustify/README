@@ -1,0 +1,3 @@
+Configuration
+	http://uncrustify.sourceforge.net/options.html
+	uncrustify --update-config-with-doc

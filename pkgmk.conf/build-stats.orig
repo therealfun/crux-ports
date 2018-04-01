@@ -1,0 +1,45 @@
+#
+# This patch makes pkgmk print some stats about the building process:
+#  - ccache hit rate
+#  - disk space used
+#  - time
+#
+# The ccache statistics will be reset !!!
+# 
+
+build_stats_pre_build() {
+	set +x
+	set +e
+	if [[ $(which ccache) == $(readlink -f $(which cc)) ]]
+	then
+		ccache --zero-stats
+	fi
+	_STARTED=$(date +%s)
+	set -e
+	set -x
+}
+
+build_stats_post_build() {
+	set +x
+	set +e
+	echo "STATS NAME: $name $version-$release"
+	echo "STATS TIME: $(( $(date +%s) - $_STARTED )) secs"
+	echo "STATS DISK: $(du -ms $PKGMK_WORK_DIR | awk '{print $1}') MB"
+	enable -f /usr/lib/pkgmk.conf/getrusage.so getrusage 2>/dev/null && {
+		getrusage
+		echo "STATS MEM: $(( $REPLY / 1024 )) MB"
+	}
+	if [[ $(which ccache) == $(readlink -f $(which cc)) ]]
+	then
+		ccache --show-stats \
+			| awk '/^cache hit rate/ {print "STATS HITS: " $4 " " $5 }'
+	fi
+	set -e
+	set -x
+}
+
+. <(
+	declare -f build_package \
+	| sed 's@ build );@ build_stats_pre_build; build; build_stats_post_build );@'
+)
+

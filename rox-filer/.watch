@@ -1,0 +1,2 @@
+wget "http://repo.or.cz/rox-filer.git/tags" -q -O-  \
+	| sed -n '0,/.*Release \([0-9.]*\).*/ s//\1/p'

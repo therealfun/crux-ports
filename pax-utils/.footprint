@@ -1,0 +1,5 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/bin/
+-rwxr-xr-x	root/root	usr/bin/dumpelf
+-rwxr-xr-x	root/root	usr/bin/pspax
+-rwxr-xr-x	root/root	usr/bin/scanelf

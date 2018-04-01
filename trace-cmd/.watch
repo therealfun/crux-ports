@@ -1,0 +1,2 @@
+wget "https://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git" -q -O- \
+	| sed -n '0,/.*\/tag\/.h=trace-cmd-v\([0-9.]*\).*/ s//\1/p'

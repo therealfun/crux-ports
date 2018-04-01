@@ -1,0 +1,18 @@
+# Description:  A system tray.
+# URL:          http://icculus.org/openbox/2/docker/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   glib xorg-libx11
+
+name=docker-tray
+version=1.5
+release=1
+source=(
+	http://icculus.org/openbox/2/docker/docker-$version.tar.gz
+	.watch
+)
+
+build() {
+	cd */
+	make
+	install -Dm755 docker $PKG/usr/bin/docker-tray
+}

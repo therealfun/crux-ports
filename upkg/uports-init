@@ -1,0 +1,26 @@
+#!/bin/bash
+
+[[ -d $PORTS_DIR ]] || exit 1
+cd -- "$PORTS_DIR"  || exit 1
+git init -q         || exit 1
+
+printf '%s\n' '/.update.*' '/.uportstag' > .gitignore
+
+# Remove the leftovers from a previous setup
+find -maxdepth 1 -type f -name .git -delete
+
+# Convert git repos to submodules
+printf '%s\n' */.git/ | sed 's@/.git/@@' | while read -r repo
+do
+	branch=$(git -C "$repo" rev-parse --abbrev-ref HEAD)
+	   url=$(git -C "$repo" config --get remote.origin.url)
+	git submodule add -f -b "$branch" -- "$url" "$repo"
+done
+
+git add -A
+git config user.name  uports
+git config user.email uports@upkg
+git commit -q -a -m init
+git tag uports-0
+git submodule foreach git tag uports-0
+echo uports-0 >.uportstag

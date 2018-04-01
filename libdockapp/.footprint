@@ -1,0 +1,21 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/include/
+drwxr-xr-x	root/root	usr/include/libdockapp/
+-rw-r--r--	root/root	usr/include/libdockapp/dockapp.h
+-rw-r--r--	root/root	usr/include/libdockapp/list.h
+-rw-r--r--	root/root	usr/include/libdockapp/misc.h
+-rw-r--r--	root/root	usr/include/libdockapp/wmgeneral.h
+drwxr-xr-x	root/root	usr/lib/
+-rw-r--r--	root/root	usr/lib/libdockapp.a
+-rwxr-xr-x	root/root	usr/lib/libdockapp.la
+lrwxrwxrwx	root/root	usr/lib/libdockapp.so -> libdockapp.so.3.0.0
+lrwxrwxrwx	root/root	usr/lib/libdockapp.so.3 -> libdockapp.so.3.0.0
+-rwxr-xr-x	root/root	usr/lib/libdockapp.so.3.0.0
+drwxr-xr-x	root/root	usr/lib/pkgconfig/
+-rw-r--r--	root/root	usr/lib/pkgconfig/dockapp.pc
+drwxr-xr-x	root/root	usr/share/
+drwxr-xr-x	root/root	usr/share/fonts/
+drwxr-xr-x	root/root	usr/share/fonts/X11/
+drwxr-xr-x	root/root	usr/share/fonts/X11/misc/
+-rw-r--r--	root/root	usr/share/fonts/X11/misc/luxel-ascii-06x09.pcf.gz
+-rw-r--r--	root/root	usr/share/fonts/X11/misc/seg7-ascii-05x07.pcf.gz

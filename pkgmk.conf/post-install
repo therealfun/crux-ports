@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if ! grep etc/pkgmk.conf.d /etc/pkgmk.conf >/dev/null; then
+	cat >> /etc/pkgmk.conf <<-"EOT"
+
+		for i in /etc/pkgmk.conf.d/*.enabled
+		do
+		    if [ -e "$i" ]; then
+		        . "$i"
+		    fi
+		done
+	EOT
+fi
+
+if ! grep etc/pkgmk.conf.d /etc/pkgadd.conf >/dev/null ; then
+	cat >> /etc/pkgadd.conf <<-"EOT"
+
+		INSTALL ^etc/pkgmk.conf.d$ NO
+	EOT
+fi
+
+if [ ! -d /etc/pkgmk.conf.d ]; then
+	mkdir /etc/pkgmk.conf.d
+fi

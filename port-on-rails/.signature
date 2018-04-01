@@ -1,0 +1,6 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8hGJxcPuFke0ykUPffOtECklb0CuKsM/IHyTKyZS80Ex0mHHXygEU8h9fWJx6at5w25WzQxkAqbewt7Y2EAzcgk=
+SHA256 (Pkgfile) = 1004dc6176f476c8458533fea9eaaca623d3095ce5d8020a36fbdffbf2d8749e
+SHA256 (.footprint) = 47ab3d505c012f530e79bd9f8fbba65d4f999f72257211fff1a3f406c15e5546
+SHA256 (enable-diff_footprint_filter) = 92534eb5e387936319c88469f64918bc0bcd6290d84b63d81f4b71366ec4cce8
+SHA256 (enable-map_remote_source) = 1dea58d102c8fcbf5540e21e39903c26b9268ee7f067660f7b95774617648d54

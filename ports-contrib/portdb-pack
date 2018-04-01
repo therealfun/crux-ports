@@ -1,0 +1,63 @@
+#!/bin/bash
+
+db=$HOME/.cache/portdb
+dl=${BASH_SOURCE%/*}/portdb-dl
+
+[[ -x $dl ]] && {
+	$dl || exit 1
+}
+
+rm $db/{robots.txt.tmp,index*tmp} 2>/dev/null
+
+while read -r p ; do
+	exclude+="--exclude $p "
+done < <(
+	pkginfo -l ports \
+	| grep etc/ports \
+	| sed 's,etc/ports/,,' \
+	| sed 's/\.inactive$//' \
+	| egrep '\.(rsync|httpup|git|pub)$'
+)
+
+inactive=(
+	# git head
+	6c37-git.httpup
+
+	# missing files
+	6c37-dropin.httpup
+
+	# deleted
+	spfng.git
+
+	# replaced with git drivers
+	6c37.httpup
+	mate.httpup
+	baguette.httpup
+	j_v.httpup
+	kris.httpup
+	lxqt.httpup
+	teatime.httpup
+	timcow.httpup
+)
+for p in "${inactive[@]}"; do
+	rename+="-s /$p/~.inactive/p "
+done
+
+published=( $db/* )
+extra=( extra/* )
+
+# --no-fflags to avoid "Failed to set file flags" errors
+# when extracting in container
+
+common="--uid 0 --gid 0 --no-fflags --verbose $exclude $rename --file ports.archive"
+
+bsdtar --cd $db   $common --create "${published[@]#$db/}"
+echo '=== extra ==='
+bsdtar --cd extra $common --update "${extra[@]#extra/}"
+
+for p in "${published[@]}"; do
+	[[ -e extra/${p##*/} ]] \
+		&& echo ">>> ignored $p"
+done
+
+exit 0

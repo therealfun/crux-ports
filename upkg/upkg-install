@@ -1,0 +1,39 @@
+#!/bin/bash
+
+PORTS_DIR=/usr/ports
+   libdir=${BASH_SOURCE%/*}
+ pref_dir="$HOME/.config/upkg/pref"
+build_dir="$HOME/.cache/upkg/build"
+  rebuild=
+
+[[ $1 == -r ]] && {
+	rebuild=$1
+	shift
+}
+
+(( $# == 0 )) && set -- "$PWD"
+
+print_portdir() {
+	shopt -s nullglob
+	pkgfiles0=( "$build_dir/$1/Pkgfil"[e] "$pref_dir"/*/"$1/Pkgfile" "$PORTS_DIR"/*/"$1/Pkgfile" )
+	readarray -t pkgfiles < <( readlink -f "${pkgfiles0[@]}" 2>/dev/null )
+	[[ -e $pkgfiles ]] \
+		&& printf '%s\n' "${pkgfiles%/*}"
+}
+
+pkgfile=$(readlink -f "$1/Pkgfile")
+
+if [[ -f $pkgfile ]]
+then
+	port=${pkgfile%/*}
+else
+	port=$(print_portdir "$1")
+	[[ $port == "" ]] \
+		&& { printf 'ERROR: unknown port: %s\n' "$1" >&2 ; exit 1; }
+fi
+
+   "$libdir/upkg-mk"  $rebuild "$port" \
+&& "$libdir/upkg-mk" -i        "$port" \
+&& if [[ $rebuild == "" ]] ; then
+	source "$libdir/upkg-keep" "$port"
+fi

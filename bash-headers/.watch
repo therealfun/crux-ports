@@ -1,0 +1,11 @@
+last=$(wget 'https://git.savannah.gnu.org/gitweb/?p=bash.git;a=tags' -q -O- \
+	| sed -n '0,/.*commit;h=\([0-9a-f]*\)".*>bash-\([0-9.]*\)<.*/ s//\1 \2/p')
+last_ver=${last#* }
+last_commit=${last% *}
+
+(
+	wget 'https://git.savannah.gnu.org/gitweb/?p=bash.git;a=shortlog' -q -O- \
+		| sed -n "0,/.*commit;h=\([0-9a-f]*\)\".*>Bash-$last_ver patch \([0-9]*\).*/ s//$last_ver.\2 version\n\1 commit/p"
+	echo "$last_ver version"
+	echo "$last_commit commit"
+) | head -2

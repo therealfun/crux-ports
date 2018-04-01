@@ -1,0 +1,1 @@
+chmod u+s /usr/bin/lpd_cancel /usr/bin/lpd_print /usr/bin/lpd_status

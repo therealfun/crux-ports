@@ -1,0 +1,2 @@
+wget 'https://github.com/rtrn/plan9fonts/commits/master' -q -O-  \
+	| sed -n '0,/.*\/commit\/\([a-f0-9]*\)".*/ s//\1 commit/p'

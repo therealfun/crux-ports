@@ -1,0 +1,16 @@
+# Description:  Share mouse and keyboard between multiple computers.
+# URL:          https://github.com/symless/synergy-core
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   cmake xorg-libxtst
+# Nice to have: xorg-libxrender openldap rtmpdump xorg-libsm xorg-libxinerama xorg-libxtst xorg-libxrandr
+
+name=synergy-cli
+version=1.9.0
+release=1
+source=(https://github.com/symless/synergy-core/archive/v$version-stable/${name%-cli}-$version.tar.gz .watch)
+
+build() {
+	cmake */ -DSYNERGY_REVISION=1e8e48d6 -DSYNERGY_BUILD_LEGACY_GUI=no
+	make synergy{c,s}
+	install -Dm755 --target-directory=$PKG/usr/bin bin/synergy{c,s}
+}

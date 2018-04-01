@@ -1,0 +1,34 @@
+# Description: Collection of utilities for setting and maintaining a system's time with remarkable precision.
+# URL:         https://cr.yp.to/clockspeed.html
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  leapsecs
+
+# check ohse.de./uwe/patches/clockspeed-time-status.diff
+
+name=clockspeed
+version=0.62
+release=3
+source=(https://cr.yp.to/clockspeed/$name-$version.tar.gz $name.rc clockfix.c .watch)
+
+build() {
+	cd */
+
+	echo /var/lib/$name >conf-home
+	echo "gcc $CFLAGS -include /usr/include/errno.h -include /usr/include/time.h" >conf-cc
+
+	make
+
+	install=/usr/bin/install
+	$install -dm0755 $PKG/usr/bin
+	for i in clockspeed clockadd clockview sntpclock taiclock taiclockd
+	do
+		$install -Dm0755 $i    $PKG/usr/bin/$i
+		$install -Dm0644 $i.1  $PKG/usr/share/man/man1/$i.1
+	done
+
+	gcc -o $PKG/usr/bin/clockfix ../clockfix.c
+	chmod 0755 $PKG/usr/bin/clockfix
+
+	$install -Dm0755 $SRC/$name.rc $PKG/etc/rc.d/$name
+	$install -d                    $PKG/var/lib/$name/etc
+}

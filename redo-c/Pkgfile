@@ -1,0 +1,22 @@
+# Description: redo build system (C, Christian Neukirchen).
+# URL:         https://github.com/chneukirchen/redo-c
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+
+name=redo-c
+version=20170330
+release=1
+commit=24b5ccb371f525101f3a9e2abe8cc254d628a128
+source=(https://github.com/chneukirchen/redo-c/archive/$commit/redo-$version.tar.gz .watch)
+
+build() {
+	cd */
+	cc $FLAGS -Wall -Wextra -Wwrite-strings -o redo redo.c
+	for p in redo redo-sources redo-targets
+	do
+		install -Dm755 $p $PKG/usr/bin/$p
+	done
+	for p in redo-ifcreate redo-ifchange redo-always
+	do
+		ln -sr $PKG/usr/bin/{redo,$p}
+	done
+}

@@ -1,0 +1,2 @@
+wget "http://download.savannah.gnu.org/releases/lzip/plzip/?C=M&O=D" -q -O-  \
+	| sed -n '0,/.*-\([0-9.]*\)\.tar.*/ s//\1/p'

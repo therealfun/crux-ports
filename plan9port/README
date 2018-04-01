@@ -1,0 +1,6 @@
+Installed in /usr/lib/plan9 because prtverify screams on /usr/local/plan9.
+
+Set the environment variables:
+
+	export PLAN9=/usr/lib/plan9
+	PATH=$PATH:$PLAN9/bin

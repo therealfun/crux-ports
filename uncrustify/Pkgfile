@@ -1,0 +1,15 @@
+# Description: Source code beautifier for C, C++, C#, ObjectiveC, D.
+# URL:         http://uncrustify.sf.net/
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  cmake
+
+name=uncrustify
+version=0.66.1
+release=1
+source=(https://github.com/uncrustify/$name/archive/$name-$version.tar.gz .watch)
+
+build() {
+	cmake */ -DCMAKE_INSTALL_PREFIX=/usr
+	cmake --build . --target install -- DESTDIR=$PKG
+}
+

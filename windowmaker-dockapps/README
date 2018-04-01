@@ -1,0 +1,53 @@
+AlsaMixer.app
+	AlsaMixer.app --card 1
+
+cnslock - display Caps/Num/Lock status
+
+pclock - simple analog clock
+	pclock --help
+	env TZ=<timezone> pclock
+
+wmacpi - battery status
+
+wmacpiload - monitor battery and CPU temperature
+
+wmail - mail flagging app
+	http://repo.or.cz/dockapps.git/blob_plain/HEAD:/wmail/wmailrc-sample
+
+wmapm - APM/Battery Monitor
+
+wmbatteries - APM/Battery and CPU monitor
+
+wmbattery - improved wmapm
+
+wmbiff - Mailbox Monitor
+
+wmbutton - application launching program
+	wmbutton -f /usr/etc/wmbutton.conf -F '-*-*-medium-r-normal-*-10-*-*-*-*-*-*-*'
+
+wmcalc - calculator
+
+wmCalClock - Calendar Clock
+
+wmcpuload - monitor CPU usage
+
+wmgtemp - display the CPU and SYS temperatures
+
+wmload - load monitor
+	wmload -shape -withdrawn -u 1 -exe "xterm -e htop"
+
+wmMatrix - Matrix scrolling
+
+wmSMPmon - system monitor
+
+wmsupermon - Universal Monitoring Dockapp
+	http://repo.or.cz/dockapps.git/blob_plain/HEAD:/wmsupermon/README
+	http://repo.or.cz/dockapps.git/blob_plain/HEAD:/wmsupermon/example-wmsupermonrc
+		(change 'smooth' to '-smooth')
+
+Not installed
+	wmfsm - crashes in containers: "m4 - double free or corruption"
+	wmcpufreq - depends on contrib/cpufrequtils
+	wmglobe - depends on libungif
+
+Sources/READMEs: http://repo.or.cz/dockapps.git/

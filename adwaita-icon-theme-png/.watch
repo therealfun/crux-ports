@@ -1,0 +1,2 @@
+wget "https://git.gnome.org/browse/adwaita-icon-theme/" -q -O- \
+	| sed -n '0,/.*\/tag\/.h=\([0-9.a-z-]*\).*/ s//\1/p'

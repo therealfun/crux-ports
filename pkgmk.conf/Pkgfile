@@ -1,0 +1,56 @@
+# Description:  Plugins for pkgmk.
+# URL:          https://github.com/therealfun/crux-ports/tree/master/pkgmk.conf
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   bash-headers
+# Nice to have: axel lbzip2 patchelf pbzip2 pigz plzip pxz
+
+name=pkgmk.conf
+version=1.78
+release=1
+
+source=(
+	FS0923.orig
+	FS1382.orig
+	FS1410.orig
+	FS1476.orig
+	FS1484.orig
+	FS1576-footprint-filter.orig
+	axel_download.orig
+	build-stats.orig
+	disable-ccache.orig
+	fallback-for-distfiles.orig
+	fallback-for-distfilez-by-hash.orig
+	hardening.orig
+	keep_work_if_failed.orig
+	parallel_make.orig
+	remove_invalid_rpaths.orig
+	z-command-line-priority.orig
+
+	getrusage.c
+	hardening-check.bin # https://sources.debian.net/data/main/h/hardening-wrapper/2.6/hardening-check
+	checksec.bin # https://raw.githubusercontent.com/slimm609/checksec.sh/1.8.0/checksec
+
+	post-install
+)
+
+build() {
+	for i in ${source[@]}; do
+		case $i in
+			*.c)
+				gcc $CFLAGS $(pkg-config --cflags bash) -fPIC -shared \
+					-o getrusage.so $SRC/getrusage.c
+				install -Dm644 getrusage.so $PKG/usr/lib/pkgmk.conf/getrusage.so
+				;;
+			hardening-check.bin)
+				sed '/List of libc functions not defined/d' -i $SRC/${i##*/}
+				install -Dm755 $SRC/$i $PKG/usr/bin/${i%.bin}
+				;;
+			*.bin)
+				install -Dm755 $SRC/$i $PKG/usr/bin/${i%.bin}
+				;;
+			*.orig)
+				install -Dm644 $i $PKG/usr/lib/pkgmk.conf/${i%.*}.enabled
+				;;
+		esac
+	done
+}

@@ -1,0 +1,20 @@
+#
+# This patch tries to add a feature from Alan's patch:
+#   keep the work directory only if the build fails
+#   (PKGMK_KEEP_WORK="failed")
+#
+# http://www.mizrahi.com.ve/crux/ports/pkgutils/0001-New-features-and-small-improvements-in-pkgmk.patch
+#
+# Uncomment the line below to enable this feature.
+# PKGMK_KEEP_WORK=failed
+
+#
+# We patch the build_package() function
+# to call remove_work_dir() either PKGMK_KEEP_WORK=no (default)
+# or PKGMK_KEEP_WORK=failed and the build was successful.
+#
+
+. <(
+	declare -f build_package \
+	| sed 's/\("$PKGMK_KEEP_WORK" = "no"\)/ \1 ] || [ $PKGMK_KEEP_WORK = failed -a $BUILD_SUCCESSFUL = yes /'
+)

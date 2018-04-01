@@ -1,0 +1,34 @@
+# Update the original footprint on-the-fly
+# when it is compared with the generated/built one.
+#
+# https://crux.nu/bugs/?do=details&task_id=1576
+#
+# This patch allows a port to hide the python/eggs footprint mismatches
+# and/or avoid "new file" warnings/errors when a soft dependency is installed,
+# by overriding the diff_footprint_filter()
+#
+# Ex.
+# diff_footprint_filter() {
+#     cat
+#     if [ -e /usr/lib/soft-dep-installed... ]; then
+#         echo "-rw-r--r--\troot/root\tusr/lib/new-file"
+#     fi
+# }
+
+xxx_diff_footprint_filter() { cat; }
+
+if         ! defined -f diff_footprint_filter            >/dev/null 2>&1 \
+        && ! egrep    '^diff_footprint_filter()' Pkgfile >/dev/null 2>&1
+then
+	. <( declare -f xxx_diff_footprint_filter | sed 's/xxx_//')
+fi
+
+# Replace
+#	sort -k 3 $PKGMK_FOOTPRINT > $FILE.footprint.orig
+# with
+#	diff_footprint_filter < $PKGMK_FOOTPRINT | sort -k 3 > $FILE.footprint.orig
+
+. <(
+	declare -f check_footprint \
+	| sed -e 's/^\s*\(sort -k 3\).*>/diff_footprint_filter < $PKGMK_FOOTPRINT | \1 >/'
+)

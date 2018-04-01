@@ -1,0 +1,13 @@
+# https://crux.nu/bugs/index.php?do=details&task_id=1476
+# pkgmk: show the complete error message from signify
+
+. <(
+	declare -f check_signature \
+	| sed   -e '/error "Failed verifying cryptographic digest"/d' \
+		-e 's/if \[ "$err" = "signify: signature verification failed" \]; then/\
+		local reErr="^signify: (\[a-z\].\*)" \
+		if \[\[ $err =~ $reErr \]\]          \
+		then                                 \
+			error "${BASH_REMATCH\[1\]}" \
+		/'
+)

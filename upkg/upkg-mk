@@ -1,0 +1,547 @@
+#!/bin/bash
+
+export LC_ALL=C LC_COLATE=C
+HOME=$(readlink -f "$HOME"); [[ $HOME == /* ]] || exit 1
+
+readonly        libdir=$(readlink -f "${BASH_SOURCE%/*}")
+readonly       dl_list="$libdir/upkg-dl-list"
+readonly     build_dir="$HOME/.cache/upkg/build"
+readonly      last_dir="$HOME/.local/upkg/last"
+readonly       log_dir="$HOME/.local/upkg/log"
+readonly        logall="$HOME/.local/upkg/log/all"
+readonly footprint_dir="$HOME/.local/upkg/footprint"
+
+main() {
+	case $1 in
+		-a)  upkg_setup "${2:-$PWD}"; upkg_ask              ;;
+		-dl) upkg_setup "${2:-$PWD}"; upkg_download_list    ;;
+		-d)  upkg_setup "${2:-$PWD}"; upkg_download_sources ;;
+		-v)  upkg_setup "${2:-$PWD}"; upkg_verify           ;;
+		-r)  upkg_setup "${2:-$PWD}"; upkg_build       "$1" ;;
+		-m)  upkg_setup "${2:-$PWD}"; upkg_build       "$1" ;;
+		-s)  upkg_setup "${2:-$PWD}"; upkg_sign             ;;
+		-i)  upkg_setup "${2:-$PWD}"; upkg_install          ;;
+		-c)  upkg_clean "${2:-$PWD}"                        ;;
+		-*)  abort "unknown option $1"                      ;;
+		*)   upkg_setup "${1:-$PWD}"; upkg_build       ".." ;;
+	esac
+}
+
+info()    { echo "=======> $1"     ; }
+warning() { info "WARNING: $1" >&2 ; }
+abort()   { info "ERROR: $1"   >&2 ; exit 1; }
+
+upkg_setup() {
+	readonly port_dir=$( readlink -f -- "$1" )
+	readonly port_name=${port_dir##*/}
+	readonly N=$(( $(nproc) + 1 ))
+	# protected against /etc/pkgmk.conf(.d)
+
+	[[ -d $port_dir ]] || abort "Invalid port directory: $1"
+
+	local  re_name='^[[:alnum:]].*'
+	[[ $port_name =~ $re_name ]] || abort "Invalid port name: $port_dir"
+
+	local dest="$build_dir/$port_name"
+	[[ -d $dest ]] || (set -x; mkdir -p "$dest" ) || exit 1
+
+	cd "$dest"     || exit 1
+
+	( shopt -s nullglob dotglob; printf '%s\0' "$port_dir"/* ) \
+	| xargs -0 -r -L1 -P$N -I{} ln -sf '{}'                    \
+		|| abort "Symlinking failed: '$port_dir' -> '$dest'"
+
+	while read -rd '' link
+	do
+		if [[ -L $link && "$( readlink -f -- "$link" )" != "$port_dir/$link" ]]
+		then
+			rm -f -- "$link" || abort "Removing dangling symlink failed: '$link'"
+		fi
+	done < <( shopt -s nullglob dotglob; printf '%s\0' * )
+
+	# pkgmk.conf && patches expect Pkgfile to be already sourced
+	local name=$port_name
+	source /etc/pkgmk.conf
+
+	TARGET=$( upkg_package_filename )
+	[[ $TARGET == "" ]] && abort "Invalid Pkgfile"
+}
+
+upkg_package_filename() {
+	awk -v "EXT=${PKGMK_COMPRESSION_MODE:-lz}" -v "NAME=$port_name" -v FS== '
+		$1 == "version" { version = $2 }
+		$1 == "release" { release = $2 }
+		END { if (version && release) print NAME "#" version "-" release ".pkg.tar." EXT }
+	' Pkgfile | sed 's/\s//g'
+}
+
+upkg_clean() {
+	local portdir=$( readlink -f -- "$1" )
+	local     dir="$build_dir/${portdir##*/}"
+
+	[[ ! -d $dir ]] && return 0
+
+	( set -x; rm -rf "$dir" )
+}
+
+upkg_download_list() {
+	"$dl_list" Pkgfile
+}
+
+upkg_download_sources() {
+	local url file
+
+	while read -r url
+	do
+		file=${url##*/}
+		[[ -e $file ]] && continue
+
+		info "Downloading '$url'."
+		upkg_download_file "$file" "$url" \
+			|| error "Downloading '$url' failed."
+	done < <( upkg_download_list )
+	wait $!
+	(( $? == 0 ))
+}
+
+upkg_download_file() (
+	set -x
+	wget	"--output-document=.$1" \
+		--compression=none      \
+		--passive-ftp           \
+		--no-directories        \
+		--tries=3               \
+		--waitretry=3           \
+		"$2"                    \
+	&& sync                         \
+	&& mv ".$1" "$1"
+)
+
+upkg_verify() {
+	[[ ${PKGMK_IGNORE_MD5SUM:-no} == no && -e .md5sum ]] && {
+		md5sum --check --quiet .md5sum \
+			|| { warning "Md5sum not ok."; return 1; }
+		info "Md5sum ok."
+	}
+
+	[[ ${PKGMK_IGNORE_SIGNATURE:-no} != no ]] && return 0
+	[[ ! -e .signature ]] && {
+		info "Signature not found."
+		[[ ${PKGMK_CHECK_SIGNATURE:-no} != no ]] && return 1
+		return 0
+	}
+
+	# signify doesn't follow links
+	cp .signature .signature.real \
+		&& signify -q -C -x .signature.real
+	local err=$?
+	rm .signature.real
+	if (( $err ))
+		then warning "Signature verification failed"
+		else info    "Signature ok."
+	fi
+	return $err
+}
+
+upkg_ask() {
+	upkg_prompt_port_changes_and_confirm || exit 1
+	upkg_save_port_dir                   || exit 1
+}
+
+upkg_prompt_port_changes_and_confirm() {
+	local err last="$last_dir/$port_name"
+
+	[[ -d $last ]] || ( set -x; mkdir -p "$last" )  || return 1
+
+	diff -Ndur "$last/" "$port_dir/"                && return 0
+
+	info "Port '$port_name' has changed since the last build."
+	upkg_accept_NO "Continue?" \
+		&& return 1
+
+	return 0
+}
+
+upkg_save_port_dir() {
+	rsync -acq --delete "$port_dir/" "$last_dir/$port_name/"
+}
+
+upkg_build() {
+	upkg_ask
+	upkg_build_needed "$@" || exit 0
+
+	[[ -e $TARGET ]] && ( set -x; rm "$TARGET" || exit 1 )
+
+	upkg_download_sources
+
+	upkg_verify || {
+		if [[ $1 == -m ]]; then
+			! upkg_accept_YES "Continue?" && exit 1
+		else
+			  upkg_accept_NO  "Continue?" && exit 1
+		fi
+	}
+
+	[[ -d $log_dir ]] || ( set -x; mkdir -p "$log_dir" ) || exit 1
+	[[ ! -d src    ]] || ( set -x; rm -rf src )          || exit 1
+	[[ ! -d pkg    ]] || ( set -x; rm -rf pkg )          || exit 1
+
+	mkdir src pkg || exit 1
+
+	local err
+	{
+		info "Building '$TARGET'."
+		upkg_run_script pre-install
+		upkg_build_start
+		(
+			PKGMK_ROOT=$port_dir
+			PKGMK_SOURCE_DIR=$PWD
+			readonly SRC="$PWD/src"
+			         PKG="$PWD/pkg"
+			source Pkgfile
+			unpack_source
+			set -e -x; cd "$SRC"; build
+		)
+		err=$?
+		{ (( $err )) || ! upkg_pack ; } \
+			&& abort "Building '$TARGET' failed."
+			    info "Building '$TARGET' succeeded."
+		upkg_build_end "$err"
+		rm -rf "$PWD/src" "$PWD/pkg"
+	} > >(tee "$log_dir/$port_name.log") 2>&1
+
+	if [[ $1 == -m ]]; then
+		upkg_sign
+		upkg_save_port_dir || true
+	fi
+}
+
+upkg_build_needed() {
+	[[ $1 == -r        ]]  && return 0
+	[[ $1 == -m        ]]  && return 0
+	upkg_up_to_date        && return 1
+	upkg_download_prebuilt && return 1
+
+	return 0
+}
+
+upkg_up_to_date() {
+	local file
+
+	[[ ! -e $TARGET ]] && return 1
+
+	while read -rd '' file
+	do
+		[[ $file != "$TARGET" && $file -nt $TARGET ]] \
+			&& return 1
+	done < <( shopt -s nullglob dotglob; printf '%s\0' * )
+
+	info "Package '$TARGET' is up to date."
+	return 0
+}
+
+upkg_download_prebuilt() {
+	false
+}
+
+upkg_accept_YES() {
+	read -p ">>> $@ [Y/n] "
+	[[ $REPLY == "" || ${REPLY,} == y* ]]
+}
+
+upkg_accept_NO() {
+	read -p ">>> $@ [y/N] "
+	[[ $REPLY == "" || ${REPLY,} == n* ]]
+}
+
+# same as pkgmk(1); executed in sub-shell
+unpack_source() {
+	for file in "${source[@]##*/}"
+	do
+		case $file in
+		*.tar|*.tar.gz|*.tar.Z|*.tgz|*.tar.bz2|*.tbz2|*.tar.xz|*.txz|*.tar.lzma|*.tar.lz|*.zip|*.rpm|*.7z)
+			( set -x; upkg_bsdtar_unpack "$file" src ) || exit 1
+			;;
+		*)
+			( set -x; cp "$file" src/ ) || exit 1
+			;;
+		esac
+	done
+}
+
+upkg_bsdtar_unpack() {
+	bsdtar --extract --preserve-permissions -o --directory "$2" --file "$1"
+}
+
+upkg_bsdtar_pack_all() {
+	bsdtar --create --file "$1" "${@:2}" -- *
+}
+
+upkg_run_script() {
+	[[ ! -e $1 ]] && return 0
+
+	[[ ! -d "${logall%/*}" ]] && mkdir -p "${logall%/*}"
+
+	local script=$(readlink -f "$1")
+
+	         local sudo=
+	(( $EUID )) && sudo=sudo
+
+	warning "Running '$script'"
+	$sudo sh -x "$script"
+	local err=$?
+	printf '%(%F %T)T RUN %s (%s)\n' -1 "$script" "$err" >> "$logall"
+	(( $err )) && abort "Script '$script' failed"
+	return 0
+}
+
+upkg_build_start() {
+	stat_started=$(date +%s)
+
+	local ccache cc
+	ccache=$(command -v ccache) || return
+	    cc=$(command -v cc)     || return
+
+	if [[ $ccache == "$(readlink -f "$cc")" ]]
+	then
+		ccache --zero-stats
+		stat_ccache=0
+	fi
+}
+
+upkg_build_end() {
+	local err=$1
+
+	[[ $stat_ccache == "0" ]] \
+		&& stat_ccache=$(ccache --show-stats | awk '/^cache hit rate/ {print $4}')
+
+	local         result=OK
+	(( $err )) && result=ERROR
+
+	printf 'BUILD STATS:%s: %s time: %ssecs src: %sMB pkg: %sMB ccache: %s%%\n' \
+		$result                                                             \
+		"$TARGET"                                                           \
+		"$(( $(date +%s) - stat_started ))"                                 \
+		"$( du -ms src | awk '{print $1}' )"                                \
+		"$( du -ms pkg | awk '{print $1}' )"                                \
+		"$stat_ccache"
+}
+
+upkg_pack() {
+	upkg_fix_file_perms    || return 1
+	upkg_strip_files       || return 1
+	upkg_compress_manpages || return 1
+	upkg_before_packing    || return 1
+
+	local          opts=()
+	(( $EUID )) && opts=(--uid 0 --gid 0)
+
+	(
+		target0="$PWD/.$TARGET"
+		target="$PWD/$TARGET"
+		cd "$PWD/pkg"                                           \
+			&& upkg_bsdtar_pack_all "$target0" "${opts[@]}" \
+			&& sync                                         \
+			&& mv "$target0" "$target"
+	) || abort "Packing failed"
+}
+
+upkg_fix_file_perms() {
+	find -type f -not -writable -exec sh -c "chmod u+w '{}'" ';'
+}
+
+upkg_strip_files() {
+	[[ $PKGMK_NO_STRIP && $PKGMK_NO_STRIP != no ]] \
+		&& return 0
+
+	local                filter=cat
+	[[ -f .nostrip ]] && filter="grep -v -f .nostrip"
+
+	find pkg -type f -printf '%P\n' \
+	| $filter                       \
+	| sed -e 's|^|pkg/|'            \
+	| xargs -r -L10 -P$N            \
+		file --no-buffer --separator '>'          \
+		-e apptype -e ascii -e encoding -e tokens \
+		-e cdf -e compress -e tar -e text         \
+	| awk '
+		BEGIN { FS = ">[ ]+" }
+		function build_cmd(f, mode) {
+			print "strip --strip-" mode " \"" f "\""
+		}
+		$0 ~ /ELF.*executable.*not stripped/    { build_cmd($1, "all");      next }
+		$0 ~ /ELF.*shared object.*not stripped/ { build_cmd($1, "unneeded"); next }
+		$2 == "current ar archive"              { build_cmd($1, "debug");    next }
+		' \
+	| xargs -r -L1 -I{} \
+		sh -xc '{}'
+}
+
+upkg_compress_manpages() {
+	find pkg -type f -path '*/man/man*/*' \
+	| grep -v '.gz$'                      \
+	| xargs -r -L1 -P$N -I{}              \
+		sh -xc "gzip -9 '{}'"
+
+	(( $? )) && return 1
+
+	find pkg -xtype l -path '*/man/man*/*'                      \
+	| xargs -r -n1 -P$N -I{}                                    \
+		sh -xc "ln -sf \"\$(readlink -n '{}').gz\" '{}.gz'"
+
+	(( $? )) && return 1
+
+	find pkg -xtype l -path '*/man/man*/*' -print -delete
+}
+
+upkg_before_packing() {
+	# pkgmk.conf (eg. rpath)
+	true
+}
+
+upkg_sign() {
+	if [[ -e $TARGET ]]; then
+		( source Pkgfile; make_footprint > .footprint.new && sync ) \
+			|| abort "Creating footprint failed"
+		info "Footprint updated."
+		diff -Nu .footprint{,.new}
+		mv       .footprint.new "$port_dir/.footprint" || exit 1
+		ln -sf   "$port_dir/.footprint"                || exit 1
+	else
+		warning "The package '$TARGET' doesn't exists."
+		upkg_accept_NO "Continue without refreshing the footprint?" && exit 1
+	fi
+
+	local err
+	set -o pipefail
+
+	if upkg_have_keys
+	then
+		(
+			source Pkgfile
+			sha256sum --tag Pkgfile .footprint "${source[@]##*/}"              \
+				| signify -S -e -x - -q -s "$PKGMK_PRIVATEKEY" -m -        \
+				| sed "s|${PKGMK_PRIVATEKEY%.sec}.pub|${PKGMK_PUBLICKEY}|" \
+				> .signature.new && sync
+		)
+		(( $? )) && abort "Creating signature failed"
+		info "Signature updated."
+		diff -Nu .signature{,.new}
+		mv       .signature.new "$port_dir/.signature" || exit 1
+		ln -sf   "$port_dir/.signature"                || exit 1
+	else
+		(
+			source Pkgfile
+			md5sum "${source[@]##*/}" | sort -k 2 > .md5sum.new \
+			&& sync
+		)
+		(( $? )) && abort "Creating md5sum failed"
+		info "Md5sum updated."
+		diff -Nu .md5sum{,.new}
+		mv       .md5sum.new "$port_dir/.md5sum" || exit 1
+		ln -sf   "$port_dir/.md5sum"             || exit 1
+	fi
+
+	set +o pipefail
+
+	if [[ -e $TARGET ]]; then
+		touch "$TARGET"
+	fi
+}
+
+# same as pkgmk(1); executed in sub-shell
+make_footprint() (
+	set -o pipefail
+	pkginfo --footprint "$TARGET"                                         \
+	| sed "s|\tlib/modules/`uname -r`/|\tlib/modules/<kernel-version>/|g" \
+	| sort -k 3
+)
+
+upkg_have_keys() {
+	local priv pub name
+	
+	[[ -e $PKGMK_PRIVATEKEY && -e $PKGMK_PUBLICKEY ]] \
+		&& return 0
+
+	while read -rd '' priv
+	do
+		name=${priv##*/}
+		pub="/etc/ports/${name%.sec}.pub"
+
+		[[ -e $pub ]] && {
+			PKGMK_PRIVATEKEY=$priv
+			PKGMK_PUBLICKEY=$pub
+			return 0
+		}
+	done < <( shopt -s nullglob; printf '%s\0' ~/.ssh/*.sec /etc/ports/*.sec )
+
+	return 1
+}
+
+upkg_install() {
+	[[ ! -e $TARGET ]] && abort "Missing package '$TARGET'"
+
+	upkg_ask
+	upkg_build_needed >/dev/null && {
+		warning        "Rebuild is needed?!"
+		upkg_accept_NO "Continue?" \
+			&& exit 1
+	}
+
+	trap "rm '$PWD/.footprint.diff' '$PWD/.footprint.new' 2>/dev/null" INT HUP QUIT TERM EXIT
+	(
+		source Pkgfile
+		make_footprint > .footprint.new || exit 1
+		diff -Nu <( diff_footprint_filter < .footprint | sort -k3 -u ) \
+			 .footprint.new                                        \
+			 >.footprint.diff || exit 1
+		wait $!
+	)
+	if (( $? )) || [[ -s .footprint.diff ]]
+	then
+		local  checksum=$( tail +4 .footprint.diff | sha256sum | awk '{print $1}' )
+		local exception="$footprint_dir/$port_name/$checksum"
+		warning "Footprint mismatch found:"
+		cat .footprint.diff
+		if [[ -e $exception ]]
+		then
+			info "Footprint mismatch ignored: $exception"
+		else
+			upkg_accept_NO "Continue?" && exit 1
+			mkdir -p "${exception%/*}"
+			mv .footprint.diff "$exception"
+		fi
+	fi
+
+	[[ ! -d "${logall%/*}" ]] && mkdir -p "${logall%/*}"
+
+	         local sudo=
+	(( $EUID )) && sudo=sudo
+
+	local opts=()
+	local new_ver=${TARGET%.pkg*}; new_ver=${new_ver##*#}
+
+	local inst_ver=$(pkginfo -i | awk -v "NAME=$port_name" '$1 == NAME {print $2; exit}')
+	if [[ $inst_ver != "" ]]
+	then
+		printf '%(%F %T)T UPGRADING %s from %s\n' -1 "$port_name" "$inst_ver" >> "$logall"
+		opts=( --upgrade )
+	fi
+
+	info "Installing '$TARGET'."
+	( set -x ; $sudo pkgadd "${opts[@]}" "$TARGET" )
+	err=$?
+	printf '%(%F %T)T INSTALL %s %s %s (%s)\n' -1 "$port_name" "$new_ver" "${port_dir%/*}" "$err" >> "$logall"
+	(( $err )) && abort "Installing '$TARGET' failed."
+	              info  "Installing '$TARGET' succeeded."
+
+	source "$libdir/upkg-keep" "$port_name"
+
+	upkg_run_script post-install >(tee -a "$log_dir/$port_name.log") 2>&1
+}
+
+diff_footprint_filter() {
+	cat
+}
+
+main "$@"

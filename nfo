@@ -1,0 +1,32 @@
+# This is a bash script intended to be sourced from pkgmk (or pkgmk.conf).
+
+REPO_SRC_MIRRORS=(
+	https://raw.githubusercontent.com/therealfun/crux-src/master
+)
+# Mirrors with sources used by ports from this repository.
+#
+# Include the file:
+#   https://github.com/therealfun/crux-ports/blob/master/pkgmk.conf/FS1385.orig
+# in your pkgmk.conf, in order to make pkgmk automatically use
+# these mirrors (when the original sources are unavailable).
+#
+# Be aware that some sources might be saved with
+#   https://github.com/therealfun/crux-ports/blob/master/pkgmk.conf/FS0923.orig
+# enabled, and be present as "name-version.tar.gz" instead of "version.tar.gz".
+# An workaround could be for FS0923 to make a symlink (version->name-version),
+# and that symlink could be on the mirrors too.
+
+REPO_PKG_MIRRORS=(
+	https://raw.githubusercontent.com/therealfun/crux-pkg/master
+)
+# Mirrors with builds from this repository.
+#
+# Include the file:
+#   https://github.com/therealfun/crux-ports/blob/master/pkgmk.conf/FS1410.orig
+# in your pkgmk.conf, in order to have pkgmk automatically use
+# these mirrors. You also need to add this repo to your PKGMK_BINARY_PACKAGES.
+# See the comments from the file mentioned above.
+#
+# Make sure you set
+#   PKGMK_CHECK_PACKAGE_SIGNATURE=yes
+# and have this repo's public key in /etc/ports/

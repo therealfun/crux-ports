@@ -1,0 +1,14 @@
+if [[ $PKGMK_DOWNLOAD_PROG == "" ]]
+then
+	command -v axel >/dev/null \
+		&& PKGMK_DOWNLOAD_PROG=axel
+
+	. <(
+		declare -f download_file \
+		| sed -e '/esac/ i\
+					axel)                                          \
+					RESUME_CMD=                                    \
+					DOWNLOAD_OPTS="-o \$LOCAL_FILENAME_PARTIAL" ;; \
+			'
+	)
+fi

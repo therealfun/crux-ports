@@ -1,0 +1,18 @@
+#!/bin/sh
+
+dest=$HOME/.cache/portdb
+test -d $dest && rm -r $dest
+mkdir -p $dest || exit 1
+
+wget https://crux.nu/portdb/                 \
+	--recursive                          \
+	--level 1                            \
+	--timeout=5 --tries=5                \
+	--no-clobber                         \
+	--no-host-directories                \
+	--no-directories                     \
+	--directory-prefix=$dest             \
+	--no-hsts                            \
+	--content-disposition                \
+	--accept '*.pub,*.httpup,*.rsync'    \
+	--accept-regex '(.*pub|.*a=getup.*)' \

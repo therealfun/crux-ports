@@ -1,0 +1,35 @@
+--- unionfs-fuse-2.0.orig/src/unionfs.c	2016-11-22 02:57:34.000000000 +0200
++++ unionfs-fuse-2.0/src/unionfs.c	2017-03-18 22:56:12.593865876 +0200
+@@ -217,6 +217,24 @@
+ 	RETURN(0);
+ }
+ 
++static int unionfs_access(const char *path, int mask) {
++	struct stat s;
++
++	if (unionfs_getattr(path, &s) != 0)
++		RETURN(-ENOENT);
++
++	if ((mask & X_OK) && (s.st_mode & S_IXUSR) == 0)
++		RETURN(-EACCES);
++
++	if ((mask & W_OK) && (s.st_mode & S_IWUSR) == 0)
++		RETURN(-EACCES);
++
++	if ((mask & R_OK) && (s.st_mode & S_IRUSR) == 0)
++		RETURN(-EACCES);
++
++	RETURN(0);
++}
++
+ /**
+  * init method
+  * called before first access to the filesystem
+@@ -811,6 +829,7 @@
+ 	.flush = unionfs_flush,
+ 	.fsync = unionfs_fsync,
+ 	.getattr = unionfs_getattr,
++	.access = unionfs_access,
+ 	.init = unionfs_init,
+ #if FUSE_VERSION >= 28
+ 	.ioctl = unionfs_ioctl,

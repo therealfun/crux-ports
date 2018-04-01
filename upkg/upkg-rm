@@ -1,0 +1,30 @@
+#!/bin/bash
+
+keep_dir="$HOME/.local/upkg/keep"
+     log="$HOME/.local/upkg/log/all"
+     ret=0
+
+[[ -d "${log#/*}" ]] \
+	|| ( set -x; mkdir -p -- "${log#/*}" )
+
+for port in "${@:-$PWD}"
+do
+	name=${port##*/}
+	inst_ver=$(pkginfo -i | awk -v "NAME=$name" '$1 == NAME { print $2; exit }')
+
+	               sudo=
+	(( $EUID )) && sudo=sudo
+
+	( set -x ; $sudo pkgrm "$name" )
+	err=$?
+
+	printf '%(%F %T)T REMOVE %s %s (%s)\n' -1 "$name" "$inst_ver" "$err" >> "$log"
+
+	(( $err )) \
+		&& ret=1
+
+	[[ -f "$keep_dir/$name" ]] \
+		&& rm "$keep_dir/$name"
+done
+
+exit $ret

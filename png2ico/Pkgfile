@@ -1,0 +1,17 @@
+# Description: PNG to ICO converter.
+# URL:         https://github.com/dkfans/png2ico
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  libpng
+
+name=png2ico
+version=20030114
+commit=df3b9abddbb85fe1d0ebcd91069937f13637fc16
+release=4
+source=(https://github.com/dkfans/$name/archive/$commit/$name-$version.tar.gz .watch)
+
+build() {
+	cd */
+	make
+	install -Dm755 $name            $PKG/usr/bin/$name
+	install -Dm644 doc/man1/$name.1 $PKG/usr/share/man/man1/$name.1
+}

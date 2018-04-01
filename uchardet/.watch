@@ -1,0 +1,2 @@
+wget 'https://github.com/freedesktop/uchardet/commits/master' -q -O-  \
+	| sed -n '0,/.*datetime="\(20[0-9]*\)-\([0-9]*\)-\([0-9]*\)T.*/ s//0.0.6.\1\2\3/p'

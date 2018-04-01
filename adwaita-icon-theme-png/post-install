@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# from gdk-pixbuf
+if [ -x /usr/bin/gdk-pixbuf-query-loaders ]; then
+	gdk-pixbuf-query-loaders --update-cache
+fi
+
+# from gtk (not gtk3)
+if [ -x /usr/bin/gtk-update-icon-cache ]; then
+	gtk-update-icon-cache -q -t -f /usr/share/icons/Adwaita
+fi

@@ -1,0 +1,34 @@
+# Description: Bluetooth Audio ALSA Backend.
+# URL:         https://github.com/Arkq/bluez-alsa
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  alsa-lib bluez sbc
+#                             sbc >= 1.2
+
+name=bluez-alsa
+version=1.2.0
+release=2
+source=(
+	https://github.com/Arkq/$name/archive/v$version/$name-$version.tar.gz
+	https://raw.github.com/Arkq/$name/master/src/a2dp-rtp.h
+	bluealsa.rc
+	.watch
+)
+
+build() {
+	cd */
+
+	# get ride of the 'ortp/rtp.h' dependency
+	# move state files in /run
+	ed -s configure.ac <<-EOF
+		g/ortp\/rtp.h/d
+		,s/var\/run/run/
+		w
+	EOF
+	mv $SRC/a2dp-rtp.h src/
+
+	autoreconf --install
+	./configure --disable-hcitop
+	make install DESTDIR=$PKG
+
+	install -Dm755 $SRC/bluealsa.rc $PKG/etc/rc.d/bluealsa
+}

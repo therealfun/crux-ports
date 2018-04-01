@@ -1,0 +1,29 @@
+# Description:  Mail indexer based on xapian.
+# URL:          https://notmuchmail.org/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   xapian gmime3 talloc
+# Nice to have: docutils
+
+name=notmuch
+version=0.26
+release=1
+
+source=(
+	https://notmuchmail.org/releases/$name-$version.tar.gz
+	.watch
+)
+
+build() {
+	cd */
+
+	# without-desktop: avoids footprint mismatches, because,
+	# when desktop-file-install is used/installed it creates
+	# mimeinfo.cache (already present in the filesystem)
+
+	./configure --prefix=/usr --without-desktop
+
+	make install DESTDIR=$PKG
+
+	install -Dm644 emacs/notmuch-emacs-mua.desktop \
+		$PKG/usr/share/applications/notmuch-emacs-mua.desktop
+}

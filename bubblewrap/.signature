@@ -1,0 +1,7 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8rc5nmcgtzjrarTNxux1UGP/mU8YH+icXKiBp+6FtydMTi33uBge2VvQzeFsP5L0wspV54AyQXiki3vO0NiEXgA=
+SHA256 (Pkgfile) = 05452c484a06c0269e2c44829ea4fc6024be5322ca6abea8a82873166c655f2a
+SHA256 (.footprint) = 611d210a54459ea4742bbc064054753a54ed2c09bb09f8ccf95d17799051a9a2
+SHA256 (.watch) = 40cef5fe3aa1cd8727391db2c7261b6ba20ba12fa31111a4a18a5927734ac263
+SHA256 (post-install) = de800ed4c41b6f69f61fc76760d2d828e8d67a6d6688ebccbccf36fc6d5f49df
+SHA256 (bubblewrap-0.2.0.tar.gz) = 50d612a2775e402105e26f8a9ab4ed314c7ba65ff85d4d051e96970b7136e99c

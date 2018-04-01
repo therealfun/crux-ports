@@ -1,0 +1,17 @@
+# Description: Parallel bzip2.
+# URL:         https://github.com/kjn/lbzip2
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+
+name=lbzip2
+version=2.5
+release=1
+source=(
+	http://archive.lbzip2.org/$name-$version.tar.bz2
+	.watch
+)
+
+build() {
+	cd */
+	./configure --prefix=/usr
+	make install DESTDIR=$PKG
+}

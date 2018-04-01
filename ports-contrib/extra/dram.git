@@ -1,0 +1,3 @@
+NAME=dram
+URL=git://github.com/dram/crux
+BRANCH=master

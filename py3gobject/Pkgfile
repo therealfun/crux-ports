@@ -1,0 +1,16 @@
+# Description: Python3 bindings for GObject.
+# URL:         https://wiki.gnome.org/Projects/PyGObject
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  gobject-introspection python3
+
+name=py3gobject
+version=3.28.2
+release=1
+source=(https://ftp.gnome.org/pub/GNOME/sources/pygobject/${version%.*}/pygobject-$version.tar.xz .watch)
+
+build() {
+	cd */
+	./configure --prefix=/usr --with-python=python3 \
+		--disable-cairo # until some port needs this
+	make install DESTDIR=$PKG
+}

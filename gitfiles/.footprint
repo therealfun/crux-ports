@@ -1,0 +1,8 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/lib/
+drwxr-xr-x	root/root	usr/lib/plan9/
+drwxr-xr-x	root/root	usr/lib/plan9/bin/
+-rwxr-xr-x	root/root	usr/lib/plan9/bin/Gitfiles
+-rwxr-xr-x	root/root	usr/lib/plan9/bin/gitfileget
+-rwxr-xr-x	root/root	usr/lib/plan9/bin/gitfileshow
+-rwxr-xr-x	root/root	usr/lib/plan9/bin/gitfilestat

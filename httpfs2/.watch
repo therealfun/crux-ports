@@ -1,0 +1,2 @@
+wget "https://sourceforge.net/projects/httpfs/files/" -q -O-  \
+	| sed -n '0,/.*\/httpfs2\/httpfs2-\(.*\)\.tar\.gz:[ ]*released.*/ s//\1/p'

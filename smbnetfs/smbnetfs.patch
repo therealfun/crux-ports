@@ -1,0 +1,135 @@
+--- a/src/auth.c	2010-09-04 01:03:56.000000000 +0200
++++ b/src/auth.c	2012-06-19 12:50:50.188389429 +0200
+@@ -249,13 +249,14 @@
+ 				const char *domain,
+ 				const char *server,
+ 				const char *share,
++				const char *user,
+ 				int *suitability){
+ 
+     int			pos;
+     struct authitem	*item;
+     struct authinfo	*info;
+ 
+-    DPRINTF(10, "domain=%s, server=%s, share=%s\n", domain, server, share);
++    DPRINTF(10, "domain=%s, server=%s, share=%s, user=%s\n", domain, server, share, user);
+ 
+     if ((server == NULL) || (*server == '\0')) return NULL;
+     if (domain == NULL) domain = "";
+@@ -284,6 +285,15 @@
+ 	    *suitability = AUTH_MATCH_SERVER;
+ 	}
+ 
++	if (*user != '\0') {
++		if ((pos = authitem_find_subitem(item, user)) > 0) {
++			item = item->childs[pos];
++			if (item->info != NULL){
++				info = item->info;
++			}
++		}
++	}
++
+ 	if (*share == '\0') goto end;
+ 	if ((pos = authitem_find_subitem(item, share)) < 0) goto end;
+ 	item = item->childs[pos];
+--- a/src/auth.h	2010-09-04 01:03:56.000000000 +0200
++++ b/src/auth.h	2012-06-18 17:39:37.361021820 +0200
+@@ -17,6 +17,7 @@
+ 				const char *domain,
+ 				const char *server,
+ 				const char *share,
++				const char *user,
+ 				int *suitability);
+ void              auth_release_authinfo(struct authinfo *info);
+ int               auth_store_auth_data(
+--- a/src/smb_conn.c	2012-06-19 12:47:05.000000000 +0200
++++ b/src/smb_conn.c	2012-06-19 13:18:05.236374458 +0200
+@@ -189,7 +189,7 @@
+ }
+ 
+ static int smb_conn_send_password(struct smb_conn_ctx *ctx,
+-			const char *server, const char *share){
++			const char *server, const char *share, const char *user){
+ 
+ #ifdef HAVE_GNOME_KEYRING
+     struct gnome_keyring_authinfo	*gnome_keyring_info;
+@@ -206,7 +206,7 @@
+ 
+     config_file_info_suitability = -1;
+     config_file_info = auth_get_authinfo(
+-				workgroup, server, share,
++				workgroup, server, share, user,
+ 				&config_file_info_suitability);
+     if ((config_file_info != NULL) &&
+ 	((config_file_info->domain   == NULL) ||
+@@ -376,7 +376,7 @@
+ 
+ 	/* is it password request? */
+ 	if (reply_hdr->reply_cmd == PASSWORD){
+-	    const char			*server, *share;
++	    const char			*server, *share, *user;
+ 	    struct smb_conn_passwd_req	*passwd_req;
+ 
+ 	    /* infinite loop? */
+@@ -395,12 +395,13 @@
+ 
+ 	    server = ((char *) passwd_req) + passwd_req->server_offs;
+ 	    share  = ((char *) passwd_req) + passwd_req->share_offs;
+-	    if (bytes != (ssize_t) (strlen(server) + strlen(share) + 2))
+-		goto error;
++	    user  = ((char *) passwd_req) + passwd_req->user_offs;
++	    if (bytes != (ssize_t) (strlen(server) + strlen(share) + strlen(user) + 3))
++		goto error;
+ 
+ 	    /* process password request */
+ 	    count++;
+-	    if (smb_conn_send_password(ctx, server, share) != 0) goto error;
++	    if (smb_conn_send_password(ctx, server, share, user) != 0) goto error;
+ 	    continue;
+ 	}
+ 
+--- a/src/smb_conn_proto.h	2010-09-04 01:03:56.000000000 +0200
++++ b/src/smb_conn_proto.h	2012-06-19 12:57:49.144385594 +0200
+@@ -163,6 +163,7 @@
+ struct smb_conn_passwd_req{
+     size_t			server_offs;
+     size_t			share_offs;
++    size_t			user_offs;
+ };
+ 
+ /* MESSAGE and DIE_MSG */
+--- a/src/smb_conn_srv.c	2010-09-04 01:03:56.000000000 +0200
++++ b/src/smb_conn_srv.c	2012-06-19 12:51:52.572388861 +0200
+@@ -86,7 +86,7 @@
+     ssize_t			bytes;
+     fd_set			readfds, exceptfds;
+     struct timeval		tv;
+-    struct iovec		iov[4];
++    struct iovec		iov[5];
+     struct smb_conn_reply_hdr	reply_header;
+     struct smb_conn_passwd_req	reply;
+     struct smb_conn_query_hdr	*query_hdr;
+@@ -111,18 +111,21 @@
+     iov[2].iov_len  = strlen(server) + 1;
+     iov[3].iov_base = (char *) share;
+     iov[3].iov_len  = strlen(share) + 1;
++    iov[4].iov_base = (char *) user;
++    iov[4].iov_len  = strlen(user) + 1;
+ 
+     reply_header.reply_len   = iov[0].iov_len + iov[1].iov_len +
+-			       iov[2].iov_len + iov[3].iov_len;
++			       iov[2].iov_len + iov[3].iov_len + iov[4].iov_len; 
+     reply_header.reply_cmd   = PASSWORD;
+     reply_header.errno_value = 0;
+     reply.server_offs        = sizeof(reply);
+     reply.share_offs         = sizeof(reply) + iov[2].iov_len;
++    reply.user_offs          = sizeof(reply) + iov[2].iov_len + iov[3].iov_len;
+ 
+     if (reply_header.reply_len > COMM_BUF_SIZE) goto error;
+ 
+     /* send password request */
+-    bytes = writev(srv_ctx->conn_fd, iov, 4);
++    bytes = writev(srv_ctx->conn_fd, iov, 5);
+     if (bytes != (ssize_t) reply_header.reply_len) goto error;
+ 
+     tv.tv_sec = srv_ctx->timeout;

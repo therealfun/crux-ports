@@ -1,0 +1,2 @@
+wget "https://www.erlang.org/downloads" -q -O- \
+	| sed -n '0,/.*\/otp_doc_man_\([0-9a-z.-]*\)\.tar.*/ s//\1/p'

@@ -1,0 +1,2 @@
+wget "https://git.kernel.org/pub/scm/bluetooth/sbc.git" -q -O- \
+	| sed -n '0,/.*\/tag\/.h=\([0-9.a-z-]*\).*/ s//\1/p'

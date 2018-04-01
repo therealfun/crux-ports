@@ -1,0 +1,75 @@
+#
+# This patch implements something like PKGMK_SOURCE_MIRRORS,
+# but with a "fallback" behaviour instead of a "cache" behaviour
+# (as it is implemented for PKGMK_SOURCE_MIRRORS).
+#
+# It also has two extra features:
+#  - it uses the repository's mirrors, as defined in the 'nfo' file.
+#  - it shuffles the mirrors
+#
+# Uncomment the array below to enable the global fallback mirrors.
+# Per/repository mirrors (from 'nfo' files) will be used anyway.
+#
+# PKGMK_SOURCE_MIRRORS_FALLBACK=(
+#	http://crux.nu/distfiles
+#	http://crux.ster.zone/distfiles
+#	http://distfiles.crux.guru
+#	http://distfiles.serverop.de
+# )
+
+include_repo_src_mirrors() {
+	local repo_info=${PWD%/*}/nfo
+
+	[[ -f $repo_info ]] \
+		&& readarray -t REPOS < <(
+			. $repo_info
+			printf '%s\n' "${REPO_SRC_MIRRORS[@]}" \
+			| shuf
+		)
+}
+
+download_source_from_fallback_mirrors() {
+	local     done=0
+	local not_done=1
+
+	local REPO
+	local REPOS=()
+
+	# add mirrors from the 'nfo' files
+	include_repo_src_mirrors
+
+	# append gloabal mirrors
+	readarray -t -O ${#REPOS[@]} REPOS < <(
+		printf '%s\n' "${PKGMK_SOURCE_MIRRORS_FALLBACK[@]}" \
+		| shuf
+	)
+
+	# FILE (source from download_source()) 
+	#   -> BASENAME       get_basename $FILE
+	#   -> LOCAL_FILENAME get_filename $FILE (map_remote_source())
+
+	local _DWN_CMD="$PKGMK_DOWNLOAD_PROG $DOWNLOAD_OPTS $RESUME_OPTS"
+	local _NAME1=$BASENAME
+	local _NAME2=${LOCAL_FILENAME##*/}
+
+	for REPO in ${REPOS[@]%/}; do
+		$_DWN_CMD "$REPO/$_NAME1"                                            \
+			|| ( [[ $_NAME1 != $_NAME2 ]] && $_DWN_CMD "$REPO/$_NAME2" ) \
+			|| continue
+
+		sync  "$LOCAL_FILENAME_PARTIAL"
+		mv -f "$LOCAL_FILENAME_PARTIAL" "$LOCAL_FILENAME" \
+			&& return $done
+	done
+	return $not_done
+}
+
+#
+# We patch the download_file() function to try these mirrors
+# before giving up on source() downloads.
+#
+
+. <(
+	declare -f download_file \
+	| sed 's/\(error "Downloading\)/download_source_from_fallback_mirrors \&\& return 0; \1/'
+)

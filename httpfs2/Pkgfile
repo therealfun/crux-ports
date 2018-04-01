@@ -1,0 +1,20 @@
+# Description: FUSE-based HTTP(s) filesystem.
+# URL:         https://httpfs.sf.net/
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  fuse gnutls
+
+name=httpfs2
+version=0.1.5
+release=3
+
+source=(
+	https://downloads.sourceforge.net/project/httpfs/$name/$name-$version.tar.gz
+	Makefile
+	.watch
+)
+
+build() {
+	cd */
+	cp $SRC/Makefile .
+	make install DESTDIR=$PKG
+}

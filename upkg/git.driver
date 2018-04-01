@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# /etc/ports/drivers/git.local: git driver script for uports(1)
+#
+# Fork from https://crux.nu/ports/crux-3.3/opt/git/git
+#
+
+read -r URL NAME BRANCH < <(gawk '
+	match($1,    "^URL=(http|https|git)://([[:alnum:]./=-]+)", m) {    url = m[1] "://" m[2]                 }
+	match($1,   "^NAME=([[:alnum:]][[:alnum:]._-]*)", m)          {   name = m[1]; gsub("[.][.]+", "", name) }
+	match($1, "^BRANCH=([[:alnum:]][[:alnum:]._-]*)", m)          { branch = m[1]                            }
+	END { print url " " name " " branch }
+' "${1?usage: $BASH_SOURCE <file>}")
+
+[[ "$URL"    == "" ]] && { echo "URL not set in '$1'"    >&2; exit 2; }
+[[ "$NAME"   == "" ]] && { echo "NAME not set in '$1'"   >&2; exit 2; }
+[[ "$BRANCH" == "" ]] && { echo "BRANCH not set in '$1'" >&2; exit 2; }
+
+[[ $PORTS_DIR == /* ]] || { echo "Strange PORTS_DIR=$PORTS_DIR" >&2; exit 1; }
+[[ -d $PORTS_DIR    ]] || mkdir -p "$PORTS_DIR"
+
+echo "Fetching updates from $URL"
+echo "Updating collection $NAME"
+
+REPOSITORY="$PORTS_DIR/$NAME"
+
+if [[ -d "$REPOSITORY/.git" ]]; then
+	cd "$REPOSITORY"
+	git checkout -q "$BRANCH"
+	git fetch -q
+	git diff --pretty=format: --name-status "$BRANCH" "origin/$BRANCH"              \
+		| sed -e "s/M\t/ Edit: /" -e "s/A\t/ Checkout: /" -e "s/D\t/ Delete: /" \
+		| sort
+	git reset -q --hard "origin/$BRANCH"
+else
+	if [[ -d "$REPOSITORY" ]]; then
+		# switching from httpup maybe
+		[[ -f "$REPOSITORY/.git" ]] && rm "$REPOSITORY/.git"
+	else
+		mkdir "$REPOSITORY" || exit 1
+	fi
+
+	cd "$REPOSITORY"
+	git init -q
+	git remote add origin "$URL"
+	git fetch -q
+	git reset -q --hard "origin/$BRANCH"
+	git checkout -q -B "$BRANCH" "origin/$BRANCH"
+	git -C "$PORTS_DIR" submodule add -q -f -b "$BRANCH" "$URL" "$NAME"
+	ls -1 "$REPOSITORY" | sed "s/^/ Checkout: /" | sort
+fi
+
+echo "Finished successfully"

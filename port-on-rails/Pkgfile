@@ -1,0 +1,16 @@
+# Description:  On-the-fly pkgmk patches.
+# URL:          https://github.com/therealfun/crux-ports/tree/master/port-on-rails
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+
+name=port-on-rails
+version=2.1
+release=1
+source=(
+	enable-diff_footprint_filter
+	enable-map_remote_source
+)
+
+build() {
+	install -d                   $PKG/usr/lib/port-on-rails
+	install -m644 "${source[@]}" $PKG/usr/lib/port-on-rails
+}

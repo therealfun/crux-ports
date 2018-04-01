@@ -1,0 +1,32 @@
+#
+# This patch disables ccache when building some ports.
+#
+# The reason you may want to do this is that some ports have a low cache
+# hit rate when building another version (updates). The Linux Kernel
+# has ~2% hit rate, and even rebuilding the same version but with 
+# the CK patches has only ~10% hit rate.
+#
+# The use of ccache with a cold ccache directory is not free. The speed
+# penalty is difficult to pin point because it depends on how you use
+# cccache (direct or preprocessing), it you run it in a container (what
+# kind) or not, but a 20-50% speed drop is not uncommon with a 0% hit rate.
+# 
+
+# We don't test if cccache is enabled, as it can be enabled in many ways
+# (eg. CC=/usr/bin/ccache)
+
+MY_CCACHE_BLACK_LIST=(
+#	erlang
+#	linux-stable
+#	linux-stable-ck
+)
+
+if [[ $name && " ${MY_CCACHE_BLACK_LIST[*]} " =~ " $name " ]];
+then
+	CCACHE_DISABLE=1
+fi
+
+# The ccache will still be executed, but it shouldn't matter too much.
+# Avoiding the ccache execution is not simple, as ccache can be enabled
+# in serveral ways (for example, by making a symlink /home/user/bin/gcc ->
+# /usr/bin/ccache and add /home/user/bin to path).

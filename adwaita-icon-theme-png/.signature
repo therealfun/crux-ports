@@ -1,0 +1,7 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8o/SqXLjbvg077egrnvmVw9LT4flshXaouElKxrUKVPkug+ZVz0oHwDCLP1mW1+xlkqVcGtv3yRsP++KWcZ2qQI=
+SHA256 (Pkgfile) = 31e0f54679c1a2323d834f0fd2aea4a41f964d77b4bcb6b6979a85b1898f753d
+SHA256 (.footprint) = 843685f437299198b100d2af305117174e87a6600775f32e40cafbf6d0e3416a
+SHA256 (adwaita-icon-theme-3.28.0.tar.xz) = 7aae8c1dffd6772fd1a21a3d365a0ea28b7c3988bdbbeafbf8742cda68242150
+SHA256 (post-install) = d15bb46f3ae5cb181b8f72a3b29230e40eaaedda863a58399c791e8e3b9505a3
+SHA256 (.watch) = 1b6a54282123904e9f1622b9924393330a9770d9249f9299deb01941c73a0c8c

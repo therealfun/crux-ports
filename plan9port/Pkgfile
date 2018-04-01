@@ -1,0 +1,25 @@
+# Description:  Plan 9 from User Space.
+# URL:          https://9fans.github.io/plan9port/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   fuse fontconfig xorg-libxext xorg-libxt
+# Nice to have: plan9fonts
+
+name=plan9port
+version=20180327
+commit=03a8ec739af17bc4ba0a2e18ea59b33671c34f2b
+release=1
+source=(https://github.com/9fans/$name/archive/$commit/$name-$version.tar.gz .watch)
+
+build() {
+	mkdir -p          $PKG/usr/lib
+	mv    plan9port*/ $PKG/usr/lib/plan9
+	cd                $PKG/usr/lib/plan9
+
+	export NPROC=${JOBS:-$(nproc)}
+	echo "CFLAGS=\"$CFLAGS -Wno-misleading-indentation -Wall -Wno-missing-braces -Wno-parentheses -Wno-switch -fPIC\"" >LOCAL.config
+
+	./INSTALL -r /usr/lib/plan9
+	rm  -f install.{log,sum} .gitignore .travis.yml LOCAL.config
+	rm -rf dist mac unix
+	find man -name '*.html' -delete
+}

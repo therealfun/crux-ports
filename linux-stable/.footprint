@@ -1,0 +1,15 @@
+drwxr-xr-x	root/root	boot/
+-rw-r--r--	root/root	boot/System.map.next
+-rw-r--r--	root/root	boot/System.map.prev
+-rw-r--r--	root/root	boot/next
+-rw-r--r--	root/root	boot/prev
+-rw-r--r--	root/root	boot/vmlinuz.next
+-rw-r--r--	root/root	boot/vmlinuz.prev
+drwxr-xr-x	root/root	lib/
+drwxr-xr-x	root/root	lib/modules/
+-rw-r--r--	root/root	lib/modules/next.tar.xz
+-rw-r--r--	root/root	lib/modules/prev.tar.xz
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/src/
+-rw-r--r--	root/root	usr/src/next.tar.xz
+-rw-r--r--	root/root	usr/src/prev.tar.xz

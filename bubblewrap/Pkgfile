@@ -1,0 +1,15 @@
+# Description:  Unprivileged sandboxing tool.
+# URL:          https://github.com/projectatomic/bubblewrap
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   docbook-xsl
+
+name=bubblewrap
+version=0.2.0
+release=3
+source=(.watch post-install https://github.com/projectatomic/$name/archive/v$version/$name-$version.tar.gz)
+
+build() {
+	cd */
+	./autogen.sh --prefix=/usr
+	make install DESTDIR=$PKG
+}

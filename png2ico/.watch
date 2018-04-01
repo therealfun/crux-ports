@@ -1,0 +1,2 @@
+wget "https://github.com/dkfans/png2ico/releases" -q -O-  \
+	| sed -n '0,/.*\/archive\/\([0-9.]*\)\.tar\.gz.*/ s//\1/p'

@@ -1,0 +1,3 @@
+NAME=stayradiated
+URL=git://github.com/stayradiated/ports
+BRANCH=master

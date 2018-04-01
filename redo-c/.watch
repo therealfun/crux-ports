@@ -1,0 +1,2 @@
+wget 'https://github.com/chneukirchen/redo-c/commits/master' -q -O-  \
+	| sed -n '0,/.*\/commit\/\([a-f0-9]*\)".*/ s//\1 commit/p'

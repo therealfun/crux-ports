@@ -1,0 +1,71 @@
+#!/bin/bash
+
+PORTS_DIR=/usr/ports
+build_dir="$HOME/.cache/upkg/build"
+
+print_aligned() { printf '%-13s %s\n' "$1" "$2" ; }
+
+print_header() {
+	awk -v "FS=$1:" 'BEGIN { IGNORECASE=1 } (NF > 1) { print $2; exit 0 }' "$2" \
+	| sed -e 's/^\s*//' -e 's/\s*$//'
+}
+
+print_version() {
+	awk -v FS== '
+		$1 == "name"    {    name = $2 }
+		$1 == "version" { version = $2 }
+		$1 == "release" { release = $2 }
+		END { if (name && version && release) print version "-" release }
+	' "$1" | sed 's/\s//g'
+}
+
+shopt -s nullglob
+
+if (( $# == 0 )) || [[ -d $1 ]]
+then
+	# by port dir
+	ports=( "${1:-$PWD}" )
+else
+	# by port name
+	pkgfiles0=( "$build_dir/$1/"Pkgfil[e] "$pref_dir"/*/"$1/Pkgfile" "$PORTS_DIR"/*/"$1/Pkgfile" )
+	readarray -t pkgfiles < <( readlink -f "${pkgfiles0[@]}" 2>/dev/null )
+	ports=( "${pkgfiles[@]%/Pkgfile}" )
+fi
+
+(( ${#ports[@]} == 0 )) && exit 1
+
+inst_ver=$(pkginfo -i | awk -v "NAME=${ports##*/}" '$1 == NAME { print $2; exit 0 }')
+
+print_aligned 'Name:'      "${ports##*/}"
+print_aligned 'Installed:' "${inst_ver:-no}"
+
+declare -A uniq
+for port in "${ports[@]}"
+do
+	[[ ${uniq["$port"]+defined} ]] \
+		&& continue
+	uniq["$port"]=1
+
+	pkgfile="$port/Pkgfile"
+
+	print_aligned 'Port:'    "$port"
+	print_aligned 'Version:' "$(print_version "$pkgfile")"
+
+	desc=$(print_header "Description"  "$pkgfile")
+	 dep=$(print_header "Depends on"   "$pkgfile" | sed -e 's/,/ /g' -e 's/  / /g')
+	  o1=$(print_header "Nice to have" "$pkgfile" | sed -e 's/,/ /g' -e 's/  / /g')
+	  o2=$(print_header "Optional"     "$pkgfile" | sed -e 's/,/ /g' -e 's/  / /g')
+
+	[[ $desc      ]] && print_aligned 'Description:'  "$desc"
+	[[ $dep       ]] && print_aligned 'Depends on:'   "$dep"
+	[[ $o1 || $o2 ]] && print_aligned 'Nice to have:' "${o1:-}${o2:-}"
+
+	files=( "$port"/* )
+	files=( "${files[@]##*/}" )
+	files=( ${files[*]/Pkgfile/} )
+	(( ${#files[@]} )) && print_aligned 'Files:' "${files[*]}"
+
+	[[ -e "$port/README" ]] \
+		&& sed -e 's/^/README:       /g' < "$port/README"
+done
+exit 0

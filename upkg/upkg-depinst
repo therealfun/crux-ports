@@ -1,0 +1,34 @@
+#!/bin/bash
+
+  libdir=${BASH_SOURCE%/*}
+rollback=()
+
+readarray -t todo < <( $libdir/upkg-deporder "$@" )
+wait "$!" || exit 1
+
+for port in "${todo[@]}"
+do
+	name=${port##*/}
+	inst_ver=$(pkginfo -i | awk -v "NAME=$name" '$1 == NAME { print $2; exit 0 }')
+	rebuild=
+
+	if [[ $inst_ver != "" ]]
+	then
+		[[ "$(revdep "$name")" == "" ]] \
+			&& continue
+		rebuild=-r
+	fi
+
+	if ! "$libdir/upkg-install" $rebuild "$port"
+	then
+		(( ${#rollback[@]} )) \
+			&& "$libdir/upkg-rm" "${rollback[@]}"
+		exit 1
+	fi
+
+	[[ $rebuild == "" ]] \
+		&& source "$libdir/upkg-keep" "$name"
+
+	[[ $inst_ver == "" ]]            \
+		&& rollback+=( "$port" )
+done

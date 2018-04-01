@@ -1,0 +1,54 @@
+#!/bin/bash
+
+PORTS_DIR=/usr/ports
+ pref_dir="$HOME/.config/upkg/pref"
+
+[[ -d $pref_dir ]]                             \
+	|| ( set -x; mkdir -p -- "$pref_dir" ) \
+	|| exit 1
+
+shopt -s nullglob
+
+old_links=( "$pref_dir"/*/ )
+old_links=( "${old_links[@]%/}" )
+old_cols=(  "${old_links[@]##*/}" )
+old_cols=(  "${old_cols[@]#*-}" )
+
+readarray -t new_cols < <(
+	export LC_ALL=C
+	pkginfo -i        \
+	| while read -r name _
+	  do
+		col=( "$PORTS_DIR/"*"/$name/Pkgfile" )
+		(( ${#col[@]} == 1 )) && {
+			col=${col%/*/*}
+			printf '%s\n' "${col##*/}"
+		}
+	  done             \
+	| sort             \
+	| uniq -c          \
+	| sort -nr         \
+	| awk '{print $2}'
+)
+
+printf '%s\n' "=== Collections in use (sorted by unique ports installed) ===" "${new_cols[@]}" "==="
+[[ " ${old_cols[@]} " == " ${new_cols[@]} " ]] \
+	&& exit 0
+
+echo "=== Differences from the current preferences ==="
+diff -u <(printf '%s\n' "${old_cols[@]##*/}") <(printf '%s\n' "${new_cols[@]}")
+
+read -p "Save the new list? [Y/n] "
+[[ $REPLY == "" || ${REPLY,} == y* ]] \
+	|| exit 1
+
+(( ${#old_links[@]} == 0 ))                    \
+	|| ( set -x; rm -- "${old_links[@]}" ) \
+	|| exit 1
+
+cd -- "$pref_dir" \
+	|| exit 1
+
+printf '%s\n' "${new_cols[@]/#/$PORTS_DIR/}" \
+| awk -v FS='/' '{ printf "-sv \"%s\" \"%.3d-%s\"\n", $0, NR, $NF  }' \
+| xargs -r -L1 ln

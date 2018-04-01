@@ -1,0 +1,14 @@
+This port contains on-the-fly patches for pkgmk.
+
+In order to use one of these patches you have the include it in your
+Pkgfile:
+
+	Depends on: port-on-rails
+	...
+	. /usr/lib/port-on-rails/enable-XXX
+
+Every patch changes a specific behavior of pkgmk only when your port
+is built.
+
+Instead of depending on this port (port-on-rails) you may distribute
+any of these patches with your port.

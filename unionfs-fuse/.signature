@@ -1,0 +1,7 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8r1/6RfQcsZuOkOfDl5SoiwXBhl8UjOe1kAdZlmzCDsnjfV3tYqEW21oPk/tRW1XzX5OzCx5WWiRapVMJu9FnQ0=
+SHA256 (Pkgfile) = 4686e4fd5661a8512033115cf0afc6d215da81d236926673cd3b033bd6a71b6d
+SHA256 (.footprint) = 19fe06654daf96919e8331d559ff532bfd70b5b668a3b388ff0e4e198fde5e9f
+SHA256 (unionfs-fuse-2.0.tar.gz) = f24d7dd64c678cefacbebf2727b61e3127b8ecb6bb9176d7117dd31503455643
+SHA256 (access.patch) = a1cc47b0c45b76a818747db19bbc8d249dea04caa6fd65e5d08747a73780943b
+SHA256 (.watch) = 5fce47b6eef87cf6c80604acdc52fd86518537b38e158979cf673f56bb3d862b

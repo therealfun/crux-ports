@@ -1,0 +1,79 @@
+#
+# This patch enables some hardening options.
+#
+# Resources
+#	https://wiki.debian.org/Hardening
+#	https://wiki.gentoo.org/wiki/Project:Hardened/GNU_stack_quickstart
+#
+# NOTES:
+# 
+# Building gcc with --enable-default-pie could be better
+# than the PIE options below. Programs having problems with this
+# should have --no-pie already in place.
+#
+# dmesg | grep NX
+#
+# -z noexecstack
+#  The marking is done automatically by recent GCC versions (objects
+# using trampolines on the stack are marked as requiring executable
+# stack, all other newly built objects are marked as not requiring it)
+# and linker collects these markings into marking of the whole binary or
+# shared library.
+#
+# It looks like programs already have read-only relocations ("-Wl,-z,relro")
+# 
+# A lot of ports ignore the link flags.
+#
+# SSP, PIE come with speed penalty. BINDNOW slows down the startup.
+#
+
+BLACKLIST_FORMAT+=(
+	gcc
+	gcc-fortran
+	ktsuss
+)
+BLACKLIST_FORTIFY_SOURCE+=(
+	gcc
+)
+BLACKLIST_SSP+=(
+	gcc          # not tested
+	glibc        # not needed for 2.26?
+	glibc-32     # not tested
+	syslinux     # not tested
+	syslinux-git # not tested
+)
+WHITELIST_PIE+=(
+)
+WHITELIST_BINDNOW+=(
+)
+
+add_hardening_options() {
+	local extra_cflags=
+
+	[[ " ${BLACKLIST_FORMAT[*]} " =~ " $name " ]] || {
+		extra_cflags+=" -Wformat -Wformat-security -Werror=format-security"
+	}
+
+	[[ " ${BLACKLIST_FORTIFY_SOURCE[*]} " =~ " $name " ]] || {
+		extra_cflags+=" -D_FORTIFY_SOURCE=2"
+	}
+
+	[[ " ${BLACKLIST_SSP[*]} " =~ " $name " ]] || {
+		extra_cflags+=" -fstack-protector-strong"
+	}
+
+	[[ " ${WHITELIST_PIE[*]} " =~ " $name " ]] && {
+		extra_cflags+=" -fPIE -pie"
+	}
+
+	[[ " ${WHITELIST_BINDNOW[*]} " =~ " $name " ]] && {
+		extra_cflags+=" -Wl,-z,now"
+	}
+
+	  CFLAGS+=$extra_cflags
+	CXXFLAGS+=$extra_cflags
+}
+
+if [[ $name ]]; then
+	add_hardening_options
+fi

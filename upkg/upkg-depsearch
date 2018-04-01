@@ -1,0 +1,18 @@
+#!/bin/bash
+
+PORTS_DIR=/usr/ports
+shopt -s nullglob
+
+headers="Depends on"
+[[ $1 == -s ]] && {
+	shift
+	headers="$headers|Optional|Nice to have"
+}
+
+grep -Eil -e "^#\\s*($headers):.*\\<${1?nothing to search for}(\\s.*|)$" \
+	"$PORTS_DIR"/*/*/Pkgfile                                         \
+| sed   -e 's|/Pkgfile||'                                                \
+| xargs -r -L1 -I{} sh -c "
+	'${BASH_SOURCE%/*}/upkg-info' '{}'
+	echo
+"

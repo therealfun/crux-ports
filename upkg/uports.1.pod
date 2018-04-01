@@ -1,0 +1,79 @@
+=pod
+
+=head1 NAME
+
+uports - micro alternative to C<ports> command
+
+=head1 SYNOPSIS
+
+B<uports> [--repos | --last | --git cmd args... | repository...]
+
+B<uports> updates all the repositories or only the specified ones, unless some option is used.
+
+=over 4
+
+=item --repos
+
+Shows the active (F</etc/ports/*>) repositories.
+
+=item --last
+
+Shows the changes from the last time (we've run C<uports --last>).
+
+=item --git cmd args...
+
+Runs git commands in F<$PORTS_DIR/> and in all submodules. E.g.,
+
+    uports --git diff '@{yesterday}...'
+
+=back
+
+=head1 DESCRIPTION
+
+B<uports> is almost B<3 times smaller> than B<ports>, but it B<has much more features>.
+
+=head2 New features and improvements
+
+=over 4
+
+=item B<faster>
+
+B<uports> updates repositories in parallel, being disk and CPU friendly and selecting the fastest possible driver (git, rsync, httpup).
+
+=item B<remembers>
+
+B<uports> keeps all the history, so you can do rollbacks or see the B<content differences>.
+
+=item B<safer>
+
+The repositories are contained to F<$PORTS_DIR/> and the F<Pkgfile> files are not sourced (executed).
+
+=item B<not limited>
+
+to F</usr/ports> or F</etc/ports>.
+
+=back
+
+=head2 Missing features
+
+These come from the fact that B<uports> handles the active repositories (F</etc/ports/*.{git,rsync,httpup}>) not the collections (F<$PORTS_DIR/*/>). You could read its name as B<u>(pdate)B<ports>.
+
+=over 4
+
+=item it doesn't lists the differences between installed and F<Pkgfile> versions
+
+You can use C<upkg diff> and C<upkg info ...> instead and get the differences between port files and dependencies too.
+
+=item it doesn't lists the ports
+
+You can do:
+
+	find /usr/ports -name Pkgfile -printf '%P\n' | xargs dirname | sort
+
+=back
+
+=head1 SEE ALSO
+
+ports(8)
+
+=cut

@@ -1,0 +1,21 @@
+# Description:  Minimalistic disassembler library.
+# URL:          https://github.com/vmt/udis86/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   python
+# Nice to have: sphinx yasm
+
+name=udis86
+version=1.7.2.20141225
+commit=56ff6c87c11de0ffa725b14339004820556e343d
+release=1
+
+source=(.watch https://github.com/vmt/udis86/archive/$commit/$name-$version.tar.gz)
+
+build() {
+	cd */
+	./autogen.sh
+	./configure --prefix=/usr
+	make install -C libudis86 DESTDIR=$PKG
+	make install -C udcli     DESTDIR=$PKG
+	install -m644 udis86.h            $PKG/usr/include/
+}

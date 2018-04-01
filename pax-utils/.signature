@@ -1,0 +1,6 @@
+untrusted comment: verify with /etc/ports/therealfun.pub
+RWTcI5d5qAlZ8u3YqNgumB3Qt52JQRUxTI4FOEXyAcw2WCmIf9fFyM+7nLTV3EhrX2ciykifzyoa2UL67chkoGDtmuPA34k3iQ4=
+SHA256 (Pkgfile) = 9b352761a57d846283e6a15fbdabc1f155a6db827ca1dacc9cbc6b6f6c89239d
+SHA256 (.footprint) = 58df2a1685d9f3b4ad7f17d7590ed9c4e915a913ddbb85d6447db178bc457d33
+SHA256 (pax-utils-1.2.2.tar.gz) = 73a2ae948476285c95c0b35ae90c78771d02c68c2204cac55b6a105eacab1c05
+SHA256 (.watch) = 715b3cca6e1f6e66c39e7ac14c6936586c5a1a9c3781a84a57c0bbb419131345

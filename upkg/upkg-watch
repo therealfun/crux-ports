@@ -1,0 +1,50 @@
+#!/bin/bash
+
+N=$(( $(nproc) + 1 ))
+
+print_version() {
+	awk -v "NAME=$1" '{
+		if (split($1, a, "=") >= 2 && a[1] == NAME) {
+			print a[2]
+			exit
+		}
+	}' "$2" 
+}
+
+check() (
+	portdir=${watch%/*}
+	pkgfile="${watch%.watch}Pkgfile"
+
+	[[ ! -e $pkgfile ]] \
+		&& continue
+
+	while read -r new_ver name
+	do
+		[[ $new_ver == "" ]] && {
+			printf 'ERROR: %s (no output)\n' "$watch" >&2
+			exit
+		}
+
+		name=${name:-version}
+		name=${name//[![:alpha:]_]/}
+		port_ver=$(print_version $name "$pkgfile")
+
+		[[ $port_ver == "" ]] && {
+			printf 'ERROR: %s (name=%s)\n' "$pkgfile" "$name" >&2
+			exit
+		}
+
+		[[ $port_ver != $new_ver ]]                               \
+			&& printf 'WARNING: %s %s -> %s (%s)\n'           \
+				"$portdir" "$port_ver" "$new_ver" "$name"
+	done < <( sh "$watch" )
+)
+
+while read -r watch
+do
+	check &
+	(( $(jobs -p | wc -l) > N )) \
+		&& wait -n
+done < <( find -L "${@:-$PWD}" -type f -name .watch )
+
+wait

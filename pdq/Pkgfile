@@ -1,0 +1,17 @@
+# Description:  Flexible print subsystem.
+# URL:          https://pdq.sf.net/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   gtk
+
+name=pdq
+version=2.2.7
+release=1
+source=(
+	https://github.com/therealfun/$name/archive/$version/$name-$version.tar.gz
+	post-install
+	.watch
+)
+
+build() {
+	make install -C */ -f Mk DESTDIR=$PKG
+}

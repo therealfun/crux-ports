@@ -1,0 +1,15 @@
+# Description: Leap-second table used by libtai and other djb programs.
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# URL:         https://cr.yp.to/libtai.html
+
+name=leapsecs
+version=20161231
+release=1
+source=(leapsecs.dat .watch)
+# http://code.dogmap.org/clockspeed/new-leapsecs
+# ftp://ftp.nist.gov/pub/time/leap-seconds.list
+# tzdata /usr/share/zoneinfo/leapseconds
+
+build() {
+	install -Dm644 $SRC/leapsecs.dat $PKG/etc/leapsecs.dat
+}

@@ -1,0 +1,8 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/bin/
+-rwxr-xr-x	root/root	usr/bin/redo
+lrwxrwxrwx	root/root	usr/bin/redo-always -> redo
+lrwxrwxrwx	root/root	usr/bin/redo-ifchange -> redo
+lrwxrwxrwx	root/root	usr/bin/redo-ifcreate -> redo
+-rwxr-xr-x	root/root	usr/bin/redo-sources
+-rwxr-xr-x	root/root	usr/bin/redo-targets

@@ -1,0 +1,13 @@
+# Description: redo build system (python, Avery Pennarun).
+# URL:         https://github.com/apenwarr/redo
+# Maintainer:  fun, just.the.real.fun at gmail dot com
+# Depends on:  python
+
+name=redo-apenwarr
+version=0.11
+release=1
+source=(https://github.com/apenwarr/redo/archive/redo-$version/redo-$version.tar.gz .watch)
+
+build() {
+	make -C */ install DESTDIR=$PKG
+}

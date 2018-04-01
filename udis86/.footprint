@@ -1,0 +1,14 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/bin/
+-rwxr-xr-x	root/root	usr/bin/udcli
+drwxr-xr-x	root/root	usr/include/
+drwxr-xr-x	root/root	usr/include/libudis86/
+-rw-r--r--	root/root	usr/include/libudis86/extern.h
+-rw-r--r--	root/root	usr/include/libudis86/itab.h
+-rw-r--r--	root/root	usr/include/libudis86/types.h
+-rw-r--r--	root/root	usr/include/udis86.h
+drwxr-xr-x	root/root	usr/lib/
+-rwxr-xr-x	root/root	usr/lib/libudis86.la
+lrwxrwxrwx	root/root	usr/lib/libudis86.so -> libudis86.so.0.0.0
+lrwxrwxrwx	root/root	usr/lib/libudis86.so.0 -> libudis86.so.0.0.0
+-rwxr-xr-x	root/root	usr/lib/libudis86.so.0.0.0

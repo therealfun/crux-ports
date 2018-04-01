@@ -1,0 +1,131 @@
+# Add support to rename the remote sources on the fly.
+#
+# Links like "https://domain/dir/1.1.tar.gz" can be saved like "$name-1.0.tar.bz".
+#
+# This patch overrides the get_filename() function
+# and makes sure the .md5sum and .signatures contains
+# the new (stored) name.
+#
+# https://crux.nu/bugs/index.php?do=details&task_id=923
+#
+# Usage:
+#
+# . /usr/lib/port-on-rails/enable-map_remote_source
+#
+# map_remote_source() {
+#	local src=$1
+#       local url=$2
+#       case $src in
+#		1.0.tar.gz) src="$name-$src" ;;
+#       esac
+#	echo "$PKGMK_SOURCE_DIR/$src"
+# }
+
+#
+# Our get_filename() replacement with only one line change
+#
+get_filename() {
+	local ABSOLUTE=""
+	if [ "$1" = "-a" ]; then
+		ABSOLUTE=1
+		shift
+	fi
+
+	if [[ $1 =~ ^(http|https|ftp|file)://.*/(.+) ]]; then
+		map_remote_source "${BASH_REMATCH[2]}" "${BASH_REMATCH[0]}"
+	else
+		if [ "$ABSOLUTE" ]; then
+			echo $PKGMK_ROOT/$1
+		else
+			echo $1
+		fi
+	fi
+}
+
+#
+# We run md5sum on sources as we have saved them 
+# (possibly as $port_name-$src_name), but we change the filenames 
+# to what we have in source=() just before we sort them.
+#
+make_md5sum() {
+	(( ${#source[@]} > 0 )) || return
+
+	local ORIG_FILE NICE_FILE
+	declare -A LOCAL_SOURCES
+	declare -a LOCAL_SOURCES_ORDERED
+
+	for ORIG_FILE in "${source[@]}"; do
+		NICE_FILE=$(get_filename "$ORIG_FILE")
+
+		LOCAL_SOURCES["$NICE_FILE"]=${ORIG_FILE##*/}
+		LOCAL_SOURCES_ORDERED+=( "$NICE_FILE" )
+	done
+
+	local MD5
+	while read -r MD5 NICE_FILE; do
+		echo "$MD5  ${LOCAL_SOURCES["$NICE_FILE"]}"
+	done < <(
+		md5sum "${LOCAL_SOURCES_ORDERED[@]}"
+	) \
+	| sort -k 2
+}
+
+#
+# We run sha256sum on sources as we have saved them 
+# (possibly as $port_name-$src_name), but we change the filenames 
+# to what we have in source=() just before feeding signify.
+#
+make_signature() {
+	local ORIG_FILE NICE_FILE
+	declare -A LOCAL_SOURCES
+	declare -a LOCAL_SOURCES_ORDERED
+	local REPO
+
+	for ORIG_FILE in "$PKGMK_PKGFILE" "$PKGMK_FOOTPRINT" "${source[@]}"; do
+		NICE_FILE=$(get_filename "$ORIG_FILE")
+
+		LOCAL_SOURCES["$NICE_FILE"]=${ORIG_FILE##*/}
+		LOCAL_SOURCES_ORDERED+=( "$NICE_FILE" )
+	done
+
+	if [ ! "$PKGMK_PRIVATEKEY" ]; then
+		REPO=${PWD%/*}
+		REPO=${REPO##*/}
+		REPO=${REPO%.git}
+	fi
+
+	if [ "$REPO" ]; then
+		PKGMK_PRIVATEKEY="/etc/ports/${REPO}.sec"
+	fi
+
+	local SHA256
+	while read -r SHA256 NICE_FILE; do
+		echo "SHA256 (${LOCAL_SOURCES["$NICE_FILE"]}) = $SHA256"
+	done < <(
+		sha256sum "${LOCAL_SOURCES_ORDERED[@]}"
+	)                                                   \
+	| signify -S -e -x - -q -s "$PKGMK_PRIVATEKEY" -m - \
+	> "${PKGMK_SIGNATURE}.tmp"
+	
+	if [ $? -ne 0 ]; then
+		rm "${PKGMK_SIGNATURE}.tmp"
+		error "Creating signature failed"
+		exit $E_SIGNATURE
+	else
+		mv "${PKGMK_SIGNATURE}.tmp" "$PKGMK_SIGNATURE"
+	fi
+}
+
+#
+# In check_signature(), we use
+#    ln -s $PKGMK_SOURCE_DIR/$src_name $orig_src_name
+# instead of
+#    ln -s $PKGMK_SOURCE_DIR/$src_name .
+# because now, $src_name could be:
+#    $port_name-$orig_src_name
+#
+
+. <(
+	declare -f check_signature \
+	| sed 's@\(ln -s .*)\) \.@\1 \$\{FILE##\*\/\}@'
+)

@@ -1,0 +1,2 @@
+wget "https://sourceforge.net/projects/smbnetfs/" -q -O-  \
+	| sed -n '0,/.*smbnetfs-\([0-9.]*\)\.tar\.bz2.*/ s//\1/p'

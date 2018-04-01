@@ -1,0 +1,101 @@
+#
+# We instruct make to resolve makefile rules in parallel, but
+# only for some heavy ports.
+#
+# Enabling parallel processing only for selected ports is safer
+# than doing it for all the ports (as with the example provided
+# in the official /etc/pkgmk.conf).
+#
+
+PKGMK_SAFE_PARALLEL_BUILDS+=(
+	binutils
+	boost
+	cairo
+	cairo-32
+	chromium
+	chromium-pepperflash
+	clang
+	cmake
+	dar
+	db
+	dovecot
+	erlang
+	ffmpeg
+	fftw
+	fontforge
+	gcc
+	gcc-fortran
+	gcj-jdk
+	gdb
+	geeqie
+	gettext
+	ghostscript
+	gimp
+	git
+	glib
+	glib-32
+	glibc
+	glibc-32
+	gnutls
+	grub2
+	grub2-efi
+	gst-plugins-base
+	gst-plugins-base-32
+	gstreamer
+	gstreamer-32
+	gtk
+	gtk3
+	gtk-32
+	gtksourceview
+	gvim
+	imagemagick
+	libvpx
+	llvm
+	llvm-32
+	mesa3d
+	mesa3d-32
+	mod_php
+	mplayer
+	mysql
+	nodejs
+	openldap
+	openssh
+	openssl-32
+	perl
+	php
+	php-fcgi
+	php-fpm
+	poppler-qt5
+	protobuf
+	qemu
+	qemu-agent
+	qemu-all
+	qt4
+	qt5
+	qtwebengine
+	qtwebkit
+	R
+	ruby
+	samba
+	scite
+	scummvm
+	spidermonkey
+	squid
+	subversion
+	sylpheed
+	valgrind
+	wine
+	wireshark
+	wxgtk
+	xorg-server
+)
+
+if [[ $name && " ${PKGMK_SAFE_PARALLEL_BUILDS[*]} " =~ " $name " ]]
+then
+	export JOBS=$(nproc)
+	# Using "-j N" instead of "-jN" because:
+	#  - samba does not expected the later form (with the make wrapper)
+	#  - "make -h" shows the first form
+	#  - there might be other apps ignoring the later form
+	export MAKEFLAGS="-j $JOBS $MAKEFLAGS"
+fi
