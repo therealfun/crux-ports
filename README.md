@@ -14,9 +14,7 @@ Name | Version | Description
 [edac-utils](https://github.com/grondo/edac-utils) | 0.18 | Userspace helper for kernel EDAC drivers.
 [encfs](https://github.com/vgough/encfs) | 1.9.4 | Encrypting filesystem for FUSE.
 [erlang-man](https://www.erlang.org/) | 20.3 | Erlang manuals.
-[erlang](https://www.erlang.org/) | 20.3.2 | General-purpose programming language and runtime environment.
 [ffms2](https://github.com/FFMS/ffms2) | 2.23 | Wrapper library around FFmpeg/libav.
-[fifth](https://github.com/clbr/fifth) | 0.5 | Web browser done right.
 [func](https://github.com/therealfun/func) | 2.7.5 | Fun containers.
 [gaupol](https://otsaloma.io/gaupol/) | 1.2 | Subtitle editor.
 [gitfiles](https://github.com/mariusae/gitfiles) | 20160912 | Gitfiles provides support for browsing Git repositories inside Acme.
@@ -27,7 +25,6 @@ Name | Version | Description
 [leapsecs](https://cr.yp.to/libtai.html) | 20161231 | Leap-second table used by libtai and other djb programs.
 [libaudit](https://github.com/linux-audit/audit-userspace) | 2.8.3 | Linux audit userspace.
 [libdockapp](https://www.dockapps.net/) | 0.7.2 | DockApp Development Standard Library.
-[liburlmatch](https://github.com/clbr/urlmatch) | 1.0 | Fast URL matcher library.
 [linux-stable](https://www.kernel.org/) | 4.15.15 | Stable kernel version built with the current config.
 [linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.15 | Linux kernel tools.
 [ltrace](https://www.ltrace.org/) | 0.7.3 | Dynamic library and system call tracing.
@@ -61,9 +58,8 @@ Name | Version | Description
 [udis86](https://github.com/vmt/udis86/) | 1.7.2.20141225 | Minimalistic disassembler library.
 [uncrustify](http://uncrustify.sf.net/) | 0.66.1 | Source code beautifier for C, C++, C#, ObjectiveC, D.
 [unionfs-fuse](https://github.com/rpodgorny/unionfs-fuse) | 2.0 | Union filesystem using FUSE.
-[upkg](https://github.com/therealfun/crux-ports/upkg) | 0.55 | Micro port utilities.
+[upkg](https://github.com/therealfun/crux-ports/upkg) | 0.56 | Micro port utilities.
 [uthash](https://troydhanson.github.io/uthash) | 2.0.2 | A hash library implemented in C.
-[webkitfltk](https://github.com/clbr/webkitfltk) | 0.5.1-fun.2 | Port of Webkit to FLTK 1.3.
 [windowmaker-dockapps](https://www.dockapps.net/) | 20171004 | Window Maker dockapps collection.
 [windowmaker](https://windowmaker.org) | 0.95.8 | A fast, feature rich, easy to configure, and easy to use window manager.
 [xvkbd](http://t-sato.in.coocan.jp/xvkbd/) | 3.9 | Virtual (on-screen) keyboard for X.
