@@ -26,7 +26,8 @@ do
 		exit 1
 	fi
 
-	[[ $rebuild == "" ]] \
+	re=" $name "
+	[[ $rebuild == "" && " $* " =~ $re ]] \
 		&& source "$libdir/upkg-keep" "$name"
 
 	[[ $inst_ver == "" ]]            \

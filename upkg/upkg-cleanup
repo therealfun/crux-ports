@@ -23,6 +23,7 @@ confirm_keep_list() {
 			 <( printf '%s\n' "${deps[@]}" )
 	)
 
+	rm=()
 	for name in "${no_dependent[@]}"
 	do
 		[[ -f "$keep_dir/$name" ]] && continue
@@ -30,20 +31,22 @@ confirm_keep_list() {
 		"$libdir/upkg-info" "$name"
 		read -p ">>> Uninstall '$name'? [y/N] "
 		if [[ $REPLY == y* ]]; then
-			"$libdir/upkg-rm" "$name" && {
-				confirm_keep_list
-				return
-			}
+			"$libdir/upkg-rm" "$name" \
+				&& rm+=( "$name" )
 		else
 			touch "$keep_dir/$name"
 		fi
 	done
 
-	# rm $tmp
+	rm $tmp
+	(( ${#rm[@]} > 0 ))
 }
 
 [[ -d $keep_dir ]] || mkdir -p "$keep_dir" || exit 1
-confirm_keep_list
+while confirm_keep_list; do
+	true
+done
+
 
 readarray -t names < <( set -x; revdep -i libreoffice )
 wait $! || exit 1

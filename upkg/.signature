@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8iRJe40GCHlNLuy4UzsMSB1qrEkzQYXd/fqO7ghh+yE6YbEprV6lFvJAvlwxRI1zv1jElKTnCuKdpnqyFBDZtAU=
-SHA256 (Pkgfile) = 7eeb1ec9a35b9b74742c4fb35327b3bebef1cdf02efff1f2e69e1050af80bb0b
+RWTcI5d5qAlZ8hifUjzzum+UjnphhSyCEKtjpiqcTOgP9oDsQYzc2ZU9u1vasdYe3to9x700cZMW50Bf9A/xpJrWsMDFxSpwJA4=
+SHA256 (Pkgfile) = 08d9b73204eb45f299a3b1af95f14b49e0b8b0586af951ca0c5b5a20ca32f5bb
 SHA256 (.footprint) = ade57b967b42ebe104c55062314fceda4576ce0b86d97650b0440c219df69653
 SHA256 (uports) = 97cc006085bde361c80e0890fd8a8dfd3be1c7f5532ba034bcd5983eb18453d8
 SHA256 (uports-init) = 6175bc20baac6941aaf20f8986801da1726f6bd0f3b58e60502d46867c55bc0d
@@ -9,9 +9,9 @@ SHA256 (git.driver) = 85341236cd37aaaa4858ce10434899fe488c2f2391b7414bf6cc6d6d5a
 SHA256 (rsync.driver) = 1dff5e76c8cb91199b1645849d4d8c2b4159637ce1c27c46ce9d0aba396ba24b
 SHA256 (httpup.driver) = b15381410f29da579ecd2d6f4415cdeca34604f20dcddc3a333f0e01eaadba0f
 SHA256 (upkg) = ae48f0e0087341a59e3c621c38e4aa9e3cffd728e30fae5171ae7d56c6574e90
-SHA256 (upkg-cleanup) = 794b9d0ac3fa46b314d06cfc2ef5b0d494989546efe4ed6d6f014a346a300bf4
+SHA256 (upkg-cleanup) = 98d3527282aedd9b796783249b83be660d06a079104214544de3083ad0fa78e0
 SHA256 (upkg-collections) = 397f93b09b94e05db28f89f771ddbc298bb5b51bd0da2c75db8de233a18cd17f
-SHA256 (upkg-depinst) = 9b2d301e9a09675376e3eb9b1023223879c2067f7d37bee2828adcfb5c251241
+SHA256 (upkg-depinst) = e216a4cd4249bea1cbc24939b822b12a0db248d7bedfefb51ba5070bb6fd5f39
 SHA256 (upkg-deporder) = bf6de34918066aa1d59e23597ee5be8ff2ceefbe105237ed9919f07a77088e2b
 SHA256 (upkg-depsearch) = c6f270183a9fc94f5e5c8391adafd2c7f31abab6fd4d086934b8b3aa9e242f4b
 SHA256 (upkg-deptree) = 211ea5553a9ee6ccbeff7a9b2d6f53b947a299b894379b2518182e9ddbcf2647
