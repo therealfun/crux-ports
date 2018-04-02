@@ -411,9 +411,9 @@ f:bb8e8137da8c008f44c6abea4f47ad0c:unionfs-fuse/.watch
 f:b2f5a92c6abcf945c4bad0efd84086d8:upkg/.footprint
 f:9fde35436e48e1cf401f90d1199b3253:upkg/git.driver
 f:c374a42bc090b0a9702939ef9aae30b8:upkg/httpup.driver
-f:b6dcdcc9b0c428f632e81248a9aab1a1:upkg/Pkgfile
+f:ee666ef5a65b575278071258b2354e1a:upkg/Pkgfile
 f:5f11facd3d0067dbc5982f84ba2ae480:upkg/rsync.driver
-f:9894fd49d6199658d592e60e3c767c9b:upkg/.signature
+f:bb881e64c90a3a1c585f90104dd102fa:upkg/.signature
 f:b3c509751080a4e60d69a08b13c1d91a:upkg/upkg
 f:549a84504050a1ab8c2b4ae464868631:upkg/upkg-cleanup
 f:0607db918da9593f715f85688770035f:upkg/upkg-collections
@@ -428,7 +428,7 @@ f:3669047aa2c2fc20b710a4579677a561:upkg/upkg-fsearch
 f:4cbe8eaab475f7a62ef462deefbfc6fe:upkg/upkg-info
 f:bb6f7f267b23493e04cfa843bbc8011b:upkg/upkg-install
 f:3ede6bfc054e8a2dd7f5e5967f3b6901:upkg/upkg-keep
-f:aa4c959dcb31ca923c4fa983e6ef0d41:upkg/upkg-mk
+f:7ff34d22dd9c7249711800a7156297ea:upkg/upkg-mk
 f:b9bc29c30eb24c0b549237456e3b9c16:upkg/upkg-rm
 f:7680e1aca7a9795309b95323b10a3bd9:upkg/upkg-search
 f:867efacb95cdf12a710537413684005b:upkg/upkg-update
@@ -441,9 +441,9 @@ f:0163b13638f74558d15e26b64a8388d2:uthash/Pkgfile
 f:39d38be38c2f48bd5f6c883a0d1a46da:uthash/.signature
 f:66833c7477617e3ce4a562148e7823c3:uthash/.watch
 f:c21f5c3ef9d46c278f4dc4e49895db68:windowmaker-dockapps/.footprint
-f:32d4d7e379ba60291ed6b9e6e6b4011a:windowmaker-dockapps/Pkgfile
+f:c25a894e39f3772422a2559536e2039c:windowmaker-dockapps/Pkgfile
 f:4fddeafbfadaf0d4f8374dc0995660be:windowmaker-dockapps/README
-f:218fa6cac79520186bc741ef8cc6b43e:windowmaker-dockapps/.signature
+f:300092c586904fd9cdf8f3d32294bd31:windowmaker-dockapps/.signature
 f:5bea06da568893a85f5c78cd474e9970:windowmaker-dockapps/.watch
 f:586437225b95dc104037733bd8a969f8:windowmaker/.footprint
 f:0a479b9b0f5defde027a590f2a0be83b:windowmaker/Pkgfile
