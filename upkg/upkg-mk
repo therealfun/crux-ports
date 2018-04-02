@@ -188,8 +188,18 @@ upkg_build() {
 
 	mkdir src pkg || exit 1
 
-	local err
-	{
+	(
+		if [[ $1 == -m ]]; then
+			# stdout and stderr redirect to log and stdout
+			exec > >(tee "$log_dir/$port_name.log") 2>&1
+		else
+			# stdout and stderr redirected to log while stderr only to stdout
+			exec 5>&1 # make fd/5 point to the current fd/1 (stdout)
+			# the new stdout goes to file, stderr is redirected to file and
+			# to the old stdout (not fd/5) through tee
+			exec >"$log_dir/$port_name.log" 2> >(tee /dev/fd/1 /dev/fd/5 >/dev/null)
+		fi
+
 		info "Building '$TARGET'."
 		upkg_run_script pre-install
 		upkg_build_start
@@ -208,7 +218,7 @@ upkg_build() {
 			    info "Building '$TARGET' succeeded."
 		upkg_build_end "$err"
 		rm -rf "$PWD/src" "$PWD/pkg"
-	} > >(tee "$log_dir/$port_name.log") 2>&1
+	)
 
 	if [[ $1 == -m ]]; then
 		upkg_sign
