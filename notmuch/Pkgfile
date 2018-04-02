@@ -5,13 +5,9 @@
 # Nice to have: docutils
 
 name=notmuch
-version=0.26
+version=0.26.1
 release=1
-
-source=(
-	https://notmuchmail.org/releases/$name-$version.tar.gz
-	.watch
-)
+source=(https://notmuchmail.org/releases/$name-$version.tar.gz .watch)
 
 build() {
 	cd */
@@ -24,6 +20,5 @@ build() {
 
 	make install DESTDIR=$PKG
 
-	install -Dm644 emacs/notmuch-emacs-mua.desktop \
-		$PKG/usr/share/applications/notmuch-emacs-mua.desktop
+	install -Dm644 {emacs,$PKG/usr/share/applications}/notmuch-emacs-mua.desktop
 }
