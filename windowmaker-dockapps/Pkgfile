@@ -1,11 +1,11 @@
 # Description:  Window Maker dockapps collection.
 # URL:          https://www.dockapps.net/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
-# Depends on:   alsa-lib libdockapp lm_sensors upower
+# Depends on:   alsa-lib libdockapp libical lm_sensors upower
 
 name=windowmaker-dockapps
 version=20171004
-release=5
+release=6
 commit=6434c272b3e7a8bca26be90417eabfd26bcce554
 source=(http://repo.or.cz/dockapps.git/snapshot/$commit.tar.gz .watch)
 
