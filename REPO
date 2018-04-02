@@ -16,12 +16,6 @@ d:func
 d:gaupol
 d:gitfiles
 d:gmime3
-d:home
-d:home/b
-d:home/b/.local
-d:home/b/.local/upkg
-d:home/b/.local/upkg/log
-d:home/b/.local/upkg/log/all
 d:httpfs2
 d:indent
 d:lbzip2
@@ -191,9 +185,9 @@ f:a744559ef3d488ab46cb9652300e468e:ltrace/Pkgfile
 f:fc740d86d2a54f5016b080f0e28dc449:ltrace/.signature
 f:b1792ae435eb09becd44989c6857e157:ltrace/.watch
 f:64cfdfa2ed21e02d4c4fac7081e6ff2f:nfo
-f:28ccde4a7e1e9c4ad14caf0ac175edd3:notmuch/.footprint
-f:9f289bd9804319d6f3d9aa4bc3f2e747:notmuch/Pkgfile
-f:649b6171872098659e983f8d82555565:notmuch/.signature
+f:22fa282797474d3c8e46b38dadedbf23:notmuch/.footprint
+f:7c03ad7e4fea40509fda5fcd088211e5:notmuch/Pkgfile
+f:d7c615b463fabeecd63aee231ca74a4c:notmuch/.signature
 f:75317b04b453b52827990148261b2ed9:notmuch/.watch
 f:1804094bbbe23046e91978f4754e40fa:nss-mdns-no-avahi/.footprint
 f:8d75f29ba3f4dd452c4fe792d87c8882:nss-mdns-no-avahi/Pkgfile

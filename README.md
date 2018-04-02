@@ -28,7 +28,7 @@ Name | Version | Description
 [linux-stable](https://www.kernel.org/) | 4.15.15 | Stable kernel version built with the current config.
 [linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.15 | Linux kernel tools.
 [ltrace](https://www.ltrace.org/) | 0.7.3 | Dynamic library and system call tracing.
-[notmuch](https://notmuchmail.org/) | 0.26 | Mail indexer based on xapian.
+[notmuch](https://notmuchmail.org/) | 0.26.1 | Mail indexer based on xapian.
 [nss-mdns-no-avahi](http://0pointer.de/lennart/projects/nss-mdns/) | 0.10 | NSS module for mDNS hostname resolution.
 [oprt](https://github.com/therealfun/oprt) | 1.99.2 | Next generation port utilities.
 [pax-utils](https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities) | 1.2.2 | Utilities for peforming security checks.
