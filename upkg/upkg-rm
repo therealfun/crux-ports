@@ -1,11 +1,11 @@
 #!/bin/bash
 
 keep_dir="$HOME/.local/upkg/keep"
-     log="$HOME/.local/upkg/log/all"
+ log_dir="$HOME/.local/upkg/log"
      ret=0
 
-[[ -d "${log#/*}" ]] \
-	|| ( set -x; mkdir -p -- "${log#/*}" )
+[[ -d $log_dir ]] \
+	|| ( set -x; mkdir -p "$log_dir" )
 
 for port in "${@:-$PWD}"
 do
@@ -18,7 +18,7 @@ do
 	( set -x ; $sudo pkgrm "$name" )
 	err=$?
 
-	printf '%(%F %T)T REMOVE %s %s (%s)\n' -1 "$name" "$inst_ver" "$err" >> "$log"
+	printf '%(%F %T)T REMOVE %s %s (%s)\n' -1 "$name" "$inst_ver" "$err" >> "$log_dir/all"
 
 	(( $err )) \
 		&& ret=1

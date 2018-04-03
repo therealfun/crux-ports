@@ -8,7 +8,6 @@ readonly       dl_list="$libdir/upkg-dl-list"
 readonly     build_dir="$HOME/.cache/upkg/build"
 readonly      last_dir="$HOME/.local/upkg/last"
 readonly       log_dir="$HOME/.local/upkg/log"
-readonly        logall="$HOME/.local/upkg/log/all"
 readonly footprint_dir="$HOME/.local/upkg/footprint"
 
 main() {
@@ -43,9 +42,13 @@ upkg_setup() {
 	[[ $port_name =~ $re_name ]] || abort "Invalid port name: $port_dir"
 
 	local dest="$build_dir/$port_name"
-	[[ -d $dest ]] || (set -x; mkdir -p "$dest" ) || exit 1
 
-	cd "$dest"     || exit 1
+	( printf '%s\n' "$dest" "$last_dir" "$log_dir" "$footprint_dir"               \
+			| xargs -L1 -I{}                                              \
+				sh -c 'test -d "{}" || { set -x; mkdir -p "{}" ; }' ) \
+		|| abort "Mkdir failed"
+
+	cd "$dest" || exit 1
 
 	( shopt -s nullglob dotglob; printf '%s\0' "$port_dir"/* ) \
 	| xargs -0 -r -L1 -P$N -I{} ln -sf '{}'                    \
@@ -151,8 +154,6 @@ upkg_ask() {
 upkg_prompt_port_changes_and_confirm() {
 	local err last="$last_dir/$port_name"
 
-	[[ -d $last ]] || ( set -x; mkdir -p "$last" )  || return 1
-
 	diff -Ndur "$last/" "$port_dir/"                && return 0
 
 	info "Port '$port_name' has changed since the last build."
@@ -182,9 +183,8 @@ upkg_build() {
 		fi
 	}
 
-	[[ -d $log_dir ]] || ( set -x; mkdir -p "$log_dir" ) || exit 1
-	[[ ! -d src    ]] || ( set -x; rm -rf src )          || exit 1
-	[[ ! -d pkg    ]] || ( set -x; rm -rf pkg )          || exit 1
+	[[ ! -d src    ]] || ( set -x; rm -rf src ) || exit 1
+	[[ ! -d pkg    ]] || ( set -x; rm -rf pkg ) || exit 1
 
 	mkdir src pkg || exit 1
 
@@ -290,8 +290,6 @@ upkg_bsdtar_pack_all() {
 upkg_run_script() {
 	[[ ! -e $1 ]] && return 0
 
-	[[ ! -d "${logall%/*}" ]] && mkdir -p "${logall%/*}"
-
 	local script=$(readlink -f "$1")
 
 	         local sudo=
@@ -300,7 +298,7 @@ upkg_run_script() {
 	warning "Running '$script'"
 	$sudo sh -x "$script"
 	local err=$?
-	printf '%(%F %T)T RUN %s (%s)\n' -1 "$script" "$err" >> "$logall"
+	printf '%(%F %T)T RUN %s (%s)\n' -1 "$script" "$err" >> "$log_dir/all"
 	(( $err )) && abort "Script '$script' failed"
 	return 0
 }
@@ -518,12 +516,9 @@ upkg_install() {
 			info "Footprint mismatch ignored: $exception"
 		else
 			upkg_accept_NO "Continue?" && exit 1
-			mkdir -p "${exception%/*}"
 			mv .footprint.diff "$exception"
 		fi
 	fi
-
-	[[ ! -d "${logall%/*}" ]] && mkdir -p "${logall%/*}"
 
 	         local sudo=
 	(( $EUID )) && sudo=sudo
@@ -534,14 +529,14 @@ upkg_install() {
 	local inst_ver=$(pkginfo -i | awk -v "NAME=$port_name" '$1 == NAME {print $2; exit}')
 	if [[ $inst_ver != "" ]]
 	then
-		printf '%(%F %T)T UPGRADING %s from %s\n' -1 "$port_name" "$inst_ver" >> "$logall"
+		printf '%(%F %T)T UPGRADING %s from %s\n' -1 "$port_name" "$inst_ver" >> "$log_dir/all"
 		opts=( --upgrade )
 	fi
 
 	info "Installing '$TARGET'."
 	( set -x ; $sudo pkgadd "${opts[@]}" "$TARGET" )
 	err=$?
-	printf '%(%F %T)T INSTALL %s %s %s (%s)\n' -1 "$port_name" "$new_ver" "${port_dir%/*}" "$err" >> "$logall"
+	printf '%(%F %T)T INSTALL %s %s %s (%s)\n' -1 "$port_name" "$new_ver" "${port_dir%/*}" "$err" >> "$log_dir/all"
 	(( $err )) && abort "Installing '$TARGET' failed."
 	              info  "Installing '$TARGET' succeeded."
 
