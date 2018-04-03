@@ -18,33 +18,29 @@ source=(
 )
 
 build() {
-	local linux=linux-${version%.*}
-	local rsync="rsync --recursive --perms --times --links"
-	local prevK=$(uname -r)
-	local prevSRC=
-	local extraVer=-auto-$release
-	local prevArc=prev.tar.xz
-	local nextArc=next.tar.xz
-	local prevName=prev
-	local nextName=next
+	linux=linux-${version%.*}
+	extraVer=-auto-$release
+	prevK=$(uname -r)
+	prevSRC=
 
 	# If we rebuild the package (we may have a different config file),
 	# we have to change the kernel version.
-	[[ $prevK = $version$extraVer ]] \
-		&& extraVer=-auto-$(( $release + 1 ))
+	[[ $prevK == "$version$extraVer" ]] \
+		&& extraVer=-auto-$(( release + 1 ))
+
+	set -o pipefail
 
 	# https://www.kernel.org/category/signatures.html
 	# wget https://cdn.kernel.org/pub/linux/kernel/v4.x/sha256sums.asc -q -O- |grep patch-4.x.y
 	for sign in $SRC/*.sign
 	do
 		signed=${sign##*/}
-		gpg --verify $sign <(xz -cd $PKGMK_SOURCE_DIR/${signed%.sign}.xz) || true
+		( xz -cd $PKGMK_SOURCE_DIR/${signed%.sign}.xz | gpg --verify $sign ) || true
 	done
 
 	cd $linux
 
-	unxz $SRC/patch-$version.xz
-	patch --silent --strip=1 --remove-empty-files < $SRC/patch-$version
+	xz -cd $SRC/patch-$version.xz | patch --silent --strip=1 --remove-empty-files
 
 	make mrproper
 
@@ -54,11 +50,11 @@ build() {
 	else
 		cp /boot/config .config 2>/dev/null       \
 			|| zcat /proc/config.gz > .config \
-			|| { echo "Using the defaults is not a good ideea"; exit 1; }
+			|| { echo "Using the defaults is not a good ideea" >&2; exit 1; }
 		make olddefconfig
 	fi
 
-	(diff -u <(zcat /proc/config.gz) .config | egrep '^[-+]CONFIG_') || true
+	( diff -u <(zcat /proc/config.gz) .config | egrep '^[-+]CONFIG_' ) || true
 
 	sed     -e '1i KCFLAGS=-march=native -mtune=native' \
 		-e "s/^\(EXTRAVERSION =\).*/\\1 $extraVer/" \
@@ -67,89 +63,77 @@ build() {
 	MAKEFLAGS="-j${JOBS:-$(nproc)} $MAKEFLAGS" \
 		make all
 
-	# save the old sources, modules and boot files, assuming:
-	#  - /lib/modules/$K are uniq
-	#  - old source can be uniq in /usr/src/linux-$K
-	#  - the current kernel is /boot/vmlinuz
-	#  - the current map is /boot/System.map
-
-	install --directory $PKG/boot
-	install --directory $PKG/lib/modules
-	install --directory $PKG/usr/src
-
-	[ ! -f /boot/vmlinuz ] || \
-		install --mode=0644 /boot/vmlinuz    $PKG/boot/vmlinuz.$prevName
-	[ ! -f /boot/System.map ] || \
-		install --mode=0644 /boot/System.map $PKG/boot/System.map.$prevName
-
-	set -o pipefail
-
-	bsdtar  --cd /lib/modules        \
-		--create                 \
-		--file -                 \
-		--exclude $prevK/source  \
-		--exclude $prevK/build   \
-		--no-fflags              \
-		$prevK                   \
-	| pxz -c > $PKG/lib/modules/$prevArc
-
-	if [ -L /lib/modules/$prevK/source ]; then
-		prevSRC=$(readlink /lib/modules/$prevK/source)
-		if [ -d "$prevSRC" ]; then
-			bsdtar  --cd $(dirname $prevSRC)                  \
-				--create                                  \
-				--file -                                  \
-				-s "/^$(basename $prevSRC)/linux-$prevK/" \
-				--no-fflags                               \
-				$(basename $prevSRC)                      \
-			| pxz -c > $PKG/usr/src/$prevArc
-		else
-			prevSRC=
-		fi
-	fi
-
-	[ -f $PKG/usr/src/$prevArc ]                 \
-		|| bsdtar                            \
-			--create                     \
-			--file $PKG/usr/src/$prevArc \
-			--xz                         \
-			--files-from /dev/null
-
-	install --mode=0644 arch/x86/boot/bzImage $PKG/boot/vmlinuz.$nextName
-	install --mode=0644 System.map            $PKG/boot/System.map.$nextName
-
 	local nextK=$(make kernelrelease)
 
-	make modules_install INSTALL_MOD_PATH=$PKG \
+	install --directory --mode=0755 $PKG/{boot,lib/modules,usr/src}
+
+	[[ -f /boot/vmlinuz ]] \
+		&& install --mode=0644 /boot/vmlinuz    $PKG/boot/vmlinuz.prev
+	[[ -f /boot/System.map ]] \
+		&& install --mode=0644 /boot/System.map $PKG/boot/System.map.prev
+
+	install --mode=0644 arch/x86/boot/bzImage       $PKG/boot/vmlinuz.next
+	install --mode=0644 System.map                  $PKG/boot/System.map.next
+
+	linux_modules_archive /lib/modules "$prevK" prev.tar.xz
+
+	make modules_install INSTALL_MOD_PATH="$PKG" \
 		INSTALL_MOD_STRIP="--strip-debug --remove-section=.note.gnu.build-id"
+	linux_modules_archive $PKG/lib/modules "$nextK" next.tar.xz
+	rm -rf                $PKG/lib/modules/$nextK
 
-	bsdtar  --cd $PKG/lib/modules            \
-		--create                         \
-		--file -                         \
-		--exclude $nextK/source          \
-		--exclude $nextK/build           \
-		--no-fflags                      \
-		$nextK                           \
-	| pxz -c > $PKG/lib/modules/$nextArc
-
-	rm -rf $PKG/lib/modules/$nextK
-
-	if [ "$prevSRC" != "" ]; then
-		make clean
-		bsdtar  --cd ..                       \
-			--create                      \
-			--file -                      \
-			 -s "/^$linux/linux-$nextK/"  \
-			--no-fflags                   \
-			$linux                        \
-		| pxz -c > $PKG/usr/src/$nextArc
-	else
-		bsdtar  --create                     \
-			--file $PKG/usr/src/$nextArc \
-			--xz                         \
-			--files-from /dev/null
+	if [[ -L "/lib/modules/$prevK/source" ]]; then
+		prevSRC=$(readlink "/lib/modules/$prevK/source")
+		[[ ! -d $prevSRC ]] && prevSRC=
 	fi
 
-	echo $prevK >$PKG/boot/$prevName
-	echo $nextK >$PKG/boot/$nextName
+	if [[ $prevSRC ]]; then
+		linux_src_archive "${prevSRC%/*}" "${prevSRC##*/}" "$prevK" prev.tar.xz
+		make clean
+		linux_src_archive ..              "$linux"         "$nextK" next.tar.xz
+	else
+		linux_empty_src_archive prev.tar.xz
+		linux_empty_src_archive next.tar.xz
+	fi
+
+	printf '%s\n' "$prevK" >$PKG/boot/prev
+	printf '%s\n' "$nextK" >$PKG/boot/next
+}
+
+linux_modules_archive() {
+	local src=$1
+	local   K=$2
+	local arc=$3
+
+
+	bsdtar  --cd "$src"                \
+		--create                   \
+		--file -                   \
+		--exclude "$K/source"      \
+		--exclude "$K/build"       \
+		--no-fflags                \
+		"$K"                       \
+	| pxz -c > $PKG/lib/modules/$arc
+}
+
+linux_src_archive() {
+	local  dir=$1
+	local name=$2
+	local    K=$3
+	local  arc=$4
+
+	bsdtar  --cd "$dir"            \
+		--create               \
+		--file -               \
+		-s "/^$name/linux-$K/" \
+		--no-fflags            \
+		"$name"                \
+	| pxz -c > $PKG/usr/src/$arc
+}
+
+linux_empty_src_archive() {
+	bsdtar  --create                 \
+		--file "$PKG/usr/src/$1" \
+		--xz                     \
+		--files-from /dev/null
 }
