@@ -45,9 +45,4 @@ wmsupermon - Universal Monitoring Dockapp
 	http://repo.or.cz/dockapps.git/blob_plain/HEAD:/wmsupermon/example-wmsupermonrc
 		(change 'smooth' to '-smooth')
 
-Not installed
-	wmfsm - crashes in containers: "m4 - double free or corruption"
-	wmcpufreq - depends on contrib/cpufrequtils
-	wmglobe - depends on libungif
-
 Sources/READMEs: http://repo.or.cz/dockapps.git/

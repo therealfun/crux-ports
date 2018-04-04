@@ -4,9 +4,9 @@
 # Depends on:   alsa-lib libdockapp libical lm_sensors upower
 
 name=windowmaker-dockapps
-version=20171004
-release=6
-commit=6434c272b3e7a8bca26be90417eabfd26bcce554
+version=20180403
+release=1
+commit=aba739e980e297bb15ae5b7fb28014c3aab246ee
 source=(http://repo.or.cz/dockapps.git/snapshot/$commit.tar.gz .watch)
 
 build() {
@@ -31,6 +31,10 @@ build() {
 	make -C wmcalc wmcalc           install DESTDIR=$PKG PREFIX=/usr CONF=/usr/etc
 	make -C wmcliphist all          install DESTDIR=$PKG PREFIX=/usr
 	make -C wmhexaclock all         install INSPATH=$PKG/usr/bin
+	make -C wmifinfo all            install DESTDIR=$PKG PREFIX=/usr
+	make -C wmitime                 install DESTDIR=$PKG PREFIX=/usr
+	make -C wmjiface/src            install prefix=$PKG/usr/bin
+	make -C wmmenu                  install prefix=$PKG/usr MANDIR=$PKG/usr/share/man
 	make -C wmSMPmon/wmSMPmon all   install BINDIR=$PKG/usr/bin/ MANDIR=$PKG/usr/share/man/
 
 	echo "$PKG/usr" > wmcalclockkbd/PREFIX
@@ -41,6 +45,10 @@ build() {
 	install -Dm755 wmckgmail/wmckgmail/wmckgmail   $PKG/usr/bin/
 	install -Dm644 wmckgmail/wmckgmail/wmckgmail.1 $PKG/usr/share/man/man1/
 
+	make -C wmjmail/src
+	install -Dm755 wmjmail/src/wmjmail $PKG/usr/bin/
+	install -Dm755 wmjmail/src/mailchk $PKG/usr/bin/
+
 	for dir in wmail
 	do
 		pushd $dir
@@ -50,7 +58,8 @@ build() {
 		popd
 	done
 
-	for dir in cnslock wmacpiload wmbatteries wmbattery wmbiff wmbutton wmclock wmcpuload wmget wmgtemp
+	for dir in cnslock wmacpiload wmbatteries wmbattery wmbiff wmbutton wmclock wmcpuload wmget wmgtemp \
+			wmifs wmix wmmemload wmmon wmmoonclock wmmp3
 	do
 		pushd $dir
 		autoreconf -i
@@ -59,3 +68,7 @@ build() {
 		popd
 	done
 }
+	# wmfsm - crashes in containers: "m4 - double free or corruption"
+	# wmcpufreq - depends on contrib/cpufrequtils
+	# wmglobe - depends on libungif
+	# wmmixer-alsa - deprecated code
