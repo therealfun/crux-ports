@@ -147,8 +147,8 @@ upkg_verify() {
 }
 
 upkg_ask() {
-	upkg_prompt_port_changes_and_confirm || exit 1
-	upkg_save_port_dir                   || exit 1
+	upkg_prompt_port_changes_and_confirm "$@" || exit 1
+	upkg_save_port_dir                        || exit 1
 }
 
 upkg_prompt_port_changes_and_confirm() {
@@ -157,10 +157,16 @@ upkg_prompt_port_changes_and_confirm() {
 	diff -Ndur "$last/" "$port_dir/"                && return 0
 
 	info "Port '$port_name' has changed since the last build."
-	upkg_accept_NO "Continue?" \
-		&& return 1
 
-	return 0
+	if [[ $1 == -m ]]; then
+		upkg_accept_YES "Continue?" \
+			&& return 0
+		return 1
+	else
+		upkg_accept_NO "Continue?" \
+			&& return 1
+		return 0
+	fi
 }
 
 upkg_save_port_dir() {
@@ -168,7 +174,7 @@ upkg_save_port_dir() {
 }
 
 upkg_build() {
-	upkg_ask
+	upkg_ask "$@"
 	upkg_build_needed "$@" || exit 0
 
 	[[ -e $TARGET ]] && ( set -x; rm "$TARGET" || exit 1 )
