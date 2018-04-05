@@ -28,8 +28,9 @@ git_func() {
 [[ $1 == "--repos" ]] && { printf '%s\n' "${ports[@]}" | sort -u; exit; }
 [[ $1 == "--git"   ]] && { git_func "${@:2}"; exit; }
 [[ $1 == "--last"  ]] && {
-	git_func diff "$(cat .uportstag)..."
-	git describe --abbrev=0 --tags > .uportstag
+	last=$(git describe --abbrev=0 --tags)
+	git_func diff "$(cat .uportstag)" "$last"
+	printf '%s\n' "$last" > .uportstag
 	exit
 }
 
@@ -41,9 +42,9 @@ printf '%s\n' "${ports[@]}" | sort -u | shuf | while read -r port
 do
 	pf=( "$conf_dir/$port"[.]{git,rsync,httpup} )
 	(( ${#pf[@]} )) \
-		&& printf 'timeout 10m nice -n19 ionice -c idle "%s" "%s" >> "%s" 2>&1 \n' \
+		&& printf 'timeout 10m "%s" "%s" >> "%s" 2>&1 \n' \
 			"$conf_dir/drivers/${pf##*.}.local" "$pf" ".update.$port"
-done | xargs -L1 -P$(( $(nproc) + 1 )) -I{} sh -c '{} || true'
+done | xargs -L1 -P10 -I{} sh -c '{} || true'
 
 logs=( .update.* )
 (( ! ${#logs[@]} )) || {

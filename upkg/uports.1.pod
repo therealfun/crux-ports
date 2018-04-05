@@ -38,7 +38,7 @@ B<uports> is almost B<3 times smaller> than B<ports>, but it B<has much more fea
 
 =item B<faster>
 
-B<uports> updates repositories in parallel, being disk and CPU friendly and selecting the fastest possible driver (git, rsync, httpup).
+B<uports> updates repositories in parallel and selects the fastest possible driver (git, rsync, httpup).
 
 =item B<remembers>
 
