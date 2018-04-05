@@ -38,6 +38,16 @@ wmload - load monitor
 
 wmMatrix - Matrix scrolling
 
+wmpop3 - POP3 checker
+	http://repo.or.cz/dockapps.git/blob_plain/HEAD:/wmpop3/README
+
+wmpop3lb - multi POP3 checker
+	http://repo.or.cz/dockapps.git/blob_plain/HEAD:/wmpop3lb/README
+
+wmradio - dockable FM radio
+
+wmsm - System Monitor
+
 wmSMPmon - system monitor
 
 wmsupermon - Universal Monitoring Dockapp

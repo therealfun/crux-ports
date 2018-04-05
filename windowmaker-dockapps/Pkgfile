@@ -1,12 +1,12 @@
 # Description:  Window Maker dockapps collection.
 # URL:          https://www.dockapps.net/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
-# Depends on:   alsa-lib libdockapp libical lm_sensors upower
+# Depends on:   alsa-lib imlib2 libdockapp libical lm_sensors upower
 
 name=windowmaker-dockapps
-version=20180403
+version=20180405
 release=1
-commit=aba739e980e297bb15ae5b7fb28014c3aab246ee
+commit=d56480c377ac042979ea47525982220f36e91dee
 source=(http://repo.or.cz/dockapps.git/snapshot/$commit.tar.gz .watch)
 
 build() {
@@ -15,27 +15,40 @@ build() {
 	install -dm755 $PKG/usr/bin
 	install -dm755 $PKG/usr/share/man/man1
 
-	make -C AlsaMixer.app;  install -Dm755 AlsaMixer.app/AlsaMixer.app $PKG/usr/bin/
-	make -C pclock;         install -Dm755 pclock/src/pclock           $PKG/usr/bin/
-	make -C wmapm/wmapm;    install -Dm755 wmapm/wmapm/wmapm           $PKG/usr/bin/
-	make -C wmCalClock/Src; install -Dm755 wmCalClock/Src/wmCalClock   $PKG/usr/bin/
-	make -C wmcalendar/Src; install -Dm755 wmcalendar/Src/wmCalendar   $PKG/usr/bin/
-	make -C wmdots;         install -Dm755 wmdots/wmdots               $PKG/usr/bin/
-	make -C wmfortune;      install -Dm755 wmfortune/wmfortune         $PKG/usr/bin/
-	make -C wmfu;           install -Dm755 wmfu/wmfu                   $PKG/usr/bin/
-	make -C wmload;         install -Dm755 wmload/wmload               $PKG/usr/bin/
-	make -C wmMatrix;       install -Dm755 wmMatrix/wmMatrix           $PKG/usr/bin/
-	make -C wmsupermon;     install -Dm755 wmsupermon/wmsupermon       $PKG/usr/bin/
+	make -C AlsaMixer.app;     install -Dm755 AlsaMixer.app/AlsaMixer.app $PKG/usr/bin/
+	make -C asbeats;           install -Dm755 asbeats/asbeats             $PKG/usr/bin/
+	make -C pclock;            install -Dm755 pclock/src/pclock           $PKG/usr/bin/
+	make -C wmapm/wmapm;       install -Dm755 wmapm/wmapm/wmapm           $PKG/usr/bin/
+	make -C wmCalClock/Src;    install -Dm755 wmCalClock/Src/wmCalClock   $PKG/usr/bin/
+	make -C wmcalendar/Src;    install -Dm755 wmcalendar/Src/wmCalendar   $PKG/usr/bin/
+	make -C wmdots;            install -Dm755 wmdots/wmdots               $PKG/usr/bin/
+	make -C wmfortune;         install -Dm755 wmfortune/wmfortune         $PKG/usr/bin/
+	make -C wmfu;              install -Dm755 wmfu/wmfu                   $PKG/usr/bin/
+	make -C wmload;            install -Dm755 wmload/wmload               $PKG/usr/bin/
+	make -C wmMatrix;          install -Dm755 wmMatrix/wmMatrix           $PKG/usr/bin/
+	make -C wmomikuzi;         install -Dm755 wmomikuzi/wmomikuzi         $PKG/usr/bin/
+	make -C wmpop3/wmpop3;     install -Dm755 wmpop3/wmpop3/wmpop3        $PKG/usr/bin/
+	make -C wmpop3lb/wmpop3;   install -Dm755 wmpop3lb/wmpop3/wmpop3lb    $PKG/usr/bin/
+	make -C wmsupermon;        install -Dm755 wmsupermon/wmsupermon       $PKG/usr/bin/
+	make -C wmswallow main;    install -Dm755 wmswallow/wmswallow         $PKG/usr/bin/
+	make -C wmymail;           install -Dm755 wmymail/wmymail             $PKG/usr/bin/
 
-	make -C wmacpi                  install PREFIX=$PKG/usr/
-	make -C wmcalc wmcalc           install DESTDIR=$PKG PREFIX=/usr CONF=/usr/etc
-	make -C wmcliphist all          install DESTDIR=$PKG PREFIX=/usr
-	make -C wmhexaclock all         install INSPATH=$PKG/usr/bin
-	make -C wmifinfo all            install DESTDIR=$PKG PREFIX=/usr
-	make -C wmitime                 install DESTDIR=$PKG PREFIX=/usr
-	make -C wmjiface/src            install prefix=$PKG/usr/bin
-	make -C wmmenu                  install prefix=$PKG/usr MANDIR=$PKG/usr/share/man
-	make -C wmSMPmon/wmSMPmon all   install BINDIR=$PKG/usr/bin/ MANDIR=$PKG/usr/share/man/
+	make -C wmtetris/wmtetris;       install -Dm755 wmtetris/wmtetris/wmtetris          $PKG/usr/bin/
+	make -C wmtictactoe/wmtictactoe; install -Dm755 wmtictactoe/wmtictactoe/wmtictactoe $PKG/usr/bin/
+
+	make -C wmacpi                install PREFIX=$PKG/usr/
+	make -C wmcalc         wmcalc install DESTDIR=$PKG PREFIX=/usr CONF=/usr/etc
+	make -C wmcliphist        all install DESTDIR=$PKG PREFIX=/usr
+	make -C wmhexaclock       all install INSPATH=$PKG/usr/bin
+	make -C wmifinfo all          install DESTDIR=$PKG PREFIX=/usr
+	make -C wmitime               install DESTDIR=$PKG PREFIX=/usr
+	make -C wmjiface/src          install prefix=$PKG/usr/bin
+	make -C wmmenu                install prefix=$PKG/usr MANDIR=$PKG/usr/share/man
+	make -C wmppp.app         all install DESTDIR=$PKG PREFIX=/usr SYSCONFDIR=/usr/etc
+	make -C wmsm.app/wmsm         install PREFIX=$PKG/usr/bin/
+	make -C wmsun                 install PREFIX=$PKG/usr
+	make -C wmSMPmon/wmSMPmon all install BINDIR=$PKG/usr/bin/ MANDIR=$PKG/usr/share/man/
+	make -C wmtime                install PREFIX=$PKG/usr
 
 	echo "$PKG/usr" > wmcalclockkbd/PREFIX
 	make -C wmcalclockkbd/pixmaps install
@@ -49,26 +62,52 @@ build() {
 	install -Dm755 wmjmail/src/wmjmail $PKG/usr/bin/
 	install -Dm755 wmjmail/src/mailchk $PKG/usr/bin/
 
+	pushd wmnet
+		xmkmf
+		make install install.man MANPATH=/usr/share/man DESTDIR=$PKG
+	popd
+
+	pushd buttonmaker
+		./autogen.sh
+		./configure --prefix=/usr
+		make install DESTDIR=$PKG
+	popd
+
 	for dir in wmail
 	do
 		pushd $dir
-		autoreconf -i
-		./configure --bindir=$PKG/usr/bin
-		make install
+			autoreconf -i
+			./configure --bindir=$PKG/usr/bin
+			make install
 		popd
 	done
 
-	for dir in cnslock wmacpiload wmbatteries wmbattery wmbiff wmbutton wmclock wmcpuload wmget wmgtemp \
-			wmifs wmix wmmemload wmmon wmmoonclock wmmp3
+	for dir in cnslock wmacpiload wmbatteries wmbattery wmbiff wmbutton \
+			wmclock wmcpuload wmget wmgtemp \
+			wmifs wmix wmmemload wmmon wmmoonclock wmmp3 wmressel \
+			wmshutdown wmtop
 	do
 		pushd $dir
-		autoreconf -i
-		./configure --prefix=/usr
-		make install DESTDIR=$PKG
+			autoreconf -i
+			./configure --prefix=/usr
+			make install DESTDIR=$PKG
 		popd
 	done
+
+	rm -rf $PKG/usr/doc
 }
-	# wmfsm - crashes in containers: "m4 - double free or corruption"
-	# wmcpufreq - depends on contrib/cpufrequtils
-	# wmglobe - depends on libungif
-	# wmmixer-alsa - deprecated code
+# Not installed
+# wmfsm - crashes in containers: "m4 - double free or corruption"
+# wmcpufreq - depends on contrib/cpufrequtils
+# wmglobe - depends on libungif
+# wmmixer - OSS
+# wmmixer-alsa - deprecated code
+# wmsmixer - OSS
+# wmpager - redundant?
+# wmpower - "checking stdio.h usability... no"
+# wmradio - needs xosd
+# wmspaceweather - broken perl script
+# wmThemeCh - redundant?
+# wmtv - deprecated?
+# yawmppp - deprecated gtk1
+# wmArchUp - depends on broken path to dockapps.h
