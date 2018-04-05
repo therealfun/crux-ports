@@ -18,7 +18,8 @@ sub main
 	my @url;
 	my %vars;
 	eval {
-		@url = map { expand_url($_, \$content, \%vars) } @raw
+		@url = map { expand_url($_, \$content, \%vars) }
+		    @raw
 	};
 
 	if ($@) {
@@ -78,8 +79,11 @@ sub expand_string
 	for my $p (@pieces) {
 		my ($expr, $clear) = ($p =~ /^ { (.+?) } (.*) $/x);
 		($expr, $clear) = ($p =~ /^      (\w+)   (.*) $/x) if not $expr;
+
 		die "Can't handle $raw" if not $expr and not $clear;
+
 		$clear =~ s/\\([_-])/$1/g if $clear;    # $name\_$var
+
 		push @url, eval_expr($expr, $content, $vars), $clear;
 	}
 	return join '', @url;
@@ -264,16 +268,36 @@ sub eval_expr
 	}
 }
 
+sub hack_vars
+{
+	my ($name, $content, $vars) = @_;
+
+	if (
+		$$content =~ / ^ $name =
+			\$\(printf \s+ "%i%.2i%.2i%.2i" \s+ \$\{version\/\/\.\/\s\}\) /xm
+	    ) {
+		my $v = expand_var('version', $content, $vars);
+		my @v = split /\./, $v;
+		push @v, 0;
+		return sprintf "%i%.2i%.2i%.2i", @v;
+	}
+
+	return undef;
+}
+
 sub expand_var
 {
 	my ($name, $content, $vars) = @_;
 
 	if (not exists $vars->{$name}) {
-		$$content =~ / ^ $name = ([^\s]+) /xm
-		    or die "unknown variable: $name";
-		my $value = $1;
-		$value =~ s/^"(.+)"$/$1/;
-		my $v = expand_string($value, $content, $vars);
+		my $v = hack_vars(@_);
+		if (not $v) {
+			$$content =~ / ^ $name = ([^\s]+) /xm
+			    or die "unknown variable: $name";
+			my $value = $1;
+			$value =~ s/^"(.+)"$/$1/;
+			$v = expand_string($value, $content, $vars);
+		}
 		$vars->{$name} = $v;
 	}
 
