@@ -408,9 +408,9 @@ f:bb8e8137da8c008f44c6abea4f47ad0c:unionfs-fuse/.watch
 f:b2f5a92c6abcf945c4bad0efd84086d8:upkg/.footprint
 f:9fde35436e48e1cf401f90d1199b3253:upkg/git.driver
 f:c374a42bc090b0a9702939ef9aae30b8:upkg/httpup.driver
-f:0834c6337c4986215d1d0809bf3401d6:upkg/Pkgfile
+f:715a59ff9a03dafb9e5fc5f0e29429ce:upkg/Pkgfile
 f:5f11facd3d0067dbc5982f84ba2ae480:upkg/rsync.driver
-f:5d8bcbc9a3b17bd505d06022a47ecddc:upkg/.signature
+f:f0ba5884e206eb1635dfb32bdaf70b6a:upkg/.signature
 f:b3c509751080a4e60d69a08b13c1d91a:upkg/upkg
 f:549a84504050a1ab8c2b4ae464868631:upkg/upkg-cleanup
 f:0607db918da9593f715f85688770035f:upkg/upkg-collections
@@ -419,7 +419,7 @@ f:24d9769ca4a7dc9c02b1f532ea7ce032:upkg/upkg-deporder
 f:85078298352000bc717cbca44cef2930:upkg/upkg-depsearch
 f:f801bf2ad0d9de9981773099af9976ac:upkg/upkg-deptree
 f:4e84fb13fdd7014dfa090b1cd91fe84a:upkg/upkg-diff
-f:a9f2f59835bb7db646266abc518933c7:upkg/upkg-dl-list
+f:0183a5a3de5fe49bf240933316bf87f4:upkg/upkg-dl-list
 f:c2a6958130949211f826ed77682f1776:upkg/upkg-dsearch
 f:3669047aa2c2fc20b710a4579677a561:upkg/upkg-fsearch
 f:4cbe8eaab475f7a62ef462deefbfc6fe:upkg/upkg-info
@@ -437,10 +437,10 @@ f:c353b20f890fd86ece40bb45efe28c61:uthash/.footprint
 f:0163b13638f74558d15e26b64a8388d2:uthash/Pkgfile
 f:39d38be38c2f48bd5f6c883a0d1a46da:uthash/.signature
 f:66833c7477617e3ce4a562148e7823c3:uthash/.watch
-f:47994e42307b97aca950362477a09e01:windowmaker-dockapps/.footprint
-f:75de52ce9d5ec65534a59677a2d6c8c2:windowmaker-dockapps/Pkgfile
-f:58b49a8495bad0f8d09362eaaede36a4:windowmaker-dockapps/README
-f:a4301f40a9e342bec092a6e4d8a70660:windowmaker-dockapps/.signature
+f:74ac831b43b361e4833524ff35a4f453:windowmaker-dockapps/.footprint
+f:b4ff1a776c0496b01975472045627bf8:windowmaker-dockapps/Pkgfile
+f:46b8c55ed52fb7dd621276b0a5cad047:windowmaker-dockapps/README
+f:d8c5dd6a7ba632259007df8d569ee423:windowmaker-dockapps/.signature
 f:5bea06da568893a85f5c78cd474e9970:windowmaker-dockapps/.watch
 f:586437225b95dc104037733bd8a969f8:windowmaker/.footprint
 f:0a479b9b0f5defde027a590f2a0be83b:windowmaker/Pkgfile
