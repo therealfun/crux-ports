@@ -58,7 +58,7 @@ Name | Version | Description
 [udis86](https://github.com/vmt/udis86/) | 1.7.2.20141225 | Minimalistic disassembler library.
 [uncrustify](http://uncrustify.sf.net/) | 0.66.1 | Source code beautifier for C, C++, C#, ObjectiveC, D.
 [unionfs-fuse](https://github.com/rpodgorny/unionfs-fuse) | 2.0 | Union filesystem using FUSE.
-[upkg](https://github.com/therealfun/crux-ports/upkg) | 0.58 | Micro port utilities.
+[upkg](https://github.com/therealfun/crux-ports/upkg) | 0.59 | Micro port utilities.
 [uthash](https://troydhanson.github.io/uthash) | 2.0.2 | A hash library implemented in C.
 [windowmaker-dockapps](https://www.dockapps.net/) | 20180403 | Window Maker dockapps collection.
 [windowmaker](https://windowmaker.org) | 0.95.8 | A fast, feature rich, easy to configure, and easy to use window manager.
