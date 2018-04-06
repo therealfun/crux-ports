@@ -1,28 +1,14 @@
 # Description: Bash header files.
 # URL:         https://www.gnu.org/software/bash
 # Maintainer:  fun, just.the.real.fun at gmail dot com
-# Depends on:  port-on-rails
 
 name=bash-headers
-version=4.4.19
-commit=b0776d8c49ab4310fa056ce1033985996c5b9807
+version=4.4
 release=1
-source=(
-	# Not all patches have release archives.
-	# https://ftpmirror.gnu.org/gnu/bash/bash-$version.tar.gz
-	"https://git.savannah.gnu.org/gitweb/?p=bash.git;a=snapshot;h=$commit;sf=tgz"
-	.watch
-)
+source=(https://ftp.igh.cnrs.fr/pub/gnu/bash/bash-$version.tar.gz .watch)
 
 build() {
 	cd */
 	./configure --prefix=/usr
 	make .build signames.h builtins/builtext.h install-headers DESTDIR=$PKG
-}
-
-. /usr/lib/port-on-rails/enable-map_remote_source
-
-map_remote_source() {
-	# we have only one remote source
-	echo "$PKGMK_SOURCE_DIR/$name-$version.tgz"
 }
