@@ -1,2 +1,0 @@
-wget "http://compression.ca/pbzip2/" -q -O-  \
-	| sed -n '0,/.*-\([0-9.]*\)\.tar\.gz.*/ s//\1/p'

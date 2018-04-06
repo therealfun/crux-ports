@@ -1,2 +1,0 @@
-wget "https://anonscm.debian.org/gitweb/?p=collab-maint/ltrace.git;a=tags" -q -O-  \
-	| sed -n '0,/.*>Release \([0-9.]*\)<.*/ s//\1/p'
