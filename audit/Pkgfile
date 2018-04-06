@@ -1,21 +1,21 @@
 # Description:  Linux audit userspace.
-# URL:          https://github.com/linux-audit/audit-userspace
+# URL:          https://people.redhat.com/sgrubb/audit
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   python3 swig
 
-name=libaudit
+name=audit
 version=2.8.3
 release=1
-
-source=(.watch https://github.com/linux-audit/audit-userspace/archive/v$version/$name-$version.tar.gz)
+source=(https://people.redhat.com/sgrubb/audit/audit-$version.tar.gz .watch)
 
 build() {
 	cd */
-	ed -s init.d/Makefile.am <<-EOF
-		g/^initdir/s@/init.d@@
+
+	ed -s init.d/Makefile.in <<-EOF
+		g/initdir/s@/init.d@@
 		w
 	EOF
-	./autogen.sh
+
 	opts=(
 		--prefix=/usr --sysconfdir=/etc
 		--disable-zos-remote            # don't depend on openldap
@@ -23,5 +23,6 @@ build() {
 		--enable-silent-rules           # kernel style
 	)
 	./configure "${opts[@]}"
+
 	make install DESTDIR=$PKG
 }

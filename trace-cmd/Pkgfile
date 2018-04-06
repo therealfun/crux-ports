@@ -1,16 +1,13 @@
 # Description:  Ftrace tools.
 # URL:          https://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git
 # Maintainer:   fun, just.the.real.fun at gmail dot com
-# Depends on:   asciidoc libaudit pygtk udis86
+# Depends on:   asciidoc audit pygtk udis86
 
 name=trace-cmd
 version=2.7
 release=2
-
-source=(
-	https://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git/snapshot/trace-cmd-v$version.tar.gz
-	.watch
-)
+source=(https://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git/snapshot/trace-cmd-v$version.tar.gz
+	.watch)
 
 build() {
 	make install_gui install_libs install_doc \

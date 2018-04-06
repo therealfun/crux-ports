@@ -1,0 +1,2 @@
+wget 'https://people.redhat.com/sgrubb/audit' -q -O-  \
+	| sed -n '0,/.*\/audit-\([0-9.]*\)\.tar\.gz.*/ s//\1/p'
