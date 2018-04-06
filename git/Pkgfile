@@ -1,0 +1,19 @@
+# Description:  Distributed version control system.
+# URL:          https://git-scm.com/
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   asciidoc expat python xmlto
+
+name=git
+version=2.17.0
+release=1
+source=(https://cdn.kernel.org/pub/software/scm/git/git-$version.tar.xz .watch)
+
+build() {
+	make install install-man               \
+		-C */                          \
+		prefix=/usr                    \
+		gitexecdir=/usr/lib/git-core   \
+		perllibdir=/usr/lib/perl5/5.24 \
+		NO_GETTEXT=1                   \
+		DESTDIR=$PKG
+}

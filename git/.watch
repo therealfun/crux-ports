@@ -1,0 +1,2 @@
+wget 'https://git-scm.com/' -q -O-  \
+	| sed -n '0,/.*RelNotes\/\([0-9.]*\)\.txt".*/ s//\1/p'
