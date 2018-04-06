@@ -6,7 +6,6 @@ PORTS_DIR=/usr/ports
  pref_dir="$HOME/.config/upkg/pref"
 build_dir="$HOME/.cache/upkg/build"
    libdir=${BASH_SOURCE%/*}
-     nice=(nice -n19 ionice --class idle)
  
 to_remove=()
 to_update=()
@@ -102,7 +101,7 @@ for port in "${to_remove[@]}"
 do
 	read -p "Remove missing port '$port'? [y/N]"
 	[[ ${REPLY,} == y* ]] \
-		&& ${nice[@]} "$libdir/upkg-rm" "$port"
+		&& "$libdir/upkg-rm" "$port"
 done	
 
 readarray -t ports < <( $libdir/upkg-deporder "${to_update[@]}" )
@@ -122,7 +121,7 @@ for spec in "${confirmed[@]}"
 do
 	rebuild=${spec%%|*}
 	port=${spec#*|}
-	${nice[@]} $libdir/upkg-install $rebuild "$port"
+	$libdir/upkg-install $rebuild "$port"
 done
 
 readarray -t names < <( set -x; revdep -i libreoffice )
@@ -132,7 +131,7 @@ for name in "${names[@]}"
 do
 	printf 'Rebuild/reinstall "%s" because of revdep\n' "$name"
 
-	${nice[@]} "$libdir/upkg-install" -r "$name"
+	"$libdir/upkg-install" -r "$name"
 done
 
 [[ -t 0 ]] && {

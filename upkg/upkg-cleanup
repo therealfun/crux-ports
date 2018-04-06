@@ -1,8 +1,24 @@
 #!/bin/bash
 
-keep_dir="$HOME/.local/upkg/keep"
-  libdir=${BASH_SOURCE%/*}
-    nice=(nice -n19 ionice --class idle)
+build_dir="$HOME/.cache/upkg/build"
+ keep_dir="$HOME/.local/upkg/keep"
+   libdir=${BASH_SOURCE%/*}
+
+ clean_orphans=1
+ clean_sources=1
+clean_packages=1
+  clean_builds=1
+
+while [[ $1 == -* ]]
+do
+	case $1 in
+		-o)  clean_orphans=0 ;;
+		-s)  clean_sources=0 ;;
+		-p) clean_packages=0 ;;
+		-b)   clean_builds=0 ;;
+	esac
+	shift
+done
 
 confirm_keep_list() {
 	readarray -t installed < <( pkginfo -i | awk '{print $1}' )
@@ -42,18 +58,76 @@ confirm_keep_list() {
 	(( ${#rm[@]} > 0 ))
 }
 
-[[ -d $keep_dir ]] || mkdir -p "$keep_dir" || exit 1
-while confirm_keep_list; do
-	true
-done
+if (( clean_orphans ))
+then
+	[[ -d $keep_dir ]] || mkdir -p "$keep_dir" || exit 1
+	while confirm_keep_list; do
+		true
+	done
 
+	readarray -t names < <( set -x; revdep -i libreoffice )
+	wait $! || exit 1
 
-readarray -t names < <( set -x; revdep -i libreoffice )
-wait $! || exit 1
+	for name in "${names[@]}"
+	do
+		printf 'Rebuild/reinstall "%s" because of revdep\n' "$name"
 
-for name in "${names[@]}"
+		"$libdir/upkg-install" -r "$name"
+	done
+fi
+
+shopt -s nullglob
+builds=( "$build_dir"/*/ )
+
+if (( clean_builds ))
+then
+	echo "Removing old build dirs from uninstalled ports"
+
+	readarray -t installed < <( pkginfo -i | awk '{print $1}' )
+	comm -23 \
+		<( printf              '%s\n'  "${builds[@]}"    | sort ) \
+		<( printf "$build_dir"'/%s/\n' "${installed[@]}" | sort ) \
+	| xargs -I{} sh -xc "rm -rf '{}'"
+
+	builds=( "$build_dir"/*/ )
+fi
+
+(( clean_sources + clean_packages )) \
+	|| exit 0
+
+echo "Removing old sources/packages"
+for dir in "${builds[@]}"
 do
-	printf 'Rebuild/reinstall "%s" because of revdep\n' "$name"
+	dir=${dir%/}
+	port=${dir##*/}
 
-	${nice[@]} "$libdir/upkg-install" -r "$name"
+	sources=$( "$libdir/upkg-dl-list" "$dir/Pkgfile" 2>/dev/null )
+	readarray -t pkgs < <(
+		find "$dir/" -maxdepth 1 -name "$port#*.pkg.tar*" -printf '%T@ %P\n' \
+		| sort -nr \
+		| awk '{print $2}' \
+		| head -2
+	) 2>/dev/null
+	re_pkg="^$port#.*.pkg.tar.*"
+
+	shopt -s dotglob
+	for f in "$dir"/*
+	do
+		name=${f##*/}
+		if [[ -L $f ]]
+		then    # keep symlinks
+			continue
+		elif [[ $name =~ $re_pkg ]]
+		then    # keep the last 2 packages
+			re_f=" $name "
+			(( clean_packages ))                       \
+				&& [[ ! " ${pkgs[*]} " =~ $re_f ]] \
+				&& sh -xc "rm -f '$f'"
+		elif (( clean_sources ))
+		then    # keep the last sources
+			re_f=" $name "
+			[[ ! " ${sources[*]##*/} " =~ $re_f ]] \
+				&& sh -xc "rm -rf '$f'"
+		fi
+	done
 done

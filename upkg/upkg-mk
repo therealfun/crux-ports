@@ -18,7 +18,7 @@ main() {
 		-v)  upkg_setup "${2:-$PWD}"; upkg_verify           ;;
 		-r)  upkg_setup "${2:-$PWD}"; upkg_build       "$1" ;;
 		-m)  upkg_setup "${2:-$PWD}"; upkg_build       "$1" ;;
-		-s)  upkg_setup "${2:-$PWD}"; upkg_sign             ;;
+		-s)  upkg_setup "${2:-$PWD}"; upkg_sign         cmd ;;
 		-i)  upkg_setup "${2:-$PWD}"; upkg_install          ;;
 		-c)  upkg_clean "${2:-$PWD}"                        ;;
 		-*)  abort "unknown option $1"                      ;;
@@ -342,7 +342,6 @@ upkg_build_end() {
 }
 
 upkg_pack() {
-	upkg_fix_file_perms    || return 1
 	upkg_strip_files       || return 1
 	upkg_compress_manpages || return 1
 	upkg_before_packing    || return 1
@@ -358,10 +357,6 @@ upkg_pack() {
 			&& sync                                         \
 			&& mv "$target0" "$target"
 	) || abort "Packing failed"
-}
-
-upkg_fix_file_perms() {
-	find -type f -not -writable -exec sh -c "chmod u+w '{}'" ';'
 }
 
 upkg_strip_files() {
@@ -381,14 +376,14 @@ upkg_strip_files() {
 	| awk '
 		BEGIN { FS = ">[ ]+" }
 		function build_cmd(f, mode) {
-			print "strip --strip-" mode " \"" f "\""
+			print "chmod u+w \"" f "\"; set -x; strip --strip-" mode " \"" f "\""
 		}
 		$0 ~ /ELF.*executable.*not stripped/    { build_cmd($1, "all");      next }
 		$0 ~ /ELF.*shared object.*not stripped/ { build_cmd($1, "unneeded"); next }
 		$2 == "current ar archive"              { build_cmd($1, "debug");    next }
 		' \
 	| xargs -r -L1 -I{} \
-		sh -xc '{}'
+		sh -c '{}'
 }
 
 upkg_compress_manpages() {
@@ -414,6 +409,8 @@ upkg_before_packing() {
 }
 
 upkg_sign() {
+	[[ $1 != cmd ]] || upkg_download_sources || exit 1
+
 	if [[ -e $TARGET ]]; then
 		( source Pkgfile; make_footprint > .footprint.new && sync ) \
 			|| abort "Creating footprint failed"
