@@ -2,10 +2,10 @@
 # URL:          https://github.com/therealfun/crux-ports/tree/master/pkgmk.conf
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   bash-headers
-# Nice to have: axel lbzip2 patchelf pbzip2 pigz plzip pxz
+# Nice to have: axel lbzip2 patchelf pigz plzip pxz
 
 name=pkgmk.conf
-version=1.78
+version=1.79
 release=1
 
 source=(

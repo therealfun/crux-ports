@@ -9,6 +9,7 @@ return_bsdtar_compress_option() {
 			;;
 		xz)
 			command -v pxz    >/dev/null && return=pxz
+			# slower
 			command -v xz     >/dev/null && return="xz -z -T0"
 			;;
 		gz)
@@ -24,10 +25,9 @@ return_bsdtar_decompress_option() {
 			;;
 		xz|txz|lzma)
 			command -v punxz    >/dev/null && return=punxz
-			command -v xz       >/dev/null && return="xz -T0"
+			command -v xz       >/dev/null && return="xz -d -T0"
 			;;
 		bz2|tbz2)
-			command -v pbunzip2 >/dev/null && return=pbunzip2
 			command -v lbunzip2 >/dev/null && return=lbunzip2
 			;;
 		gz|tgz)
