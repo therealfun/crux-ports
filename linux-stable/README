@@ -1,8 +1,11 @@
+This port will use your active configuration (/proc/config.gz)
+if /boot/config doesn't exist.
+
 !!! grub support is not tested yet
 
-Your boot manager (lilo, grub) must be configured to use at least two
-entries: /boot/vmlinuz and /boot/vmlinuz.old. When this is done (and
-working), the post-install script should work too.
+Your boot manager (lilo, syslinux, grub) must be configured to use at
+least two entries: /boot/vmlinuz and /boot/vmlinuz.old. When this is done
+(and working), the post-install script should work too.
 
 pkgadd will add/install the following files:
   the kernel built by this Pkgfile:
@@ -35,4 +38,4 @@ The post-install script will:
   - move the sources from /usr/src/tmp/ to /usr/src/
   - move the 'prev' and 'next' files from /boot/
     (vmlinuz.prev -> vmlinuz.old, vmlinuz.next -> vmlinuz)
-  - run lilo or nothing (if grub is used)
+  - run lilo or nothing (if grub or syslinux are used)

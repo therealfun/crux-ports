@@ -12,8 +12,7 @@ source=(http://repo.or.cz/dockapps.git/snapshot/$commit.tar.gz .watch)
 build() {
 	cd */
 
-	install -dm755 $PKG/usr/bin
-	install -dm755 $PKG/usr/share/man/man1
+	install -dm755 $PKG/usr/bin $PKG/usr/share/man/man1
 
 	make -C AlsaMixer.app;     install -Dm755 AlsaMixer.app/AlsaMixer.app $PKG/usr/bin/
 	make -C asbeats;           install -Dm755 asbeats/asbeats             $PKG/usr/bin/

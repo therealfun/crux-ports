@@ -5,16 +5,17 @@
 name=adwaita-icon-theme-png
 version=3.28.0
 release=1
-source=(
-	https://ftp.gnome.org/pub/gnome/sources/${name%-png}/${version%.*}/${name%-png}-$version.tar.xz
-	post-install
-	.watch
+source=(https://ftp.gnome.org/pub/gnome/sources/adwaita-icon-theme/${version%.*}/adwaita-icon-theme-$version.tar.xz
+	post-install .watch
 )
 
 build() {
 	cd */
+
 	rm -fr Adwaita/scalable*
 	mkdir  Adwaita/scalable
+
 	./configure --prefix=/usr
+
 	make install DESTDIR=$PKG
 }

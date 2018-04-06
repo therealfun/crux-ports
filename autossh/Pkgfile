@@ -6,7 +6,7 @@
 name=autossh
 version=1.4f
 release=1
-source=(http://www.harding.motd.ca/$name/$name-$version.tgz .watch)
+source=(http://www.harding.motd.ca/autossh/autossh-$version.tgz .watch)
 
 build() {
 	cd */

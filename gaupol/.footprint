@@ -148,7 +148,7 @@ drwxr-xr-x	root/root	usr/lib/python3.6/site-packages/aeidon/markups/__pycache__/
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/aeidon/temp.py
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/aeidon/unittest.py
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/aeidon/util.py
--rw-r--r--	root/root	usr/lib/python3.6/site-packages/gaupol-1.2-py3.6.egg-info
+-rw-r--r--	root/root	usr/lib/python3.6/site-packages/gaupol-1.3.1-py3.6.egg-info
 drwxr-xr-x	root/root	usr/lib/python3.6/site-packages/gaupol/
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/gaupol/__init__.py
 drwxr-xr-x	root/root	usr/lib/python3.6/site-packages/gaupol/__pycache__/
@@ -312,8 +312,6 @@ drwxr-xr-x	root/root	usr/lib/python3.6/site-packages/gaupol/renderers/__pycache_
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/gaupol/util.py
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/gaupol/view.py
 drwxr-xr-x	root/root	usr/share/
-drwxr-xr-x	root/root	usr/share/appdata/
--rw-r--r--	root/root	usr/share/appdata/gaupol.appdata.xml
 drwxr-xr-x	root/root	usr/share/applications/
 -rw-r--r--	root/root	usr/share/applications/gaupol.desktop
 drwxr-xr-x	root/root	usr/share/gaupol/
@@ -333,9 +331,9 @@ drwxr-xr-x	root/root	usr/share/gaupol/headers/
 -rw-rw-r--	root/root	usr/share/gaupol/headers/subviewer2
 -rw-rw-r--	root/root	usr/share/gaupol/headers/webvtt
 drwxr-xr-x	root/root	usr/share/gaupol/iso-codes/
--rw-rw-r--	root/root	usr/share/gaupol/iso-codes/iso_15924.xml
--rw-rw-r--	root/root	usr/share/gaupol/iso-codes/iso_3166.xml
--rw-rw-r--	root/root	usr/share/gaupol/iso-codes/iso_639.xml
+-rw-rw-r--	root/root	usr/share/gaupol/iso-codes/iso_15924.json
+-rw-rw-r--	root/root	usr/share/gaupol/iso-codes/iso_3166-1.json
+-rw-rw-r--	root/root	usr/share/gaupol/iso-codes/iso_639-2.json
 drwxr-xr-x	root/root	usr/share/gaupol/patterns/
 -rw-r--r--	root/root	usr/share/gaupol/patterns/Latn-en-US.common-error
 -rw-rw-r--	root/root	usr/share/gaupol/patterns/Latn-en-US.common-error.conf
@@ -413,3 +411,5 @@ drwxr-xr-x	root/root	usr/share/icons/hicolor/48x48/apps/
 drwxr-xr-x	root/root	usr/share/man/
 drwxr-xr-x	root/root	usr/share/man/man1/
 -rw-rw-r--	root/root	usr/share/man/man1/gaupol.1.gz
+drwxr-xr-x	root/root	usr/share/metainfo/
+-rw-r--r--	root/root	usr/share/metainfo/gaupol.appdata.xml

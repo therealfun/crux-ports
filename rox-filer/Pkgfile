@@ -1,17 +1,13 @@
 # Description:  Graphical file manager.
-# URL:          https://rox.sf.net/desktop/ROX-Filer/
+# URL:          http://rox.sf.net/desktop/ROX-Filer/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   gtk
 
 name=rox-filer
 version=2.11
 release=6
-source=(
-	https://downloads.sourceforge.net/rox/$name-$version.tar.bz2
-	rox.desktop
-	rox
-	.watch
-)
+source=(https://downloads.sourceforge.net/rox/rox-filer-$version.tar.bz2
+	rox.desktop rox .watch)
 
 build() {
 	cd */

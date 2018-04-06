@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8ihHSD8rwvgv3JCzwv9BBEociC4Ku7fijosdmHZ1ejLW4uCOVtL/gNdY+0+jaXg5oD03IgBTHRd/X01o7wxrLAY=
-SHA256 (Pkgfile) = 32957c3631158975dd1b4de0e43220a5b24ff3f4803a00a61e68433e2fc9cf2d
+RWTcI5d5qAlZ8ualDl/XsESmRWZRf7XMqPxNuM4NRkkFIVuDNodzlG2mEF2Ujrw/XtSZdyhQKqp4zif/c6Cd1r4DtllAXfbLLQQ=
+SHA256 (Pkgfile) = 204fa2a13219ca04767b0e0848f1386a3cf7ac283f85e25aed5c7349a0105a64
 SHA256 (.footprint) = 183e21fb82afa92d7d109836bc93b9c64c2567f7eb3eb1739ced18060330c75b
 SHA256 (torsocks-2.2.0.tar.gz) = 36216a1e30f47fa0e5be84761e0d72133196c8a042716017da56e9439338c87d
 SHA256 (.watch) = 4b83a80b14f8bc9504ea6916de36f547aaafbaa6e4a9a58c48da3c78d3f8fb58

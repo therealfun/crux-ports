@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8h2jQtEhl7Bl4f1lSjTYx8YpFDWDFZW9RZSIk1wbKCTGousdbumYvQxow42aIOxzBZXrI9bqoXBHqvowTfK/Lgs=
-SHA256 (Pkgfile) = 1f4fbf5ab22168d2c1ab27f28fd3efdad90c11de1b7e38dbcd11b117fbd1547c
+RWTcI5d5qAlZ8oeqU5s9UW6O3tfn/dJ9Go1gGaO/UerQUsNkD8vt+plWdvEWb+fu9YInbN7AG3m4Aq5+I8Do+e6r8izt5zwElw4=
+SHA256 (Pkgfile) = 57a12dedb588a4e74a582c026078b0283ed66f19024b688a245240a3901383da
 SHA256 (.footprint) = 388cfe7fd7a5602797289442a20a582fb68611f5fe5b630370930e5c207bf45a
 SHA256 (edac-utils-0.18.tar.gz) = 2a027dbde6c3095807c9fbfa0025bedad38fc839e9967707c1986089ff4c8750
 SHA256 (post-install) = ec687a6f06ee85bd6ae857928aab0b700963c2bc1b33fc45db68ed77bcf153f0

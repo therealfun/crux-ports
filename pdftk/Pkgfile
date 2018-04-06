@@ -6,17 +6,9 @@
 name=pdftk
 version=2.02
 release=1
-source=(
-	https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/$name-$version-src.zip
-	Makefile.Crux
-	.watch
-)
+source=(https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk-$version-src.zip
+	Makefile.Crux .watch)
 
 build() {
-	cp Makefile.Crux $name-$version-dist/$name/
-
-	make install                         \
-		DESTDIR=$PKG                 \
-		-C $name-$version-dist/$name \
-		-f Makefile.Crux
+	make install -C */pdftk -f $SRC/Makefile.Crux DESTDIR=$PKG
 }

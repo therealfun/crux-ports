@@ -7,10 +7,7 @@ name=uchardet
 version=0.0.6.20180121
 release=1
 commit=f136d434f0809e064ac195b5bc4e0b50484a474c
-source=(
-	https://github.com/freedesktop/uchardet/archive/$commit/$name-$version.tar.gz
-	.watch
-)
+source=(https://github.com/freedesktop/uchardet/archive/$commit/uchardet-$version.tar.gz .watch)
 
 build() {
 	cmake */ -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib

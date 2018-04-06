@@ -7,9 +7,9 @@ name=plan9fonts
 version=20130716
 commit=dabdac9923f0bbf56a538a5cf2a65d566ec9bf31
 release=1
-source=(https://github.com/rtrn/$name/archive/$commit/$name-$version.tar.gz .watch)
+source=(https://github.com/rtrn/plan9fonts/archive/$commit/plan9fonts-$version.tar.gz .watch)
 
 build() {
-	install -d $PKG/usr/lib/plan9/font
-	mv */      $PKG/usr/lib/plan9/font/plan9fonts
+	install -dm755 $PKG/usr/lib/plan9/font
+	mv */          $PKG/usr/lib/plan9/font/plan9fonts
 }

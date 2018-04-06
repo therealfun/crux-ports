@@ -7,11 +7,9 @@
 name=windowmaker
 version=0.95.8
 release=4
-source=(
-	https://windowmaker.org/pub/source/release/WindowMaker-0.95.8.tar.gz
+source=(https://windowmaker.org/pub/source/release/WindowMaker-0.95.8.tar.gz
 	https://windowmaker.org/pub/source/release/WindowMaker-extra-0.1.tar.gz
-	.watch
-)
+	.watch)
 
 build() {
 	(cd *extra*;   ./configure --prefix=/usr)

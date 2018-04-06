@@ -6,13 +6,9 @@
 name=docker-tray
 version=1.5
 release=1
-source=(
-	http://icculus.org/openbox/2/docker/docker-$version.tar.gz
-	.watch
-)
+source=(http://icculus.org/openbox/2/docker/docker-$version.tar.gz .watch)
 
 build() {
-	cd */
-	make
-	install -Dm755 docker $PKG/usr/bin/docker-tray
+	make -C */
+	install -Dm755 */docker $PKG/usr/bin/docker-tray
 }

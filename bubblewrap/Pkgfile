@@ -6,10 +6,11 @@
 name=bubblewrap
 version=0.2.0
 release=3
-source=(.watch post-install https://github.com/projectatomic/$name/archive/v$version/$name-$version.tar.gz)
+source=(https://github.com/projectatomic/bubblewrap/releases/download/v$version/bubblewrap-$version.tar.xz
+	post-install .watch)
 
 build() {
 	cd */
-	./autogen.sh --prefix=/usr
+	./configure --prefix=/usr
 	make install DESTDIR=$PKG
 }

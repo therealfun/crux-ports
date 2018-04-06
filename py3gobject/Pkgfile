@@ -10,7 +10,9 @@ source=(https://ftp.gnome.org/pub/GNOME/sources/pygobject/${version%.*}/pygobjec
 
 build() {
 	cd */
+
 	./configure --prefix=/usr --with-python=python3 \
 		--disable-cairo # until some port needs this
+
 	make install DESTDIR=$PKG
 }

@@ -5,15 +5,14 @@
 # Nice to have: adwaita-icon-theme python3-chardet gst-libav gst-plugins-good gst-python
 
 name=gaupol
-version=1.2
-release=4
-source=(
-	https://github.com/otsaloma/$name/archive/$version/$name-$version.tar.gz
-	.watch
-)
+version=1.3.1
+release=1
+source=(https://github.com/otsaloma/gaupol/archive/$version/gaupol-$version.tar.gz .watch)
 
 build() {
 	cd gaupol*/
-	rm -rf po
+
 	python3 setup.py install --root=$PKG
+
+	rm -rf $PKG/usr/share/locale
 }

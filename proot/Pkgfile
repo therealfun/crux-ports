@@ -7,9 +7,8 @@ name=proot
 version=20180206
 release=1
 commit=886a78b5d0ecc2f632e093c1947f1f5e81a64295
-source=(https://github.com/proot-me/PRoot/archive/$commit/$name-$version.tar.gz .watch)
+source=(https://github.com/proot-me/PRoot/archive/$commit/proot-$version.tar.gz .watch)
 
 build() {
-	cd */src
-	make install install-care DESTDIR=$PKG/usr/bin
+	make install install-care -C */src DESTDIR=$PKG/usr/bin
 }

@@ -1,1 +1,1 @@
-chmod u+s /usr/bin/lpd_cancel /usr/bin/lpd_print /usr/bin/lpd_status
+chmod u+s,a+rx /usr/bin/lpd_cancel /usr/bin/lpd_print /usr/bin/lpd_status

@@ -1,15 +1,17 @@
 # Description: Parallel lzip.
-# URL:         http://www.nongnu.org/lzip/plzip.html
+# URL:         https://www.nongnu.org/lzip/plzip.html
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  lzlib
 
 name=plzip
 version=1.7
 release=1
-source=(.watch http://download.savannah.gnu.org/releases/lzip/plzip/plzip-$version.tar.lz)
+source=(https://download.savannah.gnu.org/releases/lzip/plzip/plzip-$version.tar.lz .watch)
 
 build() {
 	cd */
-	./configure --prefix=/usr "CXXFLAGS=$CFLAGS"
+
+	./configure --prefix=/usr "CXXFLAGS=$CFLAGS -Wall -W"
+
 	make install-bin install-man DESTDIR=$PKG
 }

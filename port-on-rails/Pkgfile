@@ -11,6 +11,5 @@ source=(
 )
 
 build() {
-	install -d                   $PKG/usr/lib/port-on-rails
-	install -m644 "${source[@]}" $PKG/usr/lib/port-on-rails
+	install -Dm644 -t $PKG/usr/lib/port-on-rails/ "${source[@]}"
 }

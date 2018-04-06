@@ -37,4 +37,4 @@ readme_gen > README.md
 git diff
 git diff --cached
 git status
-
+for d in */; do upkg-mk -v $d || echo $d; done

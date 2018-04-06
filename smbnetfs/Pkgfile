@@ -1,18 +1,14 @@
 # Description:  FUSE filesystem for samba shares.
-# URL:          https://smbnetfs.sf.net/
+# URL:          http://smbnetfs.sf.net/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   fuse samba glib
 
 name=smbnetfs
 version=0.6.1
 release=1
-source=(
-	https://downloads.sourceforge.net/$name/$name-$version.tar.bz2
-	smbnetfs.auth
-	smbnetfs.patch
-#	https://raw.githubusercontent.com/FerCa/smbnetfs-patch/master/smbnetfs.patch
-	.watch
-)
+source=(https://downloads.sourceforge.net/smbnetfs/smbnetfs-$version.tar.bz2
+	https://raw.githubusercontent.com/FerCa/smbnetfs-patch/71eae8e1b6ba90133ebf9f926989d05325404397/smbnetfs.patch
+	smbnetfs.auth .watch)
 
 build() {
 	cd */
@@ -27,5 +23,6 @@ build() {
 	install -Dm644 $SRC/smbnetfs.auth $PKG/usr/share/smbnetfs/smbnetfs.auth
 	install -Dm644 conf/smbnetfs.conf $PKG/usr/share/smbnetfs/smbnetfs.conf
 	install -Dm644 conf/smbnetfs.host $PKG/usr/share/smbnetfs/smbnetfs.host
+
 	rm -rf $PKG/usr/share/doc
 }

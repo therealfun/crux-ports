@@ -6,9 +6,9 @@
 
 name=aegisub
 version=20170522
-commit=8d3ad9ff68808b14ea0b29f6efffd1ba5089319a
+commit=8d3ad9ff68808b14ea0b29f6efffd1ba5089319a #newer versions needs m4 macros
 release=2
-source=(https://github.com/Aegisub/Aegisub/archive/$commit/$name-$version.tar.gz git_version.h .watch)
+source=(https://github.com/Aegisub/Aegisub/archive/$commit/aegisub-$version.tar.gz git_version.h .watch)
 
 build() {
 	cd */
@@ -28,12 +28,12 @@ build() {
 	EOF
 
 	./autogen.sh
-	configure=(
+	opts=(
 		--prefix=/usr --disable-nls
 		--disable-update-checker # needs https and patch new_next_check_time for 7days
 		--without-system-luajit  # system luajit needs more patches
 	)
-	./configure "${configure[@]}"
+	./configure "${opts[@]}"
 
 	ed -s libaegisub/Makefile <<-EOF
 		,s/(subst \.cpp,\./(patsubst %.cpp,%./

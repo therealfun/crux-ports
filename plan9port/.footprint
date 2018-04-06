@@ -1,11 +1,14 @@
 drwxr-xr-x	root/root	usr/
 drwxr-xr-x	root/root	usr/lib/
 drwxrwxr-x	root/root	usr/lib/plan9/
+-rw-rw-r--	root/root	usr/lib/plan9/.gitignore
+-rw-rw-r--	root/root	usr/lib/plan9/.travis.yml
 -rw-rw-r--	root/root	usr/lib/plan9/CHANGES
 -rw-rw-r--	root/root	usr/lib/plan9/CONTRIBUTING.md
 -rw-rw-r--	root/root	usr/lib/plan9/CONTRIBUTORS
 -rwxrwxr-x	root/root	usr/lib/plan9/INSTALL
 -rw-rw-r--	root/root	usr/lib/plan9/LICENSE
+-rw-r--r--	root/root	usr/lib/plan9/LOCAL.config
 -rw-rw-r--	root/root	usr/lib/plan9/Makefile
 -rw-rw-r--	root/root	usr/lib/plan9/README.md
 -rw-rw-r--	root/root	usr/lib/plan9/TODO
@@ -115,6 +118,7 @@ drwxrwxr-x	root/root	usr/lib/plan9/bin/disk/
 -rwxr-xr-x	root/root	usr/lib/plan9/bin/dump9660
 -rwxr-xr-x	root/root	usr/lib/plan9/bin/echo
 -rwxr-xr-x	root/root	usr/lib/plan9/bin/ed
+-rwxr-xr-x	root/root	usr/lib/plan9/bin/eqn
 -rwxr-xr-x	root/root	usr/lib/plan9/bin/factor
 -rwxr-xr-x	root/root	usr/lib/plan9/bin/factotum
 -rwxr-xr-x	root/root	usr/lib/plan9/bin/file
@@ -4074,6 +4078,8 @@ drwxrwxr-x	root/root	usr/lib/plan9/include/
 -rw-rw-r--	root/root	usr/lib/plan9/include/u.h
 -rw-rw-r--	root/root	usr/lib/plan9/include/utf.h
 -rw-rw-r--	root/root	usr/lib/plan9/include/venti.h
+-rw-r--r--	root/root	usr/lib/plan9/install.log
+-rw-r--r--	root/root	usr/lib/plan9/install.sum
 -rw-rw-r--	root/root	usr/lib/plan9/install.txt
 drwxrwxr-x	root/root	usr/lib/plan9/lib/
 -rw-rw-r--	root/root	usr/lib/plan9/lib/CVS.IEXIST

@@ -5,10 +5,7 @@
 name=torsocks
 version=2.2.0
 release=3
-source=(
-	https://github.com/dgoulet/$name/archive/v$version/$name-$version.tar.gz
-	.watch
-)
+source=(https://github.com/dgoulet/torsocks/archive/v$version/torsocks-$version.tar.gz .watch)
 
 build() {
 	cd */

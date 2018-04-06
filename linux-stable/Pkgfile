@@ -7,14 +7,12 @@
 name=linux-stable
 version=4.15.15
 release=1
-
 source=(
 	https://www.kernel.org/pub/linux/kernel/v4.x/linux-${version%.*}.tar.xz
 	https://www.kernel.org/pub/linux/kernel/v4.x/linux-${version%.*}.tar.sign
 	https://www.kernel.org/pub/linux/kernel/v4.x/patch-$version.xz
 	https://www.kernel.org/pub/linux/kernel/v4.x/patch-$version.sign
-	post-install
-	.watch
+	post-install .watch
 )
 
 build() {
@@ -23,8 +21,7 @@ build() {
 	prevK=$(uname -r)
 	prevSRC=
 
-	# If we rebuild the package (we may have a different config file),
-	# we have to change the kernel version.
+	# rebuild the same version, but probably with a different .config
 	[[ $prevK == "$version$extraVer" ]] \
 		&& extraVer=-auto-$(( release + 1 ))
 
@@ -35,12 +32,12 @@ build() {
 	for sign in $SRC/*.sign
 	do
 		signed=${sign##*/}
-		( xz -cd $PKGMK_SOURCE_DIR/${signed%.sign}.xz | gpg --verify $sign ) || true
+		( punxz -cd $PKGMK_SOURCE_DIR/${signed%.sign}.xz | gpg --verify $sign ) || true
 	done
 
 	cd $linux
 
-	xz -cd $SRC/patch-$version.xz | patch --silent --strip=1 --remove-empty-files
+	punxz -cd $SRC/patch-$version.xz | patch --silent --strip=1 --remove-empty-files
 
 	make mrproper
 
@@ -50,7 +47,7 @@ build() {
 	else
 		cp /boot/config .config 2>/dev/null       \
 			|| zcat /proc/config.gz > .config \
-			|| { echo "Using the defaults is not a good ideea" >&2; exit 1; }
+			|| { echo "ERROR: missing config file" >&2; exit 1; }
 		make olddefconfig
 	fi
 

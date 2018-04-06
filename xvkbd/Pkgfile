@@ -6,18 +6,18 @@
 name=xvkbd
 version=3.9
 release=1
-source=(
-	http://t-sato.in.coocan.jp/xvkbd/xvkbd-$version.tar.gz
-	.watch
-)
+source=(http://t-sato.in.coocan.jp/xvkbd/xvkbd-$version.tar.gz .watch)
 
 build() {
 	cd */
+
 	xmkmf
 	ed -s xvkbd.c <<-EOF
 		g/include/s@/Xaw/@/Xaw3d/@
 		w
 	EOF
+
 	make install install.man DESTDIR=$PKG MANPATH=/usr/share/man CONFDIR=/usr/share/X11
+
 	rm -rf $PKG/usr/lib
 }

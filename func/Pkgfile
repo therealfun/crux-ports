@@ -6,9 +6,7 @@
 name=func
 version=2.7.5
 release=1
-source=(
-	https://github.com/therealfun/$name/archive/$version/$name-$version.tar.gz
-)
+source=(https://github.com/therealfun/$name/archive/$version/$name-$version.tar.gz)
 
 build() {
 	make install -C */ DESTDIR=$PKG

@@ -35,9 +35,9 @@ drwxr-xr-x	root/root	etc/pdq/interfaces/
 -rw-r--r--	root/root	etc/pdq/printrc.example
 drwxr-xr-x	root/root	usr/
 drwxr-xr-x	root/root	usr/bin/
--rwxr-xr-x	root/root	usr/bin/lpd_cancel
--rwxr-xr-x	root/root	usr/bin/lpd_print
--rwxr-xr-x	root/root	usr/bin/lpd_status
+-rw-------	root/root	usr/bin/lpd_cancel
+-rw-------	root/root	usr/bin/lpd_print
+-rw-------	root/root	usr/bin/lpd_status
 -rwxr-xr-x	root/root	usr/bin/pdq
 -rwxr-xr-x	root/root	usr/bin/xpdq
 drwxr-xr-x	root/root	usr/share/

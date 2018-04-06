@@ -7,14 +7,14 @@
 name=gmime3
 version=3.2.0
 release=1
-source=(
-	https://download.gnome.org/sources/gmime/${version%.*}/gmime-$version.tar.xz
-	.watch
-)
+source=(https://download.gnome.org/sources/gmime/${version%.*}/gmime-$version.tar.xz .watch)
 
 build() {
 	cd */
+
 	./configure --prefix=/usr
+
 	make install DESTDIR=$PKG
+
 	rm -rf $PKG/usr/share/gtk-doc
 }

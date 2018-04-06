@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8hMGsHTVUGJ5/odqfK17xiHkeSKVjjZ1chLurOKyrsIhOYRlhpeO65OCQjpbMXt9jiCWjmubroTEW10v98gL0ws=
-SHA256 (Pkgfile) = c75c95359bdc937fa0a569bd16ab378e043852a0f3166bd12ef9f1569bc506ba
+RWTcI5d5qAlZ8ttd2vbKrCDiU9ngEXTvtG5GRpoYtxapQ0ItSRXETR/C1i3l3718/RSwq9Np5ZZzxg8T/iVWrQgnPpxCw4DSJgE=
+SHA256 (Pkgfile) = ab26c4ce5983b4460c6f6c7fded8c9a981022fa990132b8cd1b3079a6066778e
 SHA256 (.footprint) = af640806777990fbcc8a024ed89b788d378b4fbe85034c404cdf10b5496ce0c0
-SHA256 (db83d64e1ce66dfde2ae4adc62f9710924543a1c.tar.gz) = d73d6a03f41454bb6d9f551818ef0c07d1424f521fe8a9968c9d6e98658fab00
+SHA256 (libdockapp-0.7.2.tar.gz) = df7a24f32a70b878bf280f0754529335ffa3bac44bf7a59cd1277f5cf13f4264
 SHA256 (.watch) = a2b59efbbc3dc0b6a38c2674b2bd23d2ff915b9f50be052c9bda1e56d51981b0

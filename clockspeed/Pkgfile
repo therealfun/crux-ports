@@ -8,7 +8,8 @@
 name=clockspeed
 version=0.62
 release=3
-source=(https://cr.yp.to/clockspeed/$name-$version.tar.gz $name.rc clockfix.c .watch)
+source=(https://cr.yp.to/clockspeed/clockspeed-$version.tar.gz
+	clockspeed.rc clockfix.c .watch)
 
 build() {
 	cd */
@@ -19,16 +20,16 @@ build() {
 	make
 
 	install=/usr/bin/install
-	$install -dm0755 $PKG/usr/bin
+	$install -dm755 $PKG/usr/bin
 	for i in clockspeed clockadd clockview sntpclock taiclock taiclockd
 	do
-		$install -Dm0755 $i    $PKG/usr/bin/$i
-		$install -Dm0644 $i.1  $PKG/usr/share/man/man1/$i.1
+		$install -Dm755 $i    $PKG/usr/bin/$i
+		$install -Dm644 $i.1  $PKG/usr/share/man/man1/$i.1
 	done
 
 	gcc -o $PKG/usr/bin/clockfix ../clockfix.c
-	chmod 0755 $PKG/usr/bin/clockfix
+	chmod 755 $PKG/usr/bin/clockfix
 
-	$install -Dm0755 $SRC/$name.rc $PKG/etc/rc.d/$name
-	$install -d                    $PKG/var/lib/$name/etc
+	$install -Dm755 $SRC/$name.rc $PKG/etc/rc.d/$name
+	$install -dm755               $PKG/var/lib/$name/etc
 }

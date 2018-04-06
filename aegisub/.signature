@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8mQclLXts7LXz7MNKwcbTBXrRbiG+cKZzSX/HugqISeFI4o7xgOBMzhDOFpXJKIOsfXSVxkBb2zVBxIByVWz+gQ=
-SHA256 (Pkgfile) = 4495e7c4a88453c710b5284aa020244c0c888191ee78b0b2e7e10bfe020c80a9
+RWTcI5d5qAlZ8qehE2uyIs+S8yezoVzqRC2qqYH/hDFJRcK0xSYYTHarsdLTqsNZ3AYqG7JqjGQ2Fc4ydHsnoK3Ylq4gx+Ejpw4=
+SHA256 (Pkgfile) = 8d02ede04f6d84b2cc3f1ff870b8ed6e218d0ed8590d03ebe1645d7aa6f147cf
 SHA256 (.footprint) = 7a9636ea58e057550fcdcd34a29e044e00c7f88b50a8dc6c43fe8edae6d4e20c
 SHA256 (aegisub-20170522.tar.gz) = 52e219ba14de51a2656ffce57bb2043c0c284be0eb92c90fc8c8ed66059c1d5e
 SHA256 (git_version.h) = 838a470e06a8152cf7c8acce7b76e56f532a3f173b265d8e6f187f0969d9b41a

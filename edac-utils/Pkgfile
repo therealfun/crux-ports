@@ -6,15 +6,15 @@
 name=edac-utils
 version=0.18
 release=2
-source=(
-	https://github.com/grondo/$name/archive/$version/$name-$version.tar.gz
-	post-install
-	.watch
-)
+source=(https://github.com/grondo/edac-utils/archive/$version/edac-utils-$version.tar.gz
+	post-install .watch)
 
 build() {
 	cd */
+
 	./configure --prefix=/usr --mandir=/usr/share/man --sysconfdir=/etc
+
 	make install DESTDIR=$PKG
+
 	mv $PKG/etc/{init,rc}.d
 }

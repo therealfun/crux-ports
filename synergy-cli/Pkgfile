@@ -7,7 +7,7 @@
 name=synergy-cli
 version=1.9.0
 release=1
-source=(https://github.com/symless/synergy-core/archive/v$version-stable/${name%-cli}-$version.tar.gz .watch)
+source=(https://github.com/symless/synergy-core/archive/v$version-stable/synergy-$version.tar.gz .watch)
 
 build() {
 	cmake */ -DSYNERGY_REVISION=1e8e48d6 -DSYNERGY_BUILD_LEGACY_GUI=no

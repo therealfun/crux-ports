@@ -5,12 +5,8 @@
 name=uthash
 version=2.0.2
 release=3
-source=(
-	https://github.com/troydhanson/uthash/archive/v$version/$name-$version.tar.gz
-	.watch
-)
+source=(https://github.com/troydhanson/uthash/archive/v$version/uthash-$version.tar.gz .watch)
 
 build() {
-	install -d $PKG/usr/include/
-	install -m 0644 -t $PKG/usr/include/ */src/*.h
+	install -Dm644 -t $PKG/usr/include/ */src/*.h
 }

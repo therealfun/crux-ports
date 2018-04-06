@@ -11,8 +11,11 @@ source=(https://github.com/mariusae/$name/archive/$commit/$name-$version.tar.gz 
 
 build() {
 	cd */
+
 	export PLAN9=/usr/lib/plan9 BIN=${PKG}$PLAN9/bin PATH=$PATH:$PLAN9/bin
+
 	mk
+
 	mv o.Gitfiles Gitfiles
 	for i in Gitfiles gitfileget gitfilestat gitfileshow
 	do

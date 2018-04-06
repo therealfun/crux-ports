@@ -7,7 +7,7 @@
 name=notmuch
 version=0.26.1
 release=1
-source=(https://notmuchmail.org/releases/$name-$version.tar.gz .watch)
+source=(https://notmuchmail.org/releases/notmuch-$version.tar.gz .watch)
 
 build() {
 	cd */

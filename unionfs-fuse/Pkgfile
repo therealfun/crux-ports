@@ -6,11 +6,8 @@
 name=unionfs-fuse
 version=2.0
 release=6
-source=(
-	https://github.com/rpodgorny/$name/archive/v$version/$name-$version.tar.gz
-	access.patch
-	.watch
-)
+source=(https://github.com/rpodgorny/unionfs-fuse/archive/v$version/unionfs-fuse-$version.tar.gz
+	access.patch .watch)
 
 build() {
 	cd */

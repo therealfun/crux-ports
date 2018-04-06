@@ -7,11 +7,14 @@
 name=ffms2
 version=2.23
 release=6
-source=(.watch https://github.com/FFMS/$name/archive/$version/$name-$version.tar.gz)
+source=(https://github.com/FFMS/ffms2/archive/$version/ffms2-$version.tar.gz .watch)
 
 build() {
 	cd */
+
 	./configure --prefix=/usr
+
 	make install DESTDIR=$PKG
-	rm -r $PKG/usr/share
+
+	rm -rf $PKG/usr/share
 }
