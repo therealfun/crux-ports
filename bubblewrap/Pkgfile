@@ -4,8 +4,8 @@
 # Depends on:   docbook-xsl
 
 name=bubblewrap
-version=0.2.0
-release=3
+version=0.2.1
+release=1
 source=(https://github.com/projectatomic/bubblewrap/releases/download/v$version/bubblewrap-$version.tar.xz
 	post-install .watch)
 
