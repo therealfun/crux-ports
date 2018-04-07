@@ -1,4 +1,4 @@
-# Description: Virtual (on-screen) keyboard for X.
+# Description: Virtual (on-screen) keyboard for X
 # URL:         http://t-sato.in.coocan.jp/xvkbd/
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  xaw3d xorg-libxtst 

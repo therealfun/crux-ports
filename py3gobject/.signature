@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8sevbWdn4wPGrRS0AskhThHlmUhIWFWM1iDaK8HwczJtFVW+znf9l1eG2wWDNJ9/NM/fI/5irO+CAlo1EKO1lAw=
-SHA256 (Pkgfile) = 59dc918f5f2d4f08b8f71a0a699e4d6fa711ad1efe89b35efd40d8d6bacab309
+RWTcI5d5qAlZ8qNj+C5EO2yJASwvWuKsXQjc6DYF2ZRHKDV5xPreaAFj6FMyOn62ve0WXZUjUzVAGUvJDMxf+gMXlrNxUncGXQs=
+SHA256 (Pkgfile) = 3a8eadbba5184b17e791df6177bf4b93df5bd85950aae0d9d0cc412492335eed
 SHA256 (.footprint) = 1302518794abf3a1faf93a8564b6f1c5a9ddfabf6ee3205e8817730154a88767
 SHA256 (pygobject-3.28.2.tar.xz) = ac443afd14fcb9ff5744b65d6e2b380e70510278404fb8684a9b9fb089e6f2ca
 SHA256 (.watch) = 507d53e65ec06f893ab00ce74812423f50bd9e465b273ed3e99240fb78cb05b0

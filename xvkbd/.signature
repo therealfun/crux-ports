@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8hiDpiKGqosPpklOQuhkcbf8U2qq/evfT6rwqEDtzKswEy/v0W+g3oPoKReV1J3b4aqr1x8CBWwUy5AJ28idgwY=
-SHA256 (Pkgfile) = b3b14ad2c24ab810e80407389d1d778e7ec06e75722a94c1805c814e7199549f
+RWTcI5d5qAlZ8nHyah1Id6W6r/hEHz/SYhlgxItJuEq4tj3Sxuni1u+e1blgrNfpWcvVgFPLsoqqtLF0fJ0lePlsvbL5R5Uy7Q0=
+SHA256 (Pkgfile) = f5743bb38c9a0590a8800b623b03501fe1b8cc0020634fb38e7d34453ceae1f3
 SHA256 (.footprint) = b5279ccd233f7233184c9509713c08dea66446a791db6dac407825b12ce8b855
 SHA256 (xvkbd-3.9.tar.gz) = b81c37ddfb7b78993dad15d304f8fd78e540d57c0a72f7e3316fd45fba919a9d
 SHA256 (.watch) = 4d5a64576d19928014aa3b6b40a0ab7cd809d3b2509227452b4e386e86289c99

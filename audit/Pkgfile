@@ -1,4 +1,4 @@
-# Description:  Linux audit userspace.
+# Description:  Linux audit userspace
 # URL:          https://people.redhat.com/sgrubb/audit
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   python3 swig

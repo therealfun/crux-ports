@@ -1,4 +1,4 @@
-# Description: Union filesystem using FUSE.
+# Description: Union filesystem using FUSE
 # URL:         https://github.com/rpodgorny/unionfs-fuse
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  fuse

@@ -1,4 +1,4 @@
-# Description:  Mail indexer based on xapian.
+# Description:  Mail indexer based on xapian
 # URL:          https://notmuchmail.org/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   xapian gmime3 talloc

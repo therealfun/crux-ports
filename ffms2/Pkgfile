@@ -1,4 +1,4 @@
-# Description:  Wrapper library around FFmpeg/libav.
+# Description:  Wrapper library around FFmpeg/libav
 # URL:          https://github.com/FFMS/ffms2
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   ffmpeg

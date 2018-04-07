@@ -1,4 +1,4 @@
-# Description: Bluetooth Audio ALSA Backend.
+# Description: Bluetooth Audio ALSA Backend
 # URL:         https://github.com/Arkq/bluez-alsa
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  alsa-lib bluez sbc

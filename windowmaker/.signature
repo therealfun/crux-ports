@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8vOnAJTFeg8ywQSCAG3LYrAiaibPpSYARMtGc2t3JBZzDoWqJ44fbIQLYxyE5F/4SRD7rc4DDy4JkHxPD7bfWw0=
-SHA256 (Pkgfile) = d7a0c1ba530795c8b124d6cf7eeff40c37ac26d59d67edbf9858bd4027a78833
+RWTcI5d5qAlZ8h0MjxS6rtzDMbSiN7OnY3L6BGzYs1EFbioOib4kjEJbMeo0bNrNqZjkmhknZRTXSsA/XiHwRE4+BCpq2rZ8sQQ=
+SHA256 (Pkgfile) = 255566067337710c2000f7cce34f0fe5ef17e96b7fc385d567f5ce532e51e91f
 SHA256 (.footprint) = 6c0bc0850b816f4c50b6ad374904a703aedf565686200f08e4f661b3268515a2
 SHA256 (WindowMaker-0.95.8.tar.gz) = 9dbf5c5571bb79c4b1584f496c960ee2cd7379af45ef0f58b4b0f487259de88a
 SHA256 (WindowMaker-extra-0.1.tar.gz) = 0b0cc956dec5b583f3e6d95c0172db7da4a4bebc2a51f0036c7257517c803dc2

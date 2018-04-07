@@ -1,4 +1,4 @@
-# Description:  Smaller/fancier prt-get/pkgmk/ports replacements.
+# Description:  Smaller/fancier prt-get/pkgmk/ports replacements
 # URL:          https://github.com/therealfun/crux-ports/upkg
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   git prt-utils

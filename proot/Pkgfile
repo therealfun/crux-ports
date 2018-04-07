@@ -1,4 +1,4 @@
-# Description: Chroot, mount --bind and binfmt_misc without privilege and setup.
+# Description: Chroot, mount --bind and binfmt_misc without privilege and setup
 # URL:         https://proot-me.github.io/
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  talloc uthash

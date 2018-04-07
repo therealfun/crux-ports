@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8l2JhfD+FBiG50c2n+h27cbmEsAmzM/yfrMxp5ErT76i0BPoqn+6hJbi50HuZ/yA2HzzekoTNXz2b7C+6wInNws=
-SHA256 (Pkgfile) = 2a90ec3139093e0cf631a92da526492dcdac8bbd53b3c1789306cd4b8e051b56
+RWTcI5d5qAlZ8jUPfZvjpfSG8DKKhBGKky4PHK1torXJXI9rl7tO12ftWlym/ULBGxCuLIkT1RN0hk8VcNnpAgFHml2pTgc2dgw=
+SHA256 (Pkgfile) = ac9d8ed8b9ee0b7e3020bd6615aa8d7e2ff01cc484d9e6909496c5ea050bdc93
 SHA256 (.footprint) = 30047eb13de80930559064a0b67f16338d4961549de46d2238e675423bde0901
 SHA256 (docker-1.5.tar.gz) = 47629578e89d96d1541c91d040aec4316f03ad6d01dc3eecb8f82a33445c1e4e
 SHA256 (.watch) = 0ab3363307d48ccd5632a128209d8a4c9e8b30a5bf26b1d2a96a309d26800936

@@ -1,4 +1,4 @@
-# Description: Utilities for peforming security checks.
+# Description: Utilities for peforming security checks
 # URL:         https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  libpcap libseccomp

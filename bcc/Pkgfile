@@ -1,4 +1,4 @@
-# Description:  BPF Compiler Collection.
+# Description:  BPF Compiler Collection
 # URL:          https://github.com/iovisor/bcc
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   clang elfutils python3

@@ -1,4 +1,4 @@
-# Description:  Unprivileged sandboxing tool.
+# Description:  Unprivileged sandboxing tool
 # URL:          https://github.com/projectatomic/bubblewrap
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   docbook-xsl

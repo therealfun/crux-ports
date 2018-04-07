@@ -1,4 +1,4 @@
-# Description:  Linux kernel tools.
+# Description:  Linux kernel tools
 # URL:          https://perf.wiki.kernel.org/index.php/Main_Page
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   audit libunwind xmlto

@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8gAIOWib8UkGlbJX0B9xUHvn8KIiwhIm2cHdiINFqvmXl7bpxw+Go+WA9pzqjwtEG3IHVcdtei3FqeFkQfxAkQ4=
-SHA256 (Pkgfile) = 627f0ce3b7b3e06cc3d0b4556378a381909dcf573a740f655a9d32198a404a92
+RWTcI5d5qAlZ8tTe7kVChV7L7Buchd7927oFLFLw/afrELKNz94czRj0Ag6KgdSk+1m9HF+ki0fvSrQ2bb9/TKvDxRDlzoSBjQk=
+SHA256 (Pkgfile) = 6e28028ea3dcec7b7d71c00bddc7d99f30a2134a14c5afb6f7ffb392fcf81450
 SHA256 (.footprint) = 7d486b1bb93d2810a47066e06fbad0ea65c59044b56b222271866ab31c7b893c
 SHA256 (pxz-20151029.tar.gz) = 080d655f84093ba4dafc22b44c3606ee12bad04d2bf1fd6df8877d94b1710251
 SHA256 (punxz) = 4545ea5a8bdda73cbd303ecd82d895fc9cab56c85f5d514d26dca1ee3f8c8f06

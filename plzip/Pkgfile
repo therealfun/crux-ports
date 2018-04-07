@@ -1,4 +1,4 @@
-# Description: Parallel lzip.
+# Description: Parallel lzip
 # URL:         https://www.nongnu.org/lzip/plzip.html
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  lzlib

@@ -1,4 +1,4 @@
-# Description: Gitfiles provides support for browsing Git repositories inside Acme.
+# Description: Browse Git repositories inside Acme
 # URL:         https://github.com/mariusae/gitfiles
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  plan9port

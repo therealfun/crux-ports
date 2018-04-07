@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8gzTOpnlraaBjRco+G6XUbG/IldQsmWBuuSh3FvefZcAMXSVqSxovKyZAx+3xL162EEZNiB+axX6kKhstxl/cwg=
-SHA256 (Pkgfile) = 379ca96d7a9f13315654bb7fb6c3e54da2d10bb85b13fc5c57cd26ba7b214725
+RWTcI5d5qAlZ8qaRI18MYkFwohrmOMqKJt2sKJhwvGIPU11qfxB+zGEXjCGLlCj1gzNj6mfDY/I4UzREb/yr9Sh/SaVDIN2DVQc=
+SHA256 (Pkgfile) = 5832307af48d092fee598dbbccab89ed6ea90c9c0c020162f41e2cabdf8632e3
 SHA256 (.footprint) = 5e7d12bb2c065704cbdee6bb879c964ed1775bd4dd7bb5ea1545584f822d195a
 SHA256 (clockspeed-0.62.tar.gz) = 43539964c4b554794b2da760d138c5975cbc850f1c8ec2ee96f5dba66e0d9eed
 SHA256 (clockspeed.rc) = 1396584695c4e2e2ee7ce8335d7e6fa50e7bcf371031a63a04626aac0b517055

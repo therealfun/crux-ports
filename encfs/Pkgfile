@@ -1,4 +1,4 @@
-# Description: Encrypting filesystem for FUSE.
+# Description: Encrypting filesystem for FUSE
 # URL:         https://github.com/vgough/encfs
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  cmake fuse

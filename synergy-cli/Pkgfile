@@ -1,4 +1,4 @@
-# Description:  Share mouse and keyboard between multiple computers.
+# Description:  Share mouse and keyboard between multiple computers
 # URL:          https://github.com/symless/synergy-core
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   cmake xorg-libxtst

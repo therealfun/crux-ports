@@ -1,4 +1,4 @@
-# Description:  Userspace helper for kernel EDAC drivers.
+# Description:  Userspace helper for kernel EDAC drivers
 # URL:          https://github.com/grondo/edac-utils
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   dmidecode

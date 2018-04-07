@@ -1,4 +1,4 @@
-# Description: Python3 bindings for GObject.
+# Description: Python3 bindings for GObject
 # URL:         https://wiki.gnome.org/Projects/PyGObject
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  gobject-introspection python3

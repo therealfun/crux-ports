@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8oSwDZl0sFUfRkZuD/cTnxazi+TzXzPq4QLmCEz/NyTfqKShr8LzdiCF6Uyd0Qk8xE6XiXReGx6HtXPz+IWLrwQ=
-SHA256 (Pkgfile) = 8790d7205123d5a870a44e5661b4d0b3242a06d55c4fedc2423ecfcf7dce9077
+RWTcI5d5qAlZ8oqnT0fHR9Ab6JGMko5VOnHy+TSpJN/VLoFN3fYkOmUPJnvnZVfR0Cy9mjdWApR1Lz95YqSdjUUiaaGeDxkgTws=
+SHA256 (Pkgfile) = 6013ca72c8bb1718f12b1a4d7157131b9ec179b6f3afa865a7cc2bbe686ba3de
 SHA256 (.footprint) = c99c21afe9508991fe097f700283ebe6bbaa55900cbb445af28025d60a049de7
 SHA256 (plan9port-20180327.tar.gz) = c4cc54cec0afc3ebe7570345f7449f8c1501b22e601962e413c98ba723065d83
 SHA256 (.watch) = 2b94dc3bfa12d42dfa1e2d2d4a96dc95724cdda6b2625ab8400675a62a115eae

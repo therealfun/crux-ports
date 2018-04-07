@@ -1,4 +1,4 @@
-# Description:  FUSE filesystem for samba shares.
+# Description:  FUSE filesystem for samba shares
 # URL:          http://smbnetfs.sf.net/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   fuse samba glib

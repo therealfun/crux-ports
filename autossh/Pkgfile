@@ -1,4 +1,4 @@
-# Description: Automatically restart SSH sessions and tunnels.
+# Description: Automatically restart SSH sessions and tunnels
 # URL:         http://www.harding.motd.ca/autossh/
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  fuse

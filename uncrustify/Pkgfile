@@ -1,4 +1,4 @@
-# Description: Source code beautifier for C, C++, C#, ObjectiveC, D.
+# Description: Source code beautifier for C, C++, C#, ObjectiveC, D
 # URL:         http://uncrustify.sf.net/
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  cmake

@@ -1,4 +1,4 @@
-# Description:  C/C++ library for MIME messages.
+# Description:  C/C++ library for MIME messages
 # URL:          https://developer.gnome.org/gmime/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   gobject-introspection

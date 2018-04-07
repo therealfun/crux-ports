@@ -1,4 +1,4 @@
-# Description:  Encoding detector library.
+# Description:  Encoding detector library
 # URL:          https://www.freedesktop.org/wiki/Software/uchardet/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   cmake

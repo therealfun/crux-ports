@@ -1,4 +1,4 @@
-# Description: Collection of utilities for setting and maintaining a system's time with remarkable precision.
+# Description: Adjust the speed of the system clock
 # URL:         https://cr.yp.to/clockspeed.html
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 # Depends on:  leapsecs
