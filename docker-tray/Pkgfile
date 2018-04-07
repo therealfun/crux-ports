@@ -1,4 +1,4 @@
-# Description:  A system tray.
+# Description:  System tray.
 # URL:          http://icculus.org/openbox/2/docker/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   glib xorg-libx11
