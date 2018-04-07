@@ -37,7 +37,10 @@ build() {
 
 	cd $linux
 
-	punxz -cd $SRC/patch-$version.xz | patch --silent --strip=1 --remove-empty-files
+	if [[ -e $SRC/patch-$version.xz ]]; then
+		punxz -cd $SRC/patch-$version.xz \
+		| patch --silent --strip=1 --remove-empty-files
+	fi
 
 	make mrproper
 
@@ -80,7 +83,7 @@ build() {
 	rm -rf                $PKG/lib/modules/$nextK
 
 	if [[ -L "/lib/modules/$prevK/source" ]]; then
-		prevSRC=$(readlink "/lib/modules/$prevK/source")
+		prevSRC=$(readlink -f "/lib/modules/$prevK/source")
 		[[ ! -d $prevSRC ]] && prevSRC=
 	fi
 
@@ -101,7 +104,6 @@ linux_modules_archive() {
 	local src=$1
 	local   K=$2
 	local arc=$3
-
 
 	bsdtar  --cd "$src"                \
 		--create                   \
