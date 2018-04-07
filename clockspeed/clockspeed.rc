@@ -59,11 +59,6 @@ case $1 in
 		killall clockspeed clockfix >/dev/null 2>&1
 		true
 		;;
-	restart)
-		$0 stop
-		sleep 2
-		$0 start
-		;;
 	set)
 		log set $(ip)
 		sntpclock | /usr/bin/clockadd
@@ -78,7 +73,7 @@ case $1 in
 		sntpclock | /usr/bin/clockview
 		;;
 	*)
-		echo "Usage: $0 [start|stop|restart|show|adjust]"
+		echo "Usage: $0 [start|stop|show|adjust]"
 		;;
 esac
 

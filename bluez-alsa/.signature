@@ -1,7 +1,7 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8uCtL+z5Ar4R/TICfvUt0eM/qFOtH3v+NIfb3gjeLWIRDupKNVfZWL0M0R7ffHrIabr/sKLqwn8EWj4N+9UmPgo=
+RWTcI5d5qAlZ8tqBnBLZN3Ci7QbXN6Pn+T9myWmTNZtGbYm3OOvxoezodxX/EJvKd8C30Ty1ZhQE331S6xC8kmcVTT3+Kep/CQg=
 SHA256 (Pkgfile) = 02907710fbf4068ca1c6fb9dbead74fc8990f9be39c794f32859f7b2e09dae58
 SHA256 (.footprint) = 46094f0ad9e6cb4db06c88b399e0a7bc9c8173b1b40b679f3db4f3e4a1f834bc
 SHA256 (bluez-alsa-1.2.0.20180302.tar.gz) = dfa48e991a6bbb194a9161deb949371155150dabd5cfc1453a8df754b7cbdc84
-SHA256 (bluealsa.rc) = de669ba6f2906d6f969e26186fa9d4d84013784fd0151c876e207f932123a389
+SHA256 (bluealsa.rc) = c1fd7a9ab7586064c69d1889a37fb2b82be704519840c47b75a4ea2cbd8a4067
 SHA256 (.watch) = ad6fb12d1245827d0b60f29eefc8795133d4dafc0e0291dfba4325274ebc3c3c
