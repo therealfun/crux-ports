@@ -1,4 +1,4 @@
-# Description:  Stable kernel version built with the current config.
+# Description:  Latest stable Linux kernel
 # URL:          https://www.kernel.org/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   pxz

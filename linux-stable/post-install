@@ -146,15 +146,6 @@ trap warn EXIT
 
 mv $cleanup.tmp $cleanup || exit 1
 
-if [ -e $prevModules ]; then
-	# If the previous modules still exist after the cleanup,
-	# it means is not ours, and we keep them.
-	rm --recursive --force /lib/modules/tmp/$prevRelease
-else
-	mv /lib/modules/tmp/$prevRelease $prevModules || exit 1
-fi
-mv /lib/modules/tmp/$nextRelease   $nextModules || exit 1
-
 if [ -d /usr/src/tmp/linux-$nextRelease ]; then
 	# The source archive was not empty
 
@@ -165,6 +156,15 @@ if [ -d /usr/src/tmp/linux-$nextRelease ]; then
 fi
 
 rmdir /lib/modules/tmp /usr/src/tmp
+
+if [ -e $prevModules ]; then
+	# If the previous modules still exist after the cleanup,
+	# it means is not ours, and we keep them.
+	rm --recursive --force /lib/modules/tmp/$prevRelease
+else
+	mv /lib/modules/tmp/$prevRelease $prevModules || exit 1
+fi
+mv /lib/modules/tmp/$nextRelease   $nextModules || exit 1
 
 mv /boot/System.map.$prevName /boot/System.old  || exit 1
 mv /boot/System.map.$nextName /boot/System.map  || exit 1
