@@ -19,6 +19,13 @@ if ! grep etc/pkgmk.conf.d /etc/pkgadd.conf >/dev/null ; then
 	EOT
 fi
 
-if [ ! -d /etc/pkgmk.conf.d ]; then
+if [ -d /etc/pkgmk.conf.d ]; then
+	for f in /usr/lib/pkgmk.conf/*.enabled
+	do
+		if [ -e /etc/pkgmk.conf.d/${f##*/} ]; then
+			diff -u {/etc/pkgmk.conf.d,/usr/lib/pkgmk.conf}/${f##*/}
+		fi
+	done
+else
 	mkdir /etc/pkgmk.conf.d
 fi

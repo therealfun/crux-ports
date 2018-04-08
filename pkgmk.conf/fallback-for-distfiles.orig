@@ -11,10 +11,11 @@
 # Per/repository mirrors (from 'nfo' files) will be used anyway.
 #
 # PKGMK_SOURCE_MIRRORS_FALLBACK=(
-#	http://crux.nu/distfiles
-#	http://crux.ster.zone/distfiles
-#	http://distfiles.crux.guru
-#	http://distfiles.serverop.de
+#	https://crux.nu/distfiles
+#	https://crux.ster.zone/distfiles
+#	https://distfiles.crux.guru
+#	https://distfiles.serverop.de
+#	https://crux.ninja/distfiles
 # )
 
 include_repo_src_mirrors() {
