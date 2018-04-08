@@ -1,7 +1,7 @@
 # This is a bash script intended to be sourced from pkgmk (or pkgmk.conf).
 
 REPO_SRC_MIRRORS=(
-	https://raw.githubusercontent.com/therealfun/crux-src/master
+	https://raw.githubusercontent.com/therealfun/crux-src/master # src
 )
 # Mirrors with sources used by ports from this repository.
 #
@@ -17,7 +17,7 @@ REPO_SRC_MIRRORS=(
 # and that symlink could be on the mirrors too.
 
 REPO_PKG_MIRRORS=(
-	https://raw.githubusercontent.com/therealfun/crux-pkg/master
+	https://raw.githubusercontent.com/therealfun/crux-pkg/master # pkg
 )
 # Mirrors with builds from this repository.
 #
