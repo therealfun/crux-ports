@@ -66,6 +66,8 @@ drwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/bin/
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/bin/futex-contention-report
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/bin/intel-pt-events-record
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/bin/intel-pt-events-report
+-rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/bin/mem-phys-addr-record
+-rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/bin/mem-phys-addr-report
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/bin/net_dropmonitor-record
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/bin/net_dropmonitor-report
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/bin/netdev-times-record
@@ -89,6 +91,7 @@ drwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/bin/
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/failed-syscalls-by-pid.py
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/futex-contention.py
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/intel-pt-events.py
+-rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/mem-phys-addr.py
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/net_dropmonitor.py
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/netdev-times.py
 -rwxr-xr-x	root/root	usr/lib/perf-core/scripts/python/sched-migration.py
@@ -194,3 +197,7 @@ drwxr-xr-x	root/root	usr/share/man/man1/
 -rw-r--r--	root/root	usr/share/man/man1/perf-top.1.gz
 -rw-r--r--	root/root	usr/share/man/man1/perf-trace.1.gz
 -rw-r--r--	root/root	usr/share/man/man1/perf.1.gz
+drwxr-xr-x	root/root	usr/share/perf-core/
+drwxr-xr-x	root/root	usr/share/perf-core/strace/
+drwxr-xr-x	root/root	usr/share/perf-core/strace/groups/
+-rwxr-xr-x	root/root	usr/share/perf-core/strace/groups/file

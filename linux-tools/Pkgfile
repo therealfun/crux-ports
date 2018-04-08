@@ -4,8 +4,8 @@
 # Depends on:   audit libunwind xmlto
 
 name=linux-tools
-version=4.15
-release=3
+version=4.16
+release=1
 source=(https://www.kernel.org/pub/linux/kernel/v4.x/linux-$version.tar.xz .watch)
 
 build() {

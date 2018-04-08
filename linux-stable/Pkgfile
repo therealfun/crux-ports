@@ -1,11 +1,11 @@
 # Description:  Latest stable Linux kernel
 # URL:          https://www.kernel.org/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
-# Depends on:   pxz
+# Depends on:   plzip pxz
 # Nice to have: gnupg
 
 name=linux-stable
-version=4.15.15
+version=4.16.1
 release=1
 source=(
 	https://www.kernel.org/pub/linux/kernel/v4.x/linux-${version%.*}.tar.xz
@@ -75,11 +75,11 @@ build() {
 	install --mode=0644 arch/x86/boot/bzImage       $PKG/boot/vmlinuz.next
 	install --mode=0644 System.map                  $PKG/boot/System.map.next
 
-	linux_modules_archive /lib/modules "$prevK" prev.tar.xz
+	linux_modules_archive /lib/modules "$prevK" prev.tar.lz
 
 	make modules_install INSTALL_MOD_PATH="$PKG" \
 		INSTALL_MOD_STRIP="--strip-debug --remove-section=.note.gnu.build-id"
-	linux_modules_archive $PKG/lib/modules "$nextK" next.tar.xz
+	linux_modules_archive $PKG/lib/modules "$nextK" next.tar.lz
 	rm -rf                $PKG/lib/modules/$nextK
 
 	if [[ -L "/lib/modules/$prevK/source" ]]; then
@@ -88,12 +88,12 @@ build() {
 	fi
 
 	if [[ $prevSRC ]]; then
-		linux_src_archive "${prevSRC%/*}" "${prevSRC##*/}" "$prevK" prev.tar.xz
-		make clean
-		linux_src_archive ..              "$linux"         "$nextK" next.tar.xz
+		linux_src_archive "${prevSRC%/*}" "${prevSRC##*/}" "$prevK" prev.tar.lz
+		make mrproper
+		linux_src_archive ..              "$linux"         "$nextK" next.tar.lz
 	else
-		linux_empty_src_archive prev.tar.xz
-		linux_empty_src_archive next.tar.xz
+		linux_empty_src_archive prev.tar.lz
+		linux_empty_src_archive next.tar.lz
 	fi
 
 	printf '%s\n' "$prevK" >$PKG/boot/prev
@@ -112,7 +112,7 @@ linux_modules_archive() {
 		--exclude "$K/build"       \
 		--no-fflags                \
 		"$K"                       \
-	| pxz -c > $PKG/lib/modules/$arc
+	| plzip -c > $PKG/lib/modules/$arc
 }
 
 linux_src_archive() {
@@ -127,12 +127,12 @@ linux_src_archive() {
 		-s "/^$name/linux-$K/" \
 		--no-fflags            \
 		"$name"                \
-	| pxz -c > $PKG/usr/src/$arc
+	| plzip -c > $PKG/usr/src/$arc
 }
 
 linux_empty_src_archive() {
 	bsdtar  --create                 \
 		--file "$PKG/usr/src/$1" \
-		--xz                     \
+		--lzip                   \
 		--files-from /dev/null
 }

@@ -22,8 +22,8 @@ pkgadd will add/install the following files:
     - /boot/next (the 'uname -r' output of the kernel)
     - /boot/vmlinuz.next (the kernel)
     - /boot/System.map.next
-    - /lib/modules/next.tar.xz (the modules)
-    - /usr/src/next.tar.xz
+    - /lib/modules/next.tar.lz (the modules)
+    - /usr/src/next.tar.lz
       (empty if the 'prev' kernel didn't had the sources installed,
       pointed out by the /lib/modules/X/source symlink)
 
@@ -31,8 +31,8 @@ pkgadd will add/install the following files:
     - /boot/prev (the 'uname -r' output of the kernel)
     - /boot/vmlinuz.prev (the kernel)
     - /boot/System.map.prev
-    - /lib/modules/prev.tar.xz (the modules)
-    - /usr/src/prev.tar.xz
+    - /lib/modules/prev.tar.lz (the modules)
+    - /usr/src/prev.tar.lz
       (empty if it didn't had the sources installed)
 
 The post-install script will:

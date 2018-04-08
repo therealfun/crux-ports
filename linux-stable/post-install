@@ -64,8 +64,8 @@ fi
 
 prevName=prev
 nextName=next
-prevArchive=prev.tar.xz
-nextArchive=next.tar.xz
+prevArchive=prev.tar.lz
+nextArchive=next.tar.lz
 prevRelease=$(cat /boot/$prevName)
 nextRelease=$(cat /boot/$nextName)
 
