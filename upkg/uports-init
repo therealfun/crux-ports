@@ -6,15 +6,19 @@ git init -q         || exit 1
 
 printf '%s\n' '/.update.*' '/.uportstag' > .gitignore
 
-# Remove the leftovers from a previous setup
-find -maxdepth 1 -type f -name .git -delete
-
-# Convert git repos to submodules
-printf '%s\n' */.git/ | sed 's@/.git/@@' | while read -r repo
+for g in */.git
 do
-	branch=$(git -C "$repo" rev-parse --abbrev-ref HEAD)
-	   url=$(git -C "$repo" config --get remote.origin.url)
-	git submodule add -f -b "$branch" -- "$url" "$repo"
+	if [[ ! -e "$conf_dir/${g%/*}.git" ]]; then
+		echo "ERROR: $g is present." >&2
+		echo "All files in "$PORTS_DIR" will be keept under git control (git add -A)."
+		echo "Repos synced with git driver (/etc/ports/*.git) will be added as git submodules."
+		exit 1
+	fi
+done
+
+for g in */.git
+do
+	rm -rf -- "$g"
 done
 
 git add -A

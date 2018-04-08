@@ -67,7 +67,7 @@ upkg_setup() {
 	source /etc/pkgmk.conf
 
 	TARGET=$( upkg_package_filename )
-	[[ $TARGET == "" ]] && abort "Invalid Pkgfile"
+	[[ $TARGET == "" ]] && abort "Invalid '$port_dir/Pkgfile'"
 }
 
 upkg_package_filename() {
@@ -82,9 +82,9 @@ upkg_clean() {
 	local portdir=$( readlink -f -- "$1" )
 	local     dir="$build_dir/${portdir##*/}"
 
-	[[ ! -d $dir ]] && return 0
-
-	( set -x; rm -rf "$dir" )
+	if [[ -d $dir ]]; then
+		( set -x; rm -rf -- "$dir" )
+	fi
 }
 
 upkg_download_list() {
@@ -107,7 +107,7 @@ upkg_download_sources() {
 	(( $? == 0 ))
 }
 
-upkg_download_file() (
+upkg_download_file() ( # override me from /etc/pkgmk.conf
 	set -x
 	wget	"--output-document=.$1" \
 		--compression=none      \
@@ -122,14 +122,16 @@ upkg_download_file() (
 
 upkg_verify() {
 	[[ ${PKGMK_IGNORE_MD5SUM:-no} == no && -e .md5sum ]] && {
-		md5sum --check --quiet .md5sum \
-			|| { warning "Md5sum not ok."; return 1; }
-		info "Md5sum ok."
+		md5sum --check --quiet .md5sum || {
+			warning "Md5sum not ok ($port_dir)."
+			return 1
+		}
+		info "Md5sum ok ($port_dir/$port_name)."
 	}
 
 	[[ ${PKGMK_IGNORE_SIGNATURE:-no} != no ]] && return 0
 	[[ ! -e .signature ]] && {
-		info "Signature not found."
+		info "Signature not found ($port_dir)."
 		[[ ${PKGMK_CHECK_SIGNATURE:-no} != no ]] && return 1
 		return 0
 	}
@@ -139,9 +141,10 @@ upkg_verify() {
 		&& signify -q -C -x .signature.real
 	local err=$?
 	rm .signature.real
-	if (( $err ))
-		then warning "Signature verification failed"
-		else info    "Signature ok."
+	if (( $err )); then
+		warning "Signature verification failed ($port_dir)"
+	else
+		info    "Signature ok ($port_dir)."
 	fi
 	return $err
 }
@@ -154,18 +157,13 @@ upkg_ask() {
 upkg_prompt_port_changes_and_confirm() {
 	local err last="$last_dir/$port_name"
 
-	diff -Ndur "$last/" "$port_dir/"                && return 0
+	diff -Ndur "$last/" "$port_dir/" && return 0
 
 	info "Port '$port_name' has changed since the last build."
-
 	if [[ $1 == -m ]]; then
-		upkg_accept_YES "Continue?" \
-			&& return 0
-		return 1
+		  upkg_accept_YES "Continue?"
 	else
-		upkg_accept_NO "Continue?" \
-			&& return 1
-		return 0
+		! upkg_accept_NO  "Continue?"
 	fi
 }
 
@@ -189,19 +187,17 @@ upkg_build() {
 		fi
 	}
 
-	[[ ! -d src    ]] || ( set -x; rm -rf src ) || exit 1
-	[[ ! -d pkg    ]] || ( set -x; rm -rf pkg ) || exit 1
+	[[ ! -d src ]] || ( set -x; rm -rf src ) || exit 1
+	[[ ! -d pkg ]] || ( set -x; rm -rf pkg ) || exit 1
 
 	mkdir src pkg || exit 1
 
 	(
-		if [[ $1 == -m ]]; then
-			# stdout and stderr redirect to log and stdout
+		if [[ $1 == -m ]]; then # stdout and stderr redirect to log and stdout
 			exec > >(tee "$log_dir/$port_name.log") 2>&1
-		else
-			# stdout and stderr redirected to log while stderr only to stdout
+		else    # stdout redirected to log while stderr redirected to log and stdout
 			exec 5>&1 # make fd/5 point to the current fd/1 (stdout)
-			# the new stdout goes to file, stderr is redirected to file and
+			# the new stdout goes to log, stderr is redirected to log and
 			# to the old stdout (not fd/5) through tee
 			exec >"$log_dir/$port_name.log" 2> >(tee /dev/fd/1 /dev/fd/5 >/dev/null)
 		fi
@@ -213,17 +209,17 @@ upkg_build() {
 			PKGMK_ROOT=$port_dir
 			PKGMK_SOURCE_DIR=$PWD
 			readonly SRC="$PWD/src"
-			         PKG="$PWD/pkg"
+			readonly PKG="$PWD/pkg"
 			source Pkgfile
 			unpack_source
-			set -e -x; cd "$SRC"; build
+			\set -e -x; \cd "$SRC"; build
 		)
 		err=$?
 		{ (( $err )) || ! upkg_pack ; } \
 			&& abort "Building '$TARGET' failed."
 			    info "Building '$TARGET' succeeded."
 		upkg_build_end "$err"
-		rm -rf "$PWD/src" "$PWD/pkg"
+		rm -rf src pkg
 	)
 
 	if [[ $1 == -m ]]; then
@@ -233,10 +229,10 @@ upkg_build() {
 }
 
 upkg_build_needed() {
-	[[ $1 == -r        ]]  && return 0
-	[[ $1 == -m        ]]  && return 0
-	upkg_up_to_date        && return 1
-	upkg_download_prebuilt && return 1
+	[[ $1 == -r        ]]            && return 0
+	[[ $1 == -m        ]]            && return 0
+	upkg_up_to_date                  && return 1
+	upkg_download_prebuilt "$TARGET" && return 1
 
 	return 0
 }
@@ -244,7 +240,8 @@ upkg_build_needed() {
 upkg_up_to_date() {
 	local file
 
-	[[ ! -e $TARGET ]] && return 1
+	[[ ! -e $TARGET ]] \
+		&& return 1
 
 	while read -rd '' file
 	do
@@ -256,7 +253,7 @@ upkg_up_to_date() {
 	return 0
 }
 
-upkg_download_prebuilt() {
+upkg_download_prebuilt() { # override me from /etc/pkgmk.conf
 	false
 }
 
@@ -270,8 +267,7 @@ upkg_accept_NO() {
 	[[ $REPLY == "" || ${REPLY,} == n* ]]
 }
 
-# same as pkgmk(1); executed in sub-shell
-unpack_source() {
+unpack_source() { # override me from Pkgfile
 	for file in "${source[@]##*/}"
 	do
 		case $file in
@@ -285,16 +281,17 @@ unpack_source() {
 	done
 }
 
-upkg_bsdtar_unpack() {
+upkg_bsdtar_unpack() { # override me from /etc/pkgmk.conf for parallel processing
 	bsdtar --extract --preserve-permissions -o --directory "$2" --file "$1"
 }
 
-upkg_bsdtar_pack_all() {
+upkg_bsdtar_pack_all() { # override me from /etc/pkgmk.conf for parallel processing
 	bsdtar --create --file "$1" "${@:2}" -- *
 }
 
 upkg_run_script() {
-	[[ ! -e $1 ]] && return 0
+	[[ ! -e $1 ]] \
+		&& return 0
 
 	local script=$(readlink -f "$1")
 
@@ -305,11 +302,12 @@ upkg_run_script() {
 	$sudo sh -x "$script"
 	local err=$?
 	printf '%(%F %T)T RUN %s (%s)\n' -1 "$script" "$err" >> "$log_dir/all"
-	(( $err )) && abort "Script '$script' failed"
+	(( $err )) \
+		&& abort "Script '$script' failed"
 	return 0
 }
 
-upkg_build_start() {
+upkg_build_start() { # override me from /etc/pkgmk.conf
 	stat_started=$(date +%s)
 
 	local ccache cc
@@ -323,7 +321,7 @@ upkg_build_start() {
 	fi
 }
 
-upkg_build_end() {
+upkg_build_end() { # override me from /etc/pkgmk.conf
 	local err=$1
 
 	[[ $stat_ccache == "0" ]] \
@@ -392,35 +390,40 @@ upkg_compress_manpages() {
 	| xargs -r -L1 -P$N -I{}              \
 		sh -xc "gzip -9 '{}'"
 
-	(( $? )) && return 1
+	(( $? )) \
+		&& return 1
 
 	find pkg -xtype l -path '*/man/man*/*'                      \
 	| xargs -r -n1 -P$N -I{}                                    \
 		sh -xc "ln -sf \"\$(readlink -n '{}').gz\" '{}.gz'"
 
-	(( $? )) && return 1
+	(( $? )) \
+		&& return 1
 
 	find pkg -xtype l -path '*/man/man*/*' -print -delete
 }
 
-upkg_before_packing() {
-	# pkgmk.conf (eg. rpath)
+upkg_before_packing() { # override me from pkgmk.conf (eg. check/fix rpath)
 	true
 }
 
 upkg_sign() {
-	[[ $1 != cmd ]] || upkg_download_sources || exit 1
+	if [[ $1 == cmd ]]; then
+		upkg_download_sources || exit 1
+	fi
 
 	if [[ -e $TARGET ]]; then
-		( source Pkgfile; make_footprint > .footprint.new && sync ) \
+		( source Pkgfile; make_footprint > .footprint.new ) \
 			|| abort "Creating footprint failed"
 		info "Footprint updated."
 		diff -Nu .footprint{,.new}
+		sync
 		mv       .footprint.new "$port_dir/.footprint" || exit 1
 		ln -sf   "$port_dir/.footprint"                || exit 1
 	else
 		warning "The package '$TARGET' doesn't exists."
-		upkg_accept_NO "Continue without refreshing the footprint?" && exit 1
+		upkg_accept_NO "Continue without refreshing the footprint?" \
+			&& exit 1
 	fi
 
 	local err
@@ -428,27 +431,24 @@ upkg_sign() {
 
 	if upkg_have_keys
 	then
-		(
-			source Pkgfile
-			sha256sum --tag Pkgfile .footprint "${source[@]##*/}"              \
-				| signify -S -e -x - -q -s "$PKGMK_PRIVATEKEY" -m -        \
-				| sed "s|${PKGMK_PRIVATEKEY%.sec}.pub|${PKGMK_PUBLICKEY}|" \
-				> .signature.new && sync
-		)
-		(( $? )) && abort "Creating signature failed"
+		( source Pkgfile; sha256sum --tag Pkgfile .footprint "${source[@]##*/}" ) \
+			| signify -S -e -x - -q -s "$PKGMK_PRIVATEKEY" -m -               \
+			| sed "s|${PKGMK_PRIVATEKEY%.sec}.pub|${PKGMK_PUBLICKEY}|"        \
+			> .signature.new
+		(( $? )) \
+			&& abort "Creating signature failed"
 		info "Signature updated."
 		diff -Nu .signature{,.new}
+		sync
 		mv       .signature.new "$port_dir/.signature" || exit 1
 		ln -sf   "$port_dir/.signature"                || exit 1
 	else
-		(
-			source Pkgfile
-			md5sum "${source[@]##*/}" | sort -k 2 > .md5sum.new \
-			&& sync
-		)
-		(( $? )) && abort "Creating md5sum failed"
+		( source Pkgfile; md5sum "${source[@]##*/}" | sort -k 2 > .md5sum.new )
+		(( $? )) \
+			&& abort "Creating md5sum failed"
 		info "Md5sum updated."
 		diff -Nu .md5sum{,.new}
+		sync
 		mv       .md5sum.new "$port_dir/.md5sum" || exit 1
 		ln -sf   "$port_dir/.md5sum"             || exit 1
 	fi
@@ -460,8 +460,7 @@ upkg_sign() {
 	fi
 }
 
-# same as pkgmk(1); executed in sub-shell
-make_footprint() (
+make_footprint() ( # override me from Pkgfile
 	set -o pipefail
 	pkginfo --footprint "$TARGET"                                         \
 	| sed "s|\tlib/modules/`uname -r`/|\tlib/modules/<kernel-version>/|g" \
@@ -490,7 +489,8 @@ upkg_have_keys() {
 }
 
 upkg_install() {
-	[[ ! -e $TARGET ]] && abort "Missing package '$TARGET'"
+	[[ ! -e $TARGET ]] \
+		&& abort "Missing package '$TARGET'"
 
 	upkg_ask
 	upkg_build_needed >/dev/null && {
@@ -505,20 +505,23 @@ upkg_install() {
 		make_footprint > .footprint.new || exit 1
 		diff -Nu <( diff_footprint_filter < .footprint | sort -k3 -u ) \
 			 .footprint.new                                        \
-			 >.footprint.diff || exit 1
+			 > .footprint.diff || exit 1
 		wait $!
 	)
 	if (( $? )) || [[ -s .footprint.diff ]]
 	then
 		local  checksum=$( tail +4 .footprint.diff | sha256sum | awk '{print $1}' )
 		local exception="$footprint_dir/$port_name/$checksum"
+
 		warning "Footprint mismatch found:"
 		cat .footprint.diff
+
 		if [[ -e $exception ]]
 		then
 			info "Footprint mismatch ignored: $exception"
 		else
-			upkg_accept_NO "Continue?" && exit 1
+			upkg_accept_NO "Continue?" \
+				&& exit 1
 			mv .footprint.diff "$exception"
 		fi
 	fi
@@ -532,7 +535,7 @@ upkg_install() {
 	local inst_ver=$(pkginfo -i | awk -v "NAME=$port_name" '$1 == NAME {print $2; exit}')
 	if [[ $inst_ver != "" ]]
 	then
-		printf '%(%F %T)T UPGRADING %s from %s\n' -1 "$port_name" "$inst_ver" >> "$log_dir/all"
+		printf '%(%F %T)T UPGRADING %s from %s to %s\n' -1 "$port_name" "$inst_ver" "$new_ver" >> "$log_dir/all"
 		opts=( --upgrade )
 	fi
 
@@ -548,7 +551,7 @@ upkg_install() {
 	upkg_run_script post-install >(tee -a "$log_dir/$port_name.log") 2>&1
 }
 
-diff_footprint_filter() {
+diff_footprint_filter() { # override me from Pkgfile
 	cat
 }
 

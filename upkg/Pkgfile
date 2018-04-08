@@ -5,7 +5,7 @@
 # Nice to have: pkgmk.conf
 
 name=upkg
-version=0.61
+version=0.62
 release=1
 source=(
 	uports uports-init uports.1.pod
