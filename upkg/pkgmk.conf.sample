@@ -1,0 +1,144 @@
+upkg_before_packing() {
+	sanityze_rpath
+	true
+}
+upkg_bsdtar_pack_all() (
+	local archive=$1
+	set -o pipefail
+	set -x
+	bsdtar -c -f - "${@:2}" * | plzip -c > "$archive"
+)
+upkg_bsdtar_unpack() {
+	local archive=$1
+	local dir=$2
+	local filter=
+
+	case ${archive##*.} in
+		lz|tlz)      filter=plzip    ;;
+		xz|txz|lzma) filter=punxz    ;;
+		bz2|tbz2)    filter=lbunzip2 ;;
+		gz|tgz)      filter=unpigz   ;;
+	esac
+
+	if [[ $filter ]]; then
+		( set -o pipefail; $filter -dc "$archive" | bsdtar -p -o -C "$dir" -x -f - )
+	else
+		bsdtar -p -o -C "$dir" -xf "$archive"
+	fi
+}
+upkg_download_src() {
+	local cached="$PKGMK_SOURCE_DIR/$1"
+
+	   [[ -e $cached ]]             \
+	|| dl_source "$cached" "${@:2}" \
+	|| return 1
+
+	cp "$cached" "$1"
+}
+dl_source() {
+	   dl_with_axel           "$@" \
+	|| dl_source_from_repo    "$@" \
+	|| dl_source_from_mirrors "$@" \
+	|| dl_source_from_romster "$@"
+}
+dl_with_axel() (
+	set -x
+	   axel -o "$1.tmp" "$2" \
+	&& sync    "$1.tmp"      \
+	&& mv      "$1.tmp" "$1"
+)
+dl_source_from_repo() {
+	local _pkgfile=$(readlink -f Pkgfile)
+	local  col_dir=${_pkgfile%/*/*}
+
+	[[ -e "$col_dir/nfo" ]] \
+		|| return 1
+
+	local url comment tag other re="^[[alpha]].*://.*"
+	while read -r url comment tag other
+	do
+		   [[ $url     =~ $re ]]       \
+		&& [[ $comment == "#" ]]       \
+		&& [[ $tag     == src ]]       \
+		&& [[ ! $other        ]]       \
+		&& dl_with_axel "$1" "$url/$1" \
+		&& return 0
+	done < "$col_dir/nfo"
+
+	return 1
+}
+dl_source_from_mirrors() {
+	local m mirrors=(
+		https://crux.nu/distfiles
+		https://crux.ster.zone/distfiles
+		https://distfiles.crux.guru
+		https://distfiles.serverop.de
+		https://crux.ninja/distfiles
+	)
+
+	while read -r m
+	do
+		dl_with_axel "$1" "$m/${1##*/}" \
+			&& return 0
+	done < <( printf '%s\n' "${mirrors[@]}" | shuf )
+
+	return 1
+}
+dl_source_from_romster() {
+	local name=${1##*/}
+	local romster=http://romster.me/distfiles/hash
+	local sha=$(awk -v "NAME=($name)"                      \
+			'(NF == 4 && $2 == NAME) { print $4 }' \
+			.signature 2>/dev/null)
+	local md5=$(awk -v "NAME=$name"                        \
+			'(NF == 2 && $2 == NAME) { print $1 }' \
+			< .md5sum 2>/dev/null)
+	{
+		[[ $sha ]] && dl_with_axel "$1" "$romster/$name/sha256/$sha/$name"
+	} || {
+		[[ $md5 ]] && dl_with_axel "$1" "$romster/$name/md5/$md5/$name"
+	}
+}
+upkg_download_pkg() {
+	local cached="$PKGMK_PACKAGE_DIR/$1"
+
+	   [[ -e $cached ]]                    \
+	|| dl_pkg_from_repo "$cached" "${@:2}" \
+	|| return 1
+
+	cp "$cached" "$1"
+}
+dl_pkg_from_repo() {
+	local _pkgfile=$(readlink -f Pkgfile)
+	local  col_dir=${_pkgfile%/*/*}
+
+	[[ -e "$col_dir/nfo" ]] \
+		|| return 1
+
+	local pkg=$1     _pkg=${pkg//\#/%23}
+	local sig=$1.sig _sig=${sig//\#/%23}
+
+	local mirror comment tag other re="^[[alpha]].*://.*"
+	while read -r mirror comment tag other
+	do
+		   [[ $mirror  =~ $re ]]                  \
+		&& [[ $comment == "#" ]]                  \
+		&& [[ $tag     == pkg ]]                  \
+		&& [[ ! $other        ]]                  \
+		&& dl_with_axel "$pkg.tmp" "$mirror/$pkg" \
+		&& dl_with_axel "$sig"     "$mirror/$sig" \
+		&& chk_pkg_sig                            \
+		&& return 0
+	done < "$col_dir/nfo"
+
+	return 1
+}
+chk_pkg_sig() (
+	set -x
+	trap "rm -f '$pkg' '$sig' 2>/dev/null" INT HUP QUIT TERM EXIT
+
+	   mv "$pkg.tmp" "$pkg"           \
+	&& signify -q -C -x "$sig"        \
+	&& trap - INT HUP QUIET TERM EXIT
+)
+

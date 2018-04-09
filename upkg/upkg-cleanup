@@ -101,7 +101,7 @@ do
 	dir=${dir%/}
 	port=${dir##*/}
 
-	sources=$( "$libdir/upkg-dl-list" "$dir/Pkgfile" 2>/dev/null )
+	readarray -t sources < <( "$libdir/upkg-dl-list" "$dir/Pkgfile" 2>/dev/null )
 	readarray -t pkgs < <(
 		find "$dir/" -maxdepth 1 -name "$port#*.pkg.tar*" -printf '%T@ %P\n' \
 		| sort -nr \
@@ -122,12 +122,18 @@ do
 			re_f=" $name "
 			(( clean_packages ))                       \
 				&& [[ ! " ${pkgs[*]} " =~ $re_f ]] \
-				&& sh -xc "rm -f '$f'"
+				&& {
+					echo "Pkg '$name' not in (${pkgs[*]})"
+					sh -xc "rm -f '$f'"
+				}
 		elif (( clean_sources ))
 		then    # keep the last sources
 			re_f=" $name "
 			[[ ! " ${sources[*]##*/} " =~ $re_f ]] \
-				&& sh -xc "rm -rf '$f'"
+				&& {
+					echo "Source '$name' not in (${sources[*]##*/})"
+					sh -xc "rm -rf '$f'"
+				}
 		fi
 	done
 done

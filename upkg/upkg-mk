@@ -121,6 +121,8 @@ upkg_download_src() ( # override me from /etc/pkgmk.conf
 )
 
 upkg_verify() {
+	upkg_download_sources
+
 	[[ ${PKGMK_IGNORE_MD5SUM:-no} == no && -e .md5sum ]] && {
 		md5sum --check --quiet .md5sum || {
 			warning "Md5sum not ok ($port_dir)."
@@ -176,8 +178,6 @@ upkg_build() {
 	upkg_build_needed "$@" || exit 0
 
 	[[ -e $TARGET ]] && ( set -x; rm "$TARGET" || exit 1 )
-
-	upkg_download_sources
 
 	upkg_verify || {
 		if [[ $1 == -m ]]; then
