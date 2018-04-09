@@ -395,11 +395,12 @@ f:bb8e8137da8c008f44c6abea4f47ad0c:unionfs-fuse/.watch
 f:b2f5a92c6abcf945c4bad0efd84086d8:upkg/.footprint
 f:9fde35436e48e1cf401f90d1199b3253:upkg/git.driver
 f:c374a42bc090b0a9702939ef9aae30b8:upkg/httpup.driver
-f:5da6bf805e014149b504873654bbe9a2:upkg/Pkgfile
+f:3b378c172ae144ad20b5aeae18d2efdb:upkg/Pkgfile
+f:1b66ac784cb193bf00a429da53e42952:upkg/pkgmk.conf.sample
 f:5f11facd3d0067dbc5982f84ba2ae480:upkg/rsync.driver
-f:69d19e52b0f01a97dc8a82f643d75d8d:upkg/.signature
+f:d55d8724af7f89fb0469c543d8693cbb:upkg/.signature
 f:b3c509751080a4e60d69a08b13c1d91a:upkg/upkg
-f:9002502cf4ab919b449a2af56be9ce9b:upkg/upkg-cleanup
+f:a71109ab925b85c0a782095aabb87327:upkg/upkg-cleanup
 f:0607db918da9593f715f85688770035f:upkg/upkg-collections
 f:94a8e11370bcf3cfa8577a2d29dd83da:upkg/upkg-depinst
 f:24d9769ca4a7dc9c02b1f532ea7ce032:upkg/upkg-deporder
@@ -412,7 +413,7 @@ f:3669047aa2c2fc20b710a4579677a561:upkg/upkg-fsearch
 f:4cbe8eaab475f7a62ef462deefbfc6fe:upkg/upkg-info
 f:bb6f7f267b23493e04cfa843bbc8011b:upkg/upkg-install
 f:3ede6bfc054e8a2dd7f5e5967f3b6901:upkg/upkg-keep
-f:9fda902904812f70d55363e4a674a24d:upkg/upkg-mk
+f:e02670edaa6687d1aa89b1af37c33dce:upkg/upkg-mk
 f:30fa0b40aca0d00409229a15a1ed1c1d:upkg/upkg-rm
 f:7680e1aca7a9795309b95323b10a3bd9:upkg/upkg-search
 f:c2ed51cb58201fb49bc52b4bca2d7fbc:upkg/upkg-update
