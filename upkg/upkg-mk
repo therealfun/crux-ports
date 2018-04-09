@@ -100,14 +100,14 @@ upkg_download_sources() {
 		[[ -e $file ]] && continue
 
 		info "Downloading '$url'."
-		upkg_download_file "$file" "$url" \
-			|| error "Downloading '$url' failed."
+		upkg_download_src "$file" "$url" \
+			|| abort "Downloading '$url' failed."
 	done < <( upkg_download_list )
 	wait $!
 	(( $? == 0 ))
 }
 
-upkg_download_file() ( # override me from /etc/pkgmk.conf
+upkg_download_src() ( # override me from /etc/pkgmk.conf
 	set -x
 	wget	"--output-document=.$1" \
 		--compression=none      \
@@ -193,7 +193,7 @@ upkg_build() {
 	mkdir src pkg || exit 1
 
 	(
-		if [[ $1 == -m ]]; then # stdout and stderr redirect to log and stdout
+		if [[ $1 == -m ]]; then # stdout and stderr redirected to log and stdout
 			exec > >(tee "$log_dir/$port_name.log") 2>&1
 		else    # stdout redirected to log while stderr redirected to log and stdout
 			exec 5>&1 # make fd/5 point to the current fd/1 (stdout)
@@ -202,7 +202,7 @@ upkg_build() {
 			exec >"$log_dir/$port_name.log" 2> >(tee /dev/fd/1 /dev/fd/5 >/dev/null)
 		fi
 
-		info "Building '$TARGET'."
+		info "Building '$TARGET' ($log_dir/$port_name.log)." >&2
 		upkg_run_script pre-install
 		upkg_build_start
 		(
@@ -216,9 +216,9 @@ upkg_build() {
 		)
 		err=$?
 		{ (( $err )) || ! upkg_pack ; } \
-			&& abort "Building '$TARGET' failed."
-			    info "Building '$TARGET' succeeded."
-		upkg_build_end "$err"
+			&& abort "Building '$TARGET' failed ($build_dir/$port_name)."
+			    info "Building '$TARGET' succeeded." >&2
+		upkg_build_end "$err" >&2
 		rm -rf src pkg
 	)
 
@@ -229,10 +229,10 @@ upkg_build() {
 }
 
 upkg_build_needed() {
-	[[ $1 == -r        ]]            && return 0
-	[[ $1 == -m        ]]            && return 0
-	upkg_up_to_date                  && return 1
-	upkg_download_prebuilt "$TARGET" && return 1
+	[[ $1 == -r        ]]       && return 0
+	[[ $1 == -m        ]]       && return 0
+	upkg_up_to_date             && return 1
+	upkg_download_pkg "$TARGET" && return 1
 
 	return 0
 }
@@ -253,7 +253,7 @@ upkg_up_to_date() {
 	return 0
 }
 
-upkg_download_prebuilt() { # override me from /etc/pkgmk.conf
+upkg_download_package() { # override me from /etc/pkgmk.conf
 	false
 }
 
@@ -358,7 +358,7 @@ upkg_pack() {
 }
 
 upkg_strip_files() {
-	[[ $PKGMK_NO_STRIP && $PKGMK_NO_STRIP != no ]] \
+	[[ ${PKGMK_NO_STRIP:-no} != no ]] \
 		&& return 0
 
 	local                filter=cat
@@ -390,8 +390,9 @@ upkg_compress_manpages() {
 	| xargs -r -L1 -P$N -I{}              \
 		sh -xc "gzip -9 '{}'"
 
-	(( $? )) \
-		&& return 1
+# behave like pkgmk (see FS#1645), because gnupg (and maybe others) has an improper symlink
+#	(( $? )) \
+#		&& return 1
 
 	find pkg -xtype l -path '*/man/man*/*'                      \
 	| xargs -r -n1 -P$N -I{}                                    \
