@@ -222,11 +222,11 @@ f:fad2e8ac5d4ec7714dd985f16ba72ff5:pkgmk.conf/hardening-check.bin
 f:4ac7d645c69387cff744b494b5f38bd1:pkgmk.conf/hardening.orig
 f:70bb9ce9ae357ed964ba4efc8565df97:pkgmk.conf/keep_work_if_failed.orig
 f:a8d8bb3d1f3463bdc612e04e0728a4ae:pkgmk.conf/parallel_make.orig
-f:8790720e0356f25a3bd83d97cf59d427:pkgmk.conf/Pkgfile
-f:824652d18e1590ae06fcbc782c86f125:pkgmk.conf/post-install
+f:e22151d5d92a970a73eb16e1fb344808:pkgmk.conf/Pkgfile
+f:3ccdda67a7ebe138614b3e541ffd7143:pkgmk.conf/post-install
 f:6255cabb527ea9d074bb0dea75efa3ce:pkgmk.conf/README
-f:02e738294280b73a8bc40f278863975c:pkgmk.conf/remove_invalid_rpaths.orig
-f:fd4ec6d07fb64941c0fc788c1d0c31b9:pkgmk.conf/.signature
+f:e7e2ec107c7f84806391b57f1eb3d1c4:pkgmk.conf/remove_invalid_rpaths.orig
+f:c7c31ba924b0970e74e1784cd036a850:pkgmk.conf/.signature
 f:3f77b24a8e77c5eb95ce59ff13cfc826:pkgmk.conf/z-command-line-priority.orig
 f:057f23bc64ca12c9853e966cd13b126c:plan9fonts/.footprint
 f:7a3392a143d1fff7c915266c94bfd6f2:plan9fonts/Pkgfile

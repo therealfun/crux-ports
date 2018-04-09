@@ -33,7 +33,7 @@ Name | Version | Description
 [pax-utils](https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities) | 1.2.2 | Utilities for peforming security checks
 [pdftk](https://www.pdflabs.com/tools/pdftk-server/) | 2.02 | Tool for manipulating PDF documents
 [pdq](https://pdq.sf.net/) | 2.2.7 | Flexible print subsystem
-[pkgmk.conf](https://github.com/therealfun/crux-ports/tree/master/pkgmk.conf) | 1.80 | Plugins for pkgmk
+[pkgmk.conf](https://github.com/therealfun/crux-ports/tree/master/pkgmk.conf) | 1.81 | Plugins for pkgmk
 [plan9fonts](https://github.com/rtrn/plan9fonts) | 20130716 | Various fonts, converted to plan9 subf
 [plan9port](https://9fans.github.io/plan9port/) | 20180327 | Plan 9 from User Space
 [plzip](https://www.nongnu.org/lzip/plzip.html) | 1.7 | Parallel lzip
