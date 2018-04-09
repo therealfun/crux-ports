@@ -58,7 +58,6 @@ drwxr-xr-x	root/root	usr/lib/ports-contrib/
 -rw-r--r--	root/root	usr/lib/ports-contrib/joe9.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/jue.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/jue.pub
--rw-r--r--	root/root	usr/lib/ports-contrib/kazufukurou.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/kde4.rsync
 -rw-r--r--	root/root	usr/lib/ports-contrib/kde5.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/kf5.git
@@ -96,7 +95,6 @@ drwxr-xr-x	root/root	usr/lib/ports-contrib/
 -rw-r--r--	root/root	usr/lib/ports-contrib/romster.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/romster.pub
 -rw-r--r--	root/root	usr/lib/ports-contrib/rtomj.git
--rw-r--r--	root/root	usr/lib/ports-contrib/spfng.git.inactive
 -rw-r--r--	root/root	usr/lib/ports-contrib/stayradiated.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/stdevel.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/swhitton.httpup
@@ -120,7 +118,3 @@ drwxr-xr-x	root/root	usr/lib/ports-contrib/
 -rw-r--r--	root/root	usr/lib/ports-contrib/xfce.pub
 -rw-r--r--	root/root	usr/lib/ports-contrib/z3bra.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/z3bra.pub
-drwxr-xr-x	root/root	usr/share/
-drwxr-xr-x	root/root	usr/share/man/
-drwxr-xr-x	root/root	usr/share/man/man1/
--rw-r--r--	root/root	usr/share/man/man1/portdb-dl.1.gz

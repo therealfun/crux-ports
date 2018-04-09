@@ -3,7 +3,7 @@
 # Maintainer:  fun, just.the.real.fun at gmail dot com
 
 name=ports-contrib
-version=1.85
+version=1.86
 release=1
 source=(portdb-dl portdb-pack ports.archive post-install)
 
