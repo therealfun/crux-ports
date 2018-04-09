@@ -93,8 +93,8 @@ f:3afdb1fc368846c0ee0ab8f9d8134b34:bcc/.watch
 f:f50bed441ee3907631e5bcce0a370134:bluez-alsa/bluealsa.rc
 f:1acea6fc555c585f04b490765df0af2e:bluez-alsa/.footprint
 f:b6ca348fd4166605c3226b3d190c0432:bluez-alsa/Pkgfile
-f:3c4d298b8ed13e564af3944de61c9470:bluez-alsa/.signature
-f:9b1757421246b03b0c01890c658d9051:bluez-alsa/.watch
+f:d150e6134ae20788c1f6cffe93950207:bluez-alsa/.signature
+f:4b90ca9942bf0cf19a4df94f33829e48:bluez-alsa/.watch
 f:cf4e3ac93fa007ccf2d494653754bed7:bubblewrap/.footprint
 f:5de9759b539c3ef298b784a6592133e2:bubblewrap/Pkgfile
 f:8fa1bb4db58eebb6fb02255b8990143d:bubblewrap/post-install
