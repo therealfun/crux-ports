@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8keWMS19czyCM8UeaQ5K41A+jNZiJA32BsobxUJVx9S8A+SmbOyeRohHeVo0/NqZrzLRigZNNBkOPKMKWZAunAE=
-SHA256 (Pkgfile) = 966cbdbf2e43a082c1a8d95021a9cd78bd91f4b7374bf476cc2f1fa894fa2ca7
+RWTcI5d5qAlZ8tA1m65HOnkB1m8DLIMwkUJbpH42OEE8a7rHclYXfJEjEOXT0XPB4kWTONLUiKZ+aywgoMe0vV2qbIMndcELDQE=
+SHA256 (Pkgfile) = ca141c7d1cde8dde17e266e736d27561188836487563e691e3d02278180fce15
 SHA256 (.footprint) = fbba1344ba2194ac378ee2fda8a7b2f6a12c1cbf2e3bdb6a8af544ca99c6b8df
 SHA256 (FS0923.orig) = 2e41800528b0dfb502486efdc744cfdff56b121fb206dd6903dc3d23ceae2b0e
 SHA256 (FS1382.orig) = 10d4779bbaf4f8785b393527299c5ec82dbcfe0e96d7cabd3eb7392462919e48
@@ -16,9 +16,9 @@ SHA256 (fallback-for-distfilez-by-hash.orig) = d5eede1179f2582686f7c1b64726b1fd1
 SHA256 (hardening.orig) = aee847912c831975e0b92fc90dc53c6d059e447891090ac7d59054552c289c06
 SHA256 (keep_work_if_failed.orig) = 1b4e88905f1933f465a157f5092ad61e66e2fc8672f16c4d7f6403a9afb70b6f
 SHA256 (parallel_make.orig) = a4127b9fe1cd215825c0073c90b356adf48430d6da304e7bc8f0d838faa5b6a7
-SHA256 (remove_invalid_rpaths.orig) = 1458fa7bbd295f28278077870edd4404b9bb51b060f86eb47164e2a5cd63b194
+SHA256 (remove_invalid_rpaths.orig) = 9aa98c980b27872de3a8932d3b517e41a5db1a209bff70227a4f03a999f13912
 SHA256 (z-command-line-priority.orig) = 41f8d229716e6571c7530dfbf703f7865b639e0277f19f2c23802f1b799671b7
 SHA256 (getrusage.c) = 37ea76313c3cb37f6a69b130fc5ab2759487ba7d76e721be0bd89198eedeeac5
 SHA256 (hardening-check.bin) = 44158660bec329834258241581d724c92d34b99c0264ac8287bf8911297b69d2
 SHA256 (checksec.bin) = 2a21331e9a4e15804e9d96939b9e6c088766de186db8353d6b315422b98b4473
-SHA256 (post-install) = e485a4e05caee3d34760ba0aa2e7dde012ea51097162c8d113a91ced2a10a374
+SHA256 (post-install) = 51f85b5d49c6c98f4c7055feefcc103bd6dea70fcec928cc6188453be9bef623

@@ -39,7 +39,7 @@ sanityze_rpath() {
 	local start=$(date +%s)
 	echo "Sanityze rpath..."
 
-	local re="^(/usr/lib(64)?(/.*)?|/lib(/.*)?|\$ORIGIN(/.*)?)$"
+	local re='^(/usr/lib(64)?(/.*)?|/lib(/.*)?|\$ORIGIN(/.*)?)$'
 	local file
 	while read -r file
 	do
@@ -56,7 +56,7 @@ sanityze_rpath() {
 
 		(( ${#old[@]} == ${#new[@]} )) && continue
 
-		printf "WARNING: change rpath '%s' -> '%s'\n" "${old[*]}" "${new[*]}" >&2
+		printf "WARNING: change rpath on '$file' '%s' -> '%s'\n" "${old[*]}" "${new[*]}" >&2
 
 		if (( ${#new[@]} == 0 )); then
 			$patchelf --remove-rpath "$file"
