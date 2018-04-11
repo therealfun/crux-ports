@@ -4,9 +4,9 @@
 # Depends on:   alsa-lib imlib2 libdockapp libical lm_sensors upower
 
 name=windowmaker-dockapps
-version=20180405
+version=20180410
 release=1
-commit=d56480c377ac042979ea47525982220f36e91dee
+commit=67f91e77949aebe26d96f01aa4ffef27dc2667df
 source=(http://repo.or.cz/dockapps.git/snapshot/$commit.tar.gz .watch)
 
 build() {
@@ -72,14 +72,11 @@ build() {
 		make install DESTDIR=$PKG
 	popd
 
-	for dir in wmail
-	do
-		pushd $dir
-			autoreconf -i
-			./configure --bindir=$PKG/usr/bin
-			make install
-		popd
-	done
+	pushd $dir
+		autoreconf -i
+		./configure --bindir=$PKG/usr/bin
+		make install
+	popd
 
 	for dir in cnslock wmacpiload wmbatteries wmbattery wmbiff wmbutton \
 			wmclock wmcpuload wmget wmgtemp \

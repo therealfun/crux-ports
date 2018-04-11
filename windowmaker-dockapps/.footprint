@@ -121,7 +121,7 @@ drwxr-xr-x	root/root	usr/share/man/man1/
 -rw-r--r--	root/root	usr/share/man/man1/wmmemload.1.gz
 -rwxr-xr-x	root/root	usr/share/man/man1/wmmenu.1.gz
 -rw-r--r--	root/root	usr/share/man/man1/wmmon.1.gz
--rw-r--r--	root/root	usr/share/man/man1/wmnet.1x.gz
+-r--r--r--	root/root	usr/share/man/man1/wmnet.1x.gz
 -rw-r--r--	root/root	usr/share/man/man1/wmppp.1.gz
 -rw-r--r--	root/root	usr/share/man/man1/wmressel.1.gz
 -rw-r--r--	root/root	usr/share/man/man1/wmshutdown.1.gz
