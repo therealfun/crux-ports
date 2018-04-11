@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8pCsZdozzHodiDOlSTs8vp94CdhHODDo23y1+ETkecXdFN5NI/VYdX2ygxvvZ4t5S5DzqsaZ/hm7htOhXMQlVwc=
-SHA256 (Pkgfile) = 53b79ab90060a565f7a11e168a33057ce69a7da8c5fdf8fce44859f6d38b1e1e
+RWTcI5d5qAlZ8uqiS4PKKHdrdtNy9B/NcniH/AKt++iBdvaxoWGzgszmduJeociEqhwDXhWHE/49FC7VkEKoTbbeVw5pcoI2ugg=
+SHA256 (Pkgfile) = 27fecff2d4d3851361f54ad32204addf4c42fc878e2669bf9415fb34483b0993
 SHA256 (.footprint) = abc7f1b248bbd4ba8084ed0718ce50cdb62d3da908ce892b319b79b1adc53054
-SHA256 (synergy-1.9.0.tar.gz) = 8140a43ba119c7c711615f6b6a90e95d483c0d998503ae30e62427ba4eb1d500
+SHA256 (synergy-1.9.1.tar.gz) = f05d5f1426079d4fe1fad90c0cb6fe5be52b2081ce996373b2e08f447d444472
 SHA256 (.watch) = 73a891cc395c58307a4269980654452eb11d7ce30f093c97dd625451b0023ab4
