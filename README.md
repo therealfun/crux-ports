@@ -25,7 +25,7 @@ Name | Version | Description
 [lbzip2](https://github.com/kjn/lbzip2) | 2.5 | Parallel bzip2
 [leapsecs](https://cr.yp.to/libtai.html) | 20161231 | Leap-second table used by djb programs
 [libdockapp](https://www.dockapps.net/) | 0.7.2 | DockApp Development Standard Library
-[linux-stable](https://www.kernel.org/) | 4.16.1 | Latest stable Linux kernel
+[linux-stable](https://www.kernel.org/) | 4.16.2 | Latest stable Linux kernel
 [linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.16 | Linux kernel tools
 [notmuch](https://notmuchmail.org/) | 0.26.1 | Mail indexer based on xapian
 [nss-mdns-no-avahi](http://0pointer.de/lennart/projects/nss-mdns/) | 0.10 | NSS module for mDNS hostname resolution
@@ -49,15 +49,15 @@ Name | Version | Description
 [rox-filer](http://rox.sf.net/desktop/ROX-Filer/) | 2.11 | Graphical file manager
 [sbc](https://git.kernel.org/pub/scm/bluetooth/sbc.git) | 1.3 | Bluetooth SubBand Codec (SBC) library
 [smbnetfs](http://smbnetfs.sf.net/) | 0.6.1 | FUSE filesystem for samba shares
-[synergy-cli](https://github.com/symless/synergy-core) | 1.9.0 | Share mouse and keyboard between multiple computers
+[synergy-cli](https://github.com/symless/synergy-core) | 1.9.1 | Share mouse and keyboard between multiple computers
 [torsocks](https://gitweb.torproject.org/torsocks.git) | 2.2.0 | Wrapper to safely torify applications
 [trace-cmd](https://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git) | 2.7 | Ftrace tools
 [uchardet](https://www.freedesktop.org/wiki/Software/uchardet/) | 0.0.6.20180121 | Encoding detector library
 [udis86](https://github.com/vmt/udis86/) | 1.7.2.20141225 | Minimalistic disassembler library
 [uncrustify](http://uncrustify.sf.net/) | 0.66.1 | Source code beautifier for C, C++, C#, ObjectiveC, D
 [unionfs-fuse](https://github.com/rpodgorny/unionfs-fuse) | 2.0 | Union filesystem using FUSE
-[upkg](https://github.com/therealfun/crux-ports/upkg) | 0.64 | Smaller/fancier prt-get/pkgmk/ports replacements
+[upkg](https://github.com/therealfun/crux-ports/upkg) | 0.65 | Smaller/fancier prt-get/pkgmk/ports replacements
 [uthash](https://troydhanson.github.io/uthash) | 2.0.2 | Hash library
-[windowmaker-dockapps](https://www.dockapps.net/) | 20180405 | Window Maker dockapps
+[windowmaker-dockapps](https://www.dockapps.net/) | 20180410 | Window Maker dockapps
 [windowmaker](https://windowmaker.org) | 0.95.8 | Fast, feature rich, and easy to use window manager
 [xvkbd](http://t-sato.in.coocan.jp/xvkbd/) | 3.9 | Virtual (on-screen) keyboard for X
