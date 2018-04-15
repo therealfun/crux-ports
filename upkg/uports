@@ -28,8 +28,8 @@ git_func() {
 [[ $1 == "--repos" ]] && { printf '%s\n' "${ports[@]}" | sort -u; exit; }
 [[ $1 == "--git"   ]] && { git_func "${@:2}"; exit; }
 [[ $1 == "--last"  ]] && {
-	from=$(git tag -l "$(cat .uportstag)" | sed -n 2p)
-	[[ $from ]] && git_func diff "$from"
+	from="$(git log -1 --format=%ai $(cat .uportstag))"
+	git_func diff "@{$from}" HEAD
 	printf '%s\n' "$(git describe --abbrev=0 --tags)" > .uportstag
 	exit
 }
