@@ -72,7 +72,7 @@ build() {
 		make install DESTDIR=$PKG
 	popd
 
-	pushd $dir
+	pushd wmail
 		autoreconf -i
 		./configure --bindir=$PKG/usr/bin
 		make install
