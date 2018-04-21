@@ -1,5 +1,6 @@
 #!/bin/bash
 
+PORTS_DIR=/usr/ports
 build_dir="$HOME/.cache/upkg/build"
  keep_dir="$HOME/.local/upkg/keep"
    libdir=${BASH_SOURCE%/*}
@@ -39,10 +40,12 @@ confirm_keep_list() {
 			 <( printf '%s\n' "${deps[@]}" )
 	)
 
+	echo "Found ${#no_dependent[@]} candidates"
 	rm=()
 	for name in "${no_dependent[@]}"
 	do
-		[[ -f "$keep_dir/$name" ]] && continue
+		[[ -f "$keep_dir/$name"       ]] && continue
+		[[ -d "$PORTS_DIR/core/$name" ]] && continue # in core but installed from another collections
 	
 		"$libdir/upkg-info" "$name"
 		read -p ">>> Uninstall '$name'? [y/N] "
@@ -122,18 +125,12 @@ do
 			re_f=" $name "
 			(( clean_packages ))                       \
 				&& [[ ! " ${pkgs[*]} " =~ $re_f ]] \
-				&& {
-					echo "Pkg '$name' not in (${pkgs[*]})"
-					sh -xc "rm -f '$f'"
-				}
+				&& sh -xc "rm -f '$f'"
 		elif (( clean_sources ))
 		then    # keep the last sources
 			re_f=" $name "
 			[[ ! " ${sources[*]##*/} " =~ $re_f ]] \
-				&& {
-					echo "Source '$name' not in (${sources[*]##*/})"
-					sh -xc "rm -rf '$f'"
-				}
+				&& sh -xc "rm -rf '$f'"
 		fi
 	done
 done

@@ -5,7 +5,7 @@
 # Nice to have: pkgmk.conf
 
 name=upkg
-version=0.66
+version=0.67
 release=1
 source=(
 	uports uports-init uports.1.pod
@@ -13,7 +13,7 @@ source=(
 	upkg
 	upkg-{cleanup,collections}
 	upkg-{depinst,deporder,depsearch,deptree,diff,dl-list,dsearch}
-	upkg-{fsearch,info,install,keep,mk,rm,search,update,watch}
+	upkg-{fsearch,info,install,keep,mk,port-dir,rm,search,update,watch}
 	pkgmk.conf.sample
 )
 

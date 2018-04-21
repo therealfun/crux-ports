@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PORTS_DIR=/usr/ports
+build_dir="$HOME/.cache/upkg/build"
+ pref_dir="$HOME/.config/upkg/pref"
+
+export LC_ALL=C LC_COLATE=C
+
+shopt -s nullglob
+
+pkgfiles0=( "$build_dir/$1/Pkgfil"[e] "$pref_dir"/*/"$1/Pkgfile" "$PORTS_DIR"/*/"$1/Pkgfile" )
+readarray -t pkgfiles < <( readlink -f "${pkgfiles0[@]}" 2>/dev/null )
+if [[ -e $pkgfiles ]]
+then
+	printf '%s\n' "${pkgfiles%/*}"
+fi

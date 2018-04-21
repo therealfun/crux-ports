@@ -1,0 +1,16 @@
+upkg collections
+
+for i in `pkginfo -i | awk '{print $1}' | xargs -L1 upkg port-dir`
+do
+	echo y | upkg-mk -a "$i"
+done
+
+upkg cleanup
+
+sudo uports
+
+upkg diff
+
+upkg deptree `upkg diff -n` | awk 'NF > 2'
+upkg update `upkg diff -n`
+upkg-update `upkg-diff | awk '{print $1}; $4 == "error" { exit 1 }'`

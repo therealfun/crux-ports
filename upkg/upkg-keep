@@ -3,10 +3,10 @@
 PORTS_DIR=/usr/ports
  keep_dir="$HOME/.local/upkg/keep"
 
-if	(( $# ))                                \
-	&& [[ $(ps -o stat= -p $PPID) == *s* ]] \
-	&& [[ ! -d $PORTS_DIR/${1##*/} ]]       ;
+if	(( $# ))                                 \
+	&& [[ $(ps -o stat= -p $PPID) == *s*  ]] \
+	&& [[ ! -d "$PORTS_DIR/core/${1##*/}" ]] ;
 then
 	[[ -d "$keep_dir" ]] || mkdir -p "$keep_dir"
-	touch "$keep_dir/${port##*/}"
+	touch "$keep_dir/${1##*/}"
 fi

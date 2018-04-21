@@ -1,9 +1,8 @@
 #!/bin/bash
 
 export LC_ALL=C LC_COLATE=C
-HOME=$(readlink -f "$HOME"); [[ $HOME == /* ]] || exit 1
 
-readonly        libdir=$(readlink -f "${BASH_SOURCE%/*}")
+readonly        libdir=${BASH_SOURCE%/*}
 readonly       dl_list="$libdir/upkg-dl-list"
 readonly     build_dir="$HOME/.cache/upkg/build"
 readonly      last_dir="$HOME/.local/upkg/last"
@@ -13,14 +12,15 @@ readonly footprint_dir="$HOME/.local/upkg/footprint"
 main() {
 	case $1 in
 		-a)  upkg_setup "${2:-$PWD}"; upkg_ask              ;;
+		-c)  upkg_clean "${2:-$PWD}"                        ;;
 		-dl) upkg_setup "${2:-$PWD}"; upkg_download_list    ;;
 		-d)  upkg_setup "${2:-$PWD}"; upkg_download_sources ;;
-		-v)  upkg_setup "${2:-$PWD}"; upkg_verify           ;;
+		-i)  upkg_setup "${2:-$PWD}"; upkg_install          ;;
+		-if) upkg_install_file                         "$2" ;;
 		-r)  upkg_setup "${2:-$PWD}"; upkg_build       "$1" ;;
 		-m)  upkg_setup "${2:-$PWD}"; upkg_build       "$1" ;;
 		-s)  upkg_setup "${2:-$PWD}"; upkg_sign         cmd ;;
-		-i)  upkg_setup "${2:-$PWD}"; upkg_install          ;;
-		-c)  upkg_clean "${2:-$PWD}"                        ;;
+		-v)  upkg_setup "${2:-$PWD}"; upkg_verify           ;;
 		-*)  abort "unknown option $1"                      ;;
 		*)   upkg_setup "${1:-$PWD}"; upkg_build       ".." ;;
 	esac
@@ -173,6 +173,13 @@ upkg_save_port_dir() {
 	rsync -acq --delete "$port_dir/" "$last_dir/$port_name/"
 }
 
+upkg_user_build_ok() {
+	[[ ! -f .footprint ]] && return 0
+	[[ $EUID == 0      ]] && return 0
+
+	awk '$1 ~ /s/ || $2 != "root/root" { exit 1 }' .footprint
+}
+
 upkg_build() {
 	upkg_ask "$@"
 	upkg_build_needed "$@" || exit 0
@@ -186,6 +193,11 @@ upkg_build() {
 			  upkg_accept_NO  "Continue?" && exit 1
 		fi
 	}
+
+	if ! upkg_user_build_ok; then
+		warning "You'll get a footprint mismatch if building with a non-root user."
+		upkg_accept_NO "Continue?" && exit 1
+	fi
 
 	[[ ! -d src ]] || ( set -x; rm -rf src ) || exit 1
 	[[ ! -d pkg ]] || ( set -x; rm -rf pkg ) || exit 1
@@ -554,6 +566,23 @@ upkg_install() {
 
 diff_footprint_filter() { # override me from Pkgfile
 	cat
+}
+
+upkg_install_file() {
+	local file=$1
+	local re='^([A-Za-z0-9][A-Za-z0-9_.+-]*)#.*\.pkg\.tar\.'
+
+	[[ -f $file && ${file##*/} =~ $re ]] || abort "Ignore $file"
+
+	local port_dir0=$("$libdir/upkg-port-dir" "${BASH_REMATCH[1]}")
+	[[ -d $port_dir0 ]] || abort "Can't find port dir for $file"
+
+	upkg_setup "$port_dir0"
+	TARGET=$file
+
+	printf '%(%F %T)T FILE install '%s'\n' -1 "$file" >> "$log_dir/all"
+ 
+	upkg_install
 }
 
 main "$@"

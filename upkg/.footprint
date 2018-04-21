@@ -21,6 +21,7 @@ drwxr-xr-x	root/root	usr/bin/
 -rwxr-xr-x	root/root	usr/bin/upkg-install
 -rwxr-xr-x	root/root	usr/bin/upkg-keep
 -rwxr-xr-x	root/root	usr/bin/upkg-mk
+-rwxr-xr-x	root/root	usr/bin/upkg-port-dir
 -rwxr-xr-x	root/root	usr/bin/upkg-rm
 -rwxr-xr-x	root/root	usr/bin/upkg-search
 -rwxr-xr-x	root/root	usr/bin/upkg-update

@@ -1,23 +1,10 @@
 #!/bin/bash
-# upkg-update `upkg-diff -n`
-# upkg-update `upkg-diff | awk '{print $1}; $4 == "error" { exit 1 }'`
 
-PORTS_DIR=/usr/ports
- pref_dir="$HOME/.config/upkg/pref"
-build_dir="$HOME/.cache/upkg/build"
-   libdir=${BASH_SOURCE%/*}
+libdir=${BASH_SOURCE%/*}
  
 to_remove=()
 to_update=()
 declare -A new_versions=()
-
-print_portdir() {
-	shopt -s nullglob
-	pkgfiles0=( "$build_dir/$1/Pkgfil"[e] "$pref_dir"/*/"$1/Pkgfile" "$PORTS_DIR"/*/"$1/Pkgfile" )
-	readarray -t pkgfiles < <( readlink -f "${pkgfiles0[@]}" 2>/dev/null )
-	[[ -e $pkgfiles ]] \
-		&& printf '%s\n' "${pkgfiles%/*}"
-}
 
 print_version() {
 	awk -v FS== '
@@ -36,7 +23,7 @@ parse_arguments() {
 		then
 			port=$(readlink  -f  "$port")
 		else
-			port=$(print_portdir "$port")
+			port=$("$libdir/upkg-port-dir" "$port")
 			[[ $port ]] || exit 1
 		fi
 
