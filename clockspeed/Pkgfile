@@ -7,9 +7,8 @@
 
 name=clockspeed
 version=0.62
-release=3
-source=(https://cr.yp.to/clockspeed/clockspeed-$version.tar.gz
-	clockspeed.rc clockfix.c .watch)
+release=4
+source=(https://cr.yp.to/clockspeed/clockspeed-$version.tar.gz clockspeed.rc clockfix.c .watch)
 
 build() {
 	cd */

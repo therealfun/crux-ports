@@ -20,7 +20,8 @@ log() {
 }
 
 case $1 in
-	start)
+	start)  $0 start0 & ;;
+	start0)
 		log start $(ip)
 
 		# Who knows what hwclock did with the system clock ?
@@ -53,7 +54,8 @@ case $1 in
 			fi
 		} &
 		;;
-	stop)
+	stop) timeout 10s $0 stop0 ;;
+	stop0)
 		log stop
 		# this should kill background jobs started with 'start'
 		killall clockspeed clockfix >/dev/null 2>&1

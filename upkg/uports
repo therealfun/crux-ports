@@ -18,9 +18,9 @@ ports=( "${ports[@]%.*}"  )
 
 git_func() {
 	{
-		git "$@"
+		git "$@" | sed "s|^|$PORTS_DIR:|"
 		while read -r _ name _ ; do
-			( cd "$name" && git "$@" )
+			( cd "$name" && git "$@" | sed "s|^|$PORTS_DIR/$name:|" )
 		done < <(git submodule)
 	} | cat
 }
@@ -29,7 +29,8 @@ git_func() {
 [[ $1 == "--git"   ]] && { git_func "${@:2}"; exit; }
 [[ $1 == "--last"  ]] && {
 	from="$(git log -1 --format=%ai $(cat .uportstag))"
-	git_func diff "@{$from}" HEAD
+	git_func diff --stat "@{$from}" HEAD
+	git_func diff        "@{$from}" HEAD
 	printf '%s\n' "$(git describe --abbrev=0 --tags)" > .uportstag
 	exit
 }

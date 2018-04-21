@@ -5,7 +5,7 @@
 
 name=windowmaker-dockapps
 version=20180410
-release=1
+release=2
 commit=67f91e77949aebe26d96f01aa4ffef27dc2667df
 source=(http://repo.or.cz/dockapps.git/snapshot/$commit.tar.gz .watch)
 
