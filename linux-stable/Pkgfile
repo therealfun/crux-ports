@@ -54,7 +54,7 @@ build() {
 		make olddefconfig
 	fi
 
-	( diff -u <(zcat /proc/config.gz) .config | egrep '^[-+]CONFIG_' ) || true
+	( diff -u <(zcat /proc/config.gz) .config | egrep '^[-+]CONFIG_' >&2 ) || true
 
 	sed     -e '1i KCFLAGS=-march=native -mtune=native' \
 		-e "s/^\(EXTRAVERSION =\).*/\\1 $extraVer/" \
@@ -107,6 +107,7 @@ linux_modules_archive() {
 
 	bsdtar  --cd "$src"                \
 		--create                   \
+		--uid 0 --gid 0            \
 		--file -                   \
 		--exclude "$K/source"      \
 		--exclude "$K/build"       \
@@ -123,6 +124,7 @@ linux_src_archive() {
 
 	bsdtar  --cd "$dir"            \
 		--create               \
+		--uid 0 --gid 0        \
 		--file -               \
 		-s "/^$name/linux-$K/" \
 		--no-fflags            \
