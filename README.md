@@ -27,7 +27,7 @@ Name | Version | Description
 [libdockapp](https://www.dockapps.net/) | 0.7.2 | DockApp Development Standard Library
 [linux-stable](https://www.kernel.org/) | 4.16.5 | Latest stable Linux kernel
 [linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.16 | Linux kernel tools
-[notmuch](https://notmuchmail.org/) | 0.26.1 | Mail indexer based on xapian
+[notmuch](https://notmuchmail.org/) | 0.26.2 | Mail indexer based on xapian
 [nss-mdns-no-avahi](http://0pointer.de/lennart/projects/nss-mdns/) | 0.10 | NSS module for mDNS hostname resolution
 [oprt](https://github.com/therealfun/oprt) | 1.99.2 | Next generation port utilities
 [pax-utils](https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities) | 1.2.2 | Utilities for peforming security checks

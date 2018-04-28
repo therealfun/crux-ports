@@ -178,8 +178,8 @@ f:eadea9101b51a33616a08922e2b305fc:linux-tools/.signature
 f:2961806287c2b39f645f6ad7ccd3bf3d:linux-tools/.watch
 f:199b46b2978d6f559c6ff83f61269a0c:nfo
 f:22fa282797474d3c8e46b38dadedbf23:notmuch/.footprint
-f:3bfe19a13f7c8819613f1084a3687b40:notmuch/Pkgfile
-f:c5cd1e209d4deadefc45bc6f654fae3a:notmuch/.signature
+f:3df57ff5d5dd2d7f1518601e6a940539:notmuch/Pkgfile
+f:935a9dcaca54222bac2ac55e0a3a8e5d:notmuch/.signature
 f:75317b04b453b52827990148261b2ed9:notmuch/.watch
 f:1804094bbbe23046e91978f4754e40fa:nss-mdns-no-avahi/.footprint
 f:c58dedaf282be4db097c7825aab9a642:nss-mdns-no-avahi/Pkgfile
