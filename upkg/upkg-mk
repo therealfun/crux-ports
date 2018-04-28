@@ -128,7 +128,7 @@ upkg_verify() {
 			warning "Md5sum not ok ($port_dir)."
 			return 1
 		}
-		info "Md5sum ok ($port_dir/$port_name)."
+		info "Md5sum ok ($port_dir)."
 	}
 
 	[[ ${PKGMK_IGNORE_SIGNATURE:-no} != no ]] && return 0
@@ -208,10 +208,11 @@ upkg_build() {
 		if [[ $1 == -m ]]; then # stdout and stderr redirected to log and stdout
 			exec > >(tee "$log_dir/$port_name.log") 2>&1
 		else    # stdout redirected to log while stderr redirected to log and stdout
-			exec 5>&1 # make fd/5 point to the current fd/1 (stdout)
+			# make fd/5 point to the current fd/1 (stdout)
+			exec 5>&1
 			# the new stdout goes to log, stderr is redirected to log and
 			# to the old stdout (not fd/5) through tee
-			exec >"$log_dir/$port_name.log" 2> >(tee /dev/fd/1 /dev/fd/5 >/dev/null)
+			exec >"$log_dir/$port_name.log" 2> >(tee /dev/fd/5)
 		fi
 
 		info "Building '$TARGET' ($log_dir/$port_name.log)." >&2

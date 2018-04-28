@@ -4,7 +4,7 @@
 # Depends on:  cmake fuse
 
 name=encfs
-version=1.9.4
+version=1.9.5
 release=1
 source=(https://github.com/vgough/encfs/releases/download/v$version/encfs-$version.tar.gz .watch)
 

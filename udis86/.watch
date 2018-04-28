@@ -1,2 +1,2 @@
-wget 'https://github.com/vmt/udis86/' -q -O - \
+wget 'https://github.com/vmt/udis86/commits/' -q -O - \
 	| sed -n '0,/.*datetime="\(20[0-9]*\)-\([0-9]*\)-\([0-9]*\)T.*/ s//1.7.2.\1\2\3/p'
