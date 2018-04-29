@@ -1,8 +1,8 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8qZEsj9F154Td2mxc9k+hn7z+yAJwBdk9sLTCGZrxbLXfjg+414mZnBpGJuT0crTuOlk+R/OFbNGJmAqcgkBEgs=
+RWTcI5d5qAlZ8ghRsCA67tWsdlcQIfYyYuha74I2w2mvYk07RhRWueGPcTD3ck2QwF/LcMxARI8jPBfeWNJr9g8pjtZesWvghQo=
 SHA256 (Pkgfile) = 4100b67bfbbfff90229c80a1da29e7e1f3031c93e5889d3e22316306935711e3
 SHA256 (.footprint) = 0e0c7ca7454ae123a1a730b3a3ac19eb8299a80193286d4ea3b50d80b4401a4d
-SHA256 (uports) = 8a186f7e0494b48da5782842edd9276a936f9c9a1fbe500bac9169565570a64d
+SHA256 (uports) = e1daa341b842f9a8cfaf1d9f11886d49a7f3d09baaa139daf8e1bae254a20d6c
 SHA256 (uports-init) = b146a0a813f72ac68610846e9de3bedf5358a78fc0b166070bd552c9d51b1e39
 SHA256 (uports.1.pod) = 6a694fe15c4114cad6ab5a64ba1447a1a41de5436f39b940a9e2948dad2938fe
 SHA256 (git.driver) = 85341236cd37aaaa4858ce10434899fe488c2f2391b7414bf6cc6d6d5ab466d5

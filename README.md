@@ -13,7 +13,6 @@ Name | Version | Description
 [clockspeed](https://cr.yp.to/clockspeed.html) | 0.62 | Adjust the speed of the system clock
 [docker-tray](http://icculus.org/openbox/2/docker/) | 1.5 | System tray
 [edac-utils](https://github.com/grondo/edac-utils) | 0.18 | Userspace helper for kernel EDAC drivers
-[encfs](https://github.com/vgough/encfs) | 1.9.5 | Encrypting filesystem for FUSE
 [erlang-man](https://www.erlang.org/) | 20.3 | Erlang manuals
 [ffms2](https://github.com/FFMS/ffms2) | 2.23 | Wrapper library around FFmpeg/libav
 [func](https://github.com/therealfun/func) | 2.7.5 | Fun containers

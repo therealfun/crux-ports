@@ -10,7 +10,6 @@ d:bubblewrap
 d:clockspeed
 d:docker-tray
 d:edac-utils
-d:encfs
 d:erlang-man
 d:ffms2
 d:func
@@ -116,10 +115,6 @@ f:c06f707b04cd7ddb9dabab80755efc55:edac-utils/Pkgfile
 f:c99856afb83dc684e59835c4e642b08d:edac-utils/post-install
 f:c461e692d5ddfab173ace29bd465467d:edac-utils/.signature
 f:eec81c99f0382eb7812c32b9770ab316:edac-utils/.watch
-f:71d7d85b735512b15b01169875a1afc4:encfs/.footprint
-f:df5564c1baba3b556ded3f155e7c8481:encfs/Pkgfile
-f:6d2633cc6e672ec1431691401df554f0:encfs/.signature
-f:82573c2bf5dd35cc4c2d8911d8092b18:encfs/.watch
 f:8bb5f8d49f3e0599e347557f2075c78a:erlang-man/.footprint
 f:c17df02772b539030e045271654aaecd:erlang-man/Pkgfile
 f:d3ea1ad7e33b4cae511903e720e79c9b:erlang-man/.signature
@@ -394,7 +389,7 @@ f:a1b9ad97115042b54c26fd7b5c27fbc7:upkg/Pkgfile
 f:1b66ac784cb193bf00a429da53e42952:upkg/pkgmk.conf.sample
 f:dfb2826f73a22183a21dfd69b983844c:upkg/README
 f:5f11facd3d0067dbc5982f84ba2ae480:upkg/rsync.driver
-f:24c6dcc5ef3d4484c2797b7eeae2b11f:upkg/.signature
+f:e01c951457c40bc0b5fed02effe6a8ca:upkg/.signature
 f:b3c509751080a4e60d69a08b13c1d91a:upkg/upkg
 f:d6ec2fb5aed5802a890154ef199ec2f1:upkg/upkg-cleanup
 f:0607db918da9593f715f85688770035f:upkg/upkg-collections
@@ -415,7 +410,7 @@ f:30fa0b40aca0d00409229a15a1ed1c1d:upkg/upkg-rm
 f:7680e1aca7a9795309b95323b10a3bd9:upkg/upkg-search
 f:af2a07590fb67a1c5bdc87ac6e4bbaa2:upkg/upkg-update
 f:3e9b586257ee30fad0d66776c408f732:upkg/upkg-watch
-f:7cbc30870102953b437a611f48d697c0:upkg/uports
+f:026f1752806d6544578bfa3834c8e18f:upkg/uports
 f:d94e24cfaa304ec2183575de2815259b:upkg/uports.1.pod
 f:73d32881db247614c1fd492da2bae9e0:upkg/uports-init
 f:c353b20f890fd86ece40bb45efe28c61:uthash/.footprint
