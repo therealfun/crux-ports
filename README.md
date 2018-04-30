@@ -24,7 +24,7 @@ Name | Version | Description
 [lbzip2](https://github.com/kjn/lbzip2) | 2.5 | Parallel bzip2
 [leapsecs](https://cr.yp.to/libtai.html) | 20161231 | Leap-second table used by djb programs
 [libdockapp](https://www.dockapps.net/) | 0.7.2 | DockApp Development Standard Library
-[linux-stable](https://www.kernel.org/) | 4.16.5 | Latest stable Linux kernel
+[linux-stable](https://www.kernel.org/) | 4.16.6 | Latest stable Linux kernel
 [linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.16 | Linux kernel tools
 [notmuch](https://notmuchmail.org/) | 0.26.2 | Mail indexer based on xapian
 [nss-mdns-no-avahi](http://0pointer.de/lennart/projects/nss-mdns/) | 0.10 | NSS module for mDNS hostname resolution
@@ -54,7 +54,7 @@ Name | Version | Description
 [udis86](https://github.com/vmt/udis86/) | 1.7.2.20141225 | Minimalistic disassembler library
 [uncrustify](http://uncrustify.sf.net/) | 0.66.1 | Source code beautifier for C, C++, C#, ObjectiveC, D
 [unionfs-fuse](https://github.com/rpodgorny/unionfs-fuse) | 2.0 | Union filesystem using FUSE
-[upkg](https://github.com/therealfun/crux-ports/upkg) | 0.68 | Smaller/fancier prt-get/pkgmk/ports replacements
+[upkg](https://github.com/therealfun/crux-ports/upkg) | 0.69 | Smaller/fancier prt-get/pkgmk/ports replacements
 [uthash](https://troydhanson.github.io/uthash) | 2.0.2 | Hash library
 [windowmaker-dockapps](https://www.dockapps.net/) | 20180410 | Window Maker dockapps
 [windowmaker](https://windowmaker.org) | 0.95.8 | Fast, feature rich, and easy to use window manager

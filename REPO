@@ -65,8 +65,8 @@ f:e006dacbb79a6d9af902c37de88d3318:adwaita-icon-theme-png/.watch
 f:a5e229ebdd25fcb469ef055bbefa39e5:aegisub/.footprint
 f:1d1568b8a0c42058d284a402ed4e0701:aegisub/git_version.h
 f:eee6530098c1f660e47ae1ba3848f2b0:aegisub/Pkgfile
-f:0a8d19456bd9d0de602dfed390d5ddc3:aegisub/.signature
-f:ae87c09a45d42403ed8e9414caf93d6a:aegisub/.watch
+f:a3157e8233610a1765778b1ab554e419:aegisub/.signature
+f:14d3962daddbaa4c5e824e6f7185f650:aegisub/.watch
 f:181d162dc8adea5027af80e07070b0d5:audit/.footprint
 f:0315c78bf5b04c7590b0858b4a2a9d27:audit/Pkgfile
 f:a7513305661419a3f010453e67738c01:audit/.signature
@@ -161,10 +161,10 @@ f:0f84b2ebf5e668008e0bdd010b54ad32:libdockapp/Pkgfile
 f:cf4dab8568a2322c6ef2efd1cc17fabd:libdockapp/.signature
 f:f69a4a365a8bcb2c3b73ac20bcfc686c:libdockapp/.watch
 f:6f29b2a15589c21967eb6c2bc2969b2a:linux-stable/.footprint
-f:cb17ee071bc206a3f98775c1a55fbdce:linux-stable/Pkgfile
+f:9d55cf9a9b81ccd5682e12e47a608759:linux-stable/Pkgfile
 f:8279fb5096f2e054c0a1e97d38a3bd20:linux-stable/post-install
 f:f28473bdfbe587a50959250dd13a9fd5:linux-stable/README
-f:03f15e4a4322993efad67127d9453494:linux-stable/.signature
+f:2c3d410cbc203eab5470bc2387885afb:linux-stable/.signature
 f:93a62c6836c14c32a3a6d8a34e4705b8:linux-stable/.watch
 f:43063a77000a6d90e54210f49443d32d:linux-tools/.footprint
 f:3ed08381ad429595c2e3b3ff6144ee89:linux-tools/Pkgfile
@@ -385,11 +385,11 @@ f:bb8e8137da8c008f44c6abea4f47ad0c:unionfs-fuse/.watch
 f:7cc86b0cc9b521dd08d24e683eb97053:upkg/.footprint
 f:9fde35436e48e1cf401f90d1199b3253:upkg/git.driver
 f:c374a42bc090b0a9702939ef9aae30b8:upkg/httpup.driver
-f:a1b9ad97115042b54c26fd7b5c27fbc7:upkg/Pkgfile
+f:0b4133060f92809a1ab96947c4a31531:upkg/Pkgfile
 f:1b66ac784cb193bf00a429da53e42952:upkg/pkgmk.conf.sample
 f:dfb2826f73a22183a21dfd69b983844c:upkg/README
 f:5f11facd3d0067dbc5982f84ba2ae480:upkg/rsync.driver
-f:e01c951457c40bc0b5fed02effe6a8ca:upkg/.signature
+f:287ccb0af44a0b96502c2791729cefe4:upkg/.signature
 f:b3c509751080a4e60d69a08b13c1d91a:upkg/upkg
 f:d6ec2fb5aed5802a890154ef199ec2f1:upkg/upkg-cleanup
 f:0607db918da9593f715f85688770035f:upkg/upkg-collections
@@ -410,7 +410,7 @@ f:30fa0b40aca0d00409229a15a1ed1c1d:upkg/upkg-rm
 f:7680e1aca7a9795309b95323b10a3bd9:upkg/upkg-search
 f:af2a07590fb67a1c5bdc87ac6e4bbaa2:upkg/upkg-update
 f:3e9b586257ee30fad0d66776c408f732:upkg/upkg-watch
-f:026f1752806d6544578bfa3834c8e18f:upkg/uports
+f:d64a7af06c29393186227b82c5181b42:upkg/uports
 f:d94e24cfaa304ec2183575de2815259b:upkg/uports.1.pod
 f:73d32881db247614c1fd492da2bae9e0:upkg/uports-init
 f:c353b20f890fd86ece40bb45efe28c61:uthash/.footprint
