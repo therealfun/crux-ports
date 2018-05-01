@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo >> $1/init '
+echo "Mounting $rootdev"
+mount -o ro $rootdev /new_root || error "mount failed"
+'

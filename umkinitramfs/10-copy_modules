@@ -1,0 +1,27 @@
+#!/bin/bash
+
+dest=$1
+kernel=$2
+
+src_dir="/lib/modules"
+dest_dir="$dest/lib/modules"
+
+[[ -d "$src_dir/$kernel" && -n $kernel ]] \
+	|| exit 1
+
+for i in $(lsmod | awk 'NR > 1 {print $1}')
+do
+	              mod=$(find "$src_dir/$kernel" -name "${i//_/-}.ko" -printf '%P\n')
+	[[ $mod ]] || mod=$(find "$src_dir/$kernel" -name "$i.ko"        -printf '%P\n')
+
+	if [[ $mod ]]
+	then
+		install -Dm755 "$src_dir/$kernel/$mod" "$dest_dir/$kernel/$mod" \
+			|| exit 1
+	else
+		echo "ERROR: can't find module '$i' in '$src_dir/$kernel'"
+		exit 1
+	fi
+done
+
+/sbin/depmod -b "$dest" "$kernel"

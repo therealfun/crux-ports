@@ -83,6 +83,7 @@ nextSources=/usr/src/linux-$nextRelease
 && test -f /boot/vmlinuz             \
 && test ! -e /boot/vmlinuz.$prevName \
 && test ! -e /boot/vmlinuz.$nextName \
+&& test ! -e /boot/initrd.tmp        \
 && exec $install_cmd
 
 remove_tmp_dirs() {
@@ -127,6 +128,13 @@ echo "#!/bin/sh
 	exit 0
 " >$cleanup.tmp || exit 1
 
+initrd=/boot/initrd
+if [ $(which umkinitramfs) != "" ]; then
+	umkinitramfs $initrd.tmp $nextRelease || exit 1
+else
+	rm $initrd.tmp
+fi
+
 test -f $cleanup && {
 	sh         $cleanup || exit 1
 	rm --force $cleanup
@@ -170,6 +178,8 @@ mv /boot/System.map.$prevName /boot/System.old  || exit 1
 mv /boot/System.map.$nextName /boot/System.map  || exit 1
 mv /boot/vmlinuz.$prevName    /boot/vmlinuz.old || exit 1
 mv /boot/vmlinuz.$nextName    /boot/vmlinuz     || exit 1
+
+[ ! -e $initrd.tmp ] || mv $initrd.tmp $initrd  || exit 1
 
 sync
 

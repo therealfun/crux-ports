@@ -1,0 +1,43 @@
+Make sure you have CONFIG_BLK_DEV_INITRD=y enabled in kernel:
+
+  General setup
+    [*] Initial RAM filesystem and RAM disk (initramfs/initrd) support
+
+Optional, you may want to enable CONFIG_UEVENT_HELPER=y too:
+
+  Device Drivers
+    Generic Driver Options
+      [*] Support for uevent helper
+
+Run the post-install script
+or create /etc/umkinitramfs/ and copy from /usr/share/umkinitramfs at least
+00-init, 30-find_root, 50-mount_root and 80-switch_root
+
+Duplicate the current entry from your boot manager and add to it
+
+	initrd=/boot/initrd
+
+Generate the initrd with:
+
+	umkinitramfs /boot/initrd `uname -r`
+
+Check the generated init script (printed on stdout), reboot and see if
+the new boot entry works.
+
+Change the files from /etc/umkinitramfs for your needs and add other
+files from /usr/share/umkinitramfs.
+
+If you want to force an initrd shell in order to debug the /init script,
+add to the new boot entry:
+
+	forcerescue
+
+and once you get the rescue shell, disable the kernel output to console:
+
+	echo 0 > /proc/sys/kernel/printk
+
+read the init script:
+
+	cat /init
+
+and start running commands one by one.

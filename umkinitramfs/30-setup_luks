@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# !!! You might need to run 'dmsetup mknodes'
+# before mounting /dev/mapper/$name (after switch_root)
+
+echo >> $1/init '
+luksdev=                            # luksdev=/dev/sd...:name
+old=$(cat /proc/sys/kernel/printk)
+echo 0 > /proc/sys/kernel/printk
+for i in $(cat /proc/cmdline)
+do
+	case $i in
+	luksdev=*)
+		param=${i#luksdev=}
+		dev=${param%:*}
+		name=${param#*:}
+		echo "Running cryptsetup open $dev $name"
+		cryptsetup open --type luks "$dev" "$name" \
+			|| error "cryptsetup failed"
+		set -- "$@" "/dev/mapper/$name"
+		;;
+	esac
+done
+echo $old > /proc/sys/kernel/printk
+'

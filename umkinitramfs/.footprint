@@ -1,0 +1,14 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/bin/
+-rwxr-xr-x	root/root	usr/bin/umkinitramfs
+drwxr-xr-x	root/root	usr/share/
+drwxr-xr-x	root/root	usr/share/umkinitramfs/
+-rwxr-xr-x	root/root	usr/share/umkinitramfs/00-init
+-rwxr-xr-x	root/root	usr/share/umkinitramfs/10-copy_binaries
+-rwxr-xr-x	root/root	usr/share/umkinitramfs/10-copy_firmware
+-rwxr-xr-x	root/root	usr/share/umkinitramfs/10-copy_modules
+-rwxr-xr-x	root/root	usr/share/umkinitramfs/30-find_root
+-rwxr-xr-x	root/root	usr/share/umkinitramfs/30-setup_luks
+-rwxr-xr-x	root/root	usr/share/umkinitramfs/40-fsck
+-rwxr-xr-x	root/root	usr/share/umkinitramfs/50-mount_root
+-rwxr-xr-x	root/root	usr/share/umkinitramfs/80-switch_root

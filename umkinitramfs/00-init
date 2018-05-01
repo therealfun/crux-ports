@@ -1,0 +1,25 @@
+#!/bin/sh
+
+echo >> $1/init '
+set -x
+/bin/busybox --install -s /bin
+
+mount -t proc  none /proc
+mount -t sysfs none /sys
+
+mdev -s
+[ -e /proc/sys/kernel/hotplug ] \
+	&& echo /sbin/mdev > /proc/sys/kernel/hotplug
+
+mkdir /new_root
+
+error() {
+	echo "$@"
+	exec ash
+}
+
+grep -q forcerescue /proc/cmdline && {
+	echo "Rescue shell requested"
+	ash
+}
+'

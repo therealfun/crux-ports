@@ -1,0 +1,32 @@
+#!/bin/bash
+
+output=$1
+kernel=$2
+
+set -e
+set -o pipefail
+
+D=$(mktemp -d)
+
+trap "rm -rf '$D' 2>/dev/null" INT HUP QUIT TERM EXIT
+
+mkdir -p $D/{bin,dev,proc,sbin,sys}
+
+cp -a /dev/{null,console,tty} $D/dev/
+cp -a /sbin/busybox.static    $D/bin/busybox
+echo '#!/bin/busybox sh'    > $D/init
+
+chmod 755 $D/init
+
+for i in /etc/umkinitramfs/[0-9]*
+do
+	if [ -x $i ]; then
+		$i $D "$kernel"
+	fi
+done
+
+cd $D
+echo "Building '$output'..."
+find . | cpio --verbose -o -H newc | gzip > "$output"
+echo "--- begin"; cat init; echo "--- end"
+echo "Done."

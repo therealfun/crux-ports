@@ -1,0 +1,40 @@
+#!/bin/bash
+
+dest=$1
+
+bin=(
+)
+sbin=(
+	/sbin/fsck
+	/sbin/fsck.ext3
+	/sbin/fsck.ext4
+	/sbin/cryptsetup.static
+)
+
+for i in "${bin[@]}"
+do
+	name=${i##*/}
+	install -Dm755 $i $dest/bin/${name%.static} || exit 1
+done
+
+for i in "${sbin[@]}"
+do
+	name=${i##*/}
+	install -Dm755 $i $dest/sbin/${name%.static} || exit 1
+done
+
+while read -r dep
+do
+	parent="$dest${dep%/*}"
+	[[ -d $parent ]] || mkdir -p "$parent" || exit 1
+	[[ -e "$dest$dep" ]] \
+		|| cp --dereference --preserve "$dep" "$dest$dep" \
+		|| exit 1
+done < <(
+	ldd "${bin[@]}" "${sbin[@]}" \
+	| awk '
+		$1 ~ ":$" {next}
+		$1 ~ "^/" {print $1; next}
+		$3 ~ "^/" {print $3}
+	'
+)

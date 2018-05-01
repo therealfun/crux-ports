@@ -1,0 +1,22 @@
+# Description:  Simple initramfs generator
+# URL:          https://github.com/therealfun/crux-ports/tree/master/umkinitramfs
+# Maintainer:   fun, just.the.real.fun at gmail dot com
+# Depends on:   busybox
+
+name=umkinitramfs
+version=0.1
+release=1
+source=(umkinitramfs post-install
+	00-init 10-copy_modules 10-copy_firmware 10-copy_binaries
+	30-find_root 30-setup_luks 40-fsck
+	50-mount_root 80-switch_root)
+
+build() {
+	for i in "${source[@]}"
+	do
+		case $i in
+			umkinitramfs) install -Dm755 $i $PKG/usr/bin/$i ;;
+			[0-9]*)       install -Dm755 $i $PKG/usr/share/umkinitramfs/$i ;;
+		esac
+	done
+}

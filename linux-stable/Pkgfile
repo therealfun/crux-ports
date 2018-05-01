@@ -2,7 +2,7 @@
 # URL:          https://www.kernel.org/
 # Maintainer:   fun, just.the.real.fun at gmail dot com
 # Depends on:   plzip pxz
-# Nice to have: gnupg
+# Nice to have: gnupg umkinitramfs
 
 name=linux-stable
 version=4.16.6

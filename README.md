@@ -16,7 +16,7 @@ Name | Version | Description
 [erlang-man](https://www.erlang.org/) | 20.3 | Erlang manuals
 [ffms2](https://github.com/FFMS/ffms2) | 2.23 | Wrapper library around FFmpeg/libav
 [func](https://github.com/therealfun/func) | 2.7.5 | Fun containers
-[gaupol](https://otsaloma.io/gaupol/) | 1.3.1 | Subtitle editor
+[gaupol](https://otsaloma.io/gaupol/) | 1.4 | Subtitle editor
 [gitfiles](https://github.com/mariusae/gitfiles) | 20160912 | Browse Git repositories inside Acme
 [git](https://git-scm.com/) | 2.17.0 | Distributed version control system
 [gmime3](https://developer.gnome.org/gmime/) | 3.2.0 | C/C++ library for MIME messages
@@ -52,6 +52,7 @@ Name | Version | Description
 [trace-cmd](https://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git) | 2.7 | Ftrace tools
 [uchardet](https://www.freedesktop.org/wiki/Software/uchardet/) | 0.0.6.20180121 | Encoding detector library
 [udis86](https://github.com/vmt/udis86/) | 1.7.2.20141225 | Minimalistic disassembler library
+[umkinitramfs](https://github.com/therealfun/crux-ports/tree/master/umkinitramfs) | 0.1 | Simple initramfs generator
 [uncrustify](http://uncrustify.sf.net/) | 0.66.1 | Source code beautifier for C, C++, C#, ObjectiveC, D
 [unionfs-fuse](https://github.com/rpodgorny/unionfs-fuse) | 2.0 | Union filesystem using FUSE
 [upkg](https://github.com/therealfun/crux-ports/upkg) | 0.69 | Smaller/fancier prt-get/pkgmk/ports replacements

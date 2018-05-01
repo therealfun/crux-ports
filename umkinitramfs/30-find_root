@@ -1,0 +1,19 @@
+#!/bin/sh
+
+echo >> $1/init '
+rootdev=
+for i in $(cat /proc/cmdline)
+do
+	case $i in
+	root=*)
+		dev=${i#root=}
+		case $dev in
+			UUID=* ) rootdev="/dev/disk/by-uuid/${dev#UUID=}"  ;;
+			LABEL=*) rootdev="/dev/disk/by-label/${dev#LABEL=}" ;;
+			/dev/*)  rootdev=$dev ;;
+		esac
+		;;
+	esac
+done
+set -- "$rootdev"
+'

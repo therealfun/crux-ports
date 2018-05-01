@@ -1,0 +1,17 @@
+#!/bin/sh
+
+[ -e /etc/umkinitramfs ] && exit 0
+
+set -e
+
+if [ -d /etc/umkinitramfs.tmp ]
+then
+	rm -rf /etc/umkinitramfs.tmp
+fi
+
+for i in 00-init 30-find_root 50-mount_root 80-switch_root
+do
+	install -Dm755 /usr/share/umkinitramfs/$i /etc/umkinitramfs.tmp/$i
+done
+
+mv /etc/umkinitramfs.tmp /etc/umkinitramfs
