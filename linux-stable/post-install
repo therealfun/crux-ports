@@ -128,13 +128,6 @@ echo "#!/bin/sh
 	exit 0
 " >$cleanup.tmp || exit 1
 
-initrd=/boot/initrd
-if [ $(which umkinitramfs) != "" ]; then
-	umkinitramfs $initrd.tmp $nextRelease || exit 1
-else
-	rm $initrd.tmp
-fi
-
 test -f $cleanup && {
 	sh         $cleanup || exit 1
 	rm --force $cleanup
@@ -173,6 +166,13 @@ else
 	mv /lib/modules/tmp/$prevRelease $prevModules || exit 1
 fi
 mv /lib/modules/tmp/$nextRelease   $nextModules || exit 1
+
+initrd=/boot/initrd
+if [ $(which umkinitramfs) != "" ]; then
+	umkinitramfs $initrd.tmp $nextRelease || exit 1
+else
+	rm $initrd.tmp
+fi
 
 mv /boot/System.map.$prevName /boot/System.old  || exit 1
 mv /boot/System.map.$nextName /boot/System.map  || exit 1
