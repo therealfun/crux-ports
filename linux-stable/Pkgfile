@@ -5,7 +5,7 @@
 # Nice to have: gnupg umkinitramfs
 
 name=linux-stable
-version=4.16.6
+version=4.16.7
 release=1
 source=(
 	https://www.kernel.org/pub/linux/kernel/v4.x/linux-${version%.*}.tar.xz
