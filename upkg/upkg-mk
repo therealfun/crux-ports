@@ -44,7 +44,7 @@ upkg_setup() {
 
 	local dest="$build_dir/$port_name"
 
-	( printf '%s\n' "$dest" "$last_dir" "$log_dir" "$footprint_dir"               \
+	( printf '%s\n' "$dest" "$last_dir" "$log_dir" "$footprint_dir" "$scripts_dir" \
 			| xargs -L1 -I{}                                              \
 				sh -c 'test -d "{}" || { set -x; mkdir -p "{}" ; }' ) \
 		|| abort "Mkdir failed"

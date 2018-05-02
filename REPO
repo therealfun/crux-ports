@@ -401,11 +401,11 @@ f:bb8e8137da8c008f44c6abea4f47ad0c:unionfs-fuse/.watch
 f:7cc86b0cc9b521dd08d24e683eb97053:upkg/.footprint
 f:9fde35436e48e1cf401f90d1199b3253:upkg/git.driver
 f:c374a42bc090b0a9702939ef9aae30b8:upkg/httpup.driver
-f:13f5da2c7451095f2f5c4ec0530cd97b:upkg/Pkgfile
+f:a09f45e3414f80559730fe2992e8c4c2:upkg/Pkgfile
 f:1b66ac784cb193bf00a429da53e42952:upkg/pkgmk.conf.sample
 f:dfb2826f73a22183a21dfd69b983844c:upkg/README
 f:5f11facd3d0067dbc5982f84ba2ae480:upkg/rsync.driver
-f:a3b30799ddb2aec03b613b52c782031b:upkg/.signature
+f:4c7fab538a843a937717644f0804ec46:upkg/.signature
 f:b3c509751080a4e60d69a08b13c1d91a:upkg/upkg
 f:d6ec2fb5aed5802a890154ef199ec2f1:upkg/upkg-cleanup
 f:0607db918da9593f715f85688770035f:upkg/upkg-collections
@@ -420,7 +420,7 @@ f:3669047aa2c2fc20b710a4579677a561:upkg/upkg-fsearch
 f:4cbe8eaab475f7a62ef462deefbfc6fe:upkg/upkg-info
 f:884cf520e0f9d6b4fadca45d1b484ac9:upkg/upkg-install
 f:9dbaf34fd39383e7a2b47d667c50fb75:upkg/upkg-keep
-f:de00003e4baa534c56d76a846f9b16a0:upkg/upkg-mk
+f:7260580b0a6cef3ffba6a172bf292e44:upkg/upkg-mk
 f:6b895c3769851bb7310659d28e678f26:upkg/upkg-port-dir
 f:30fa0b40aca0d00409229a15a1ed1c1d:upkg/upkg-rm
 f:7680e1aca7a9795309b95323b10a3bd9:upkg/upkg-search
