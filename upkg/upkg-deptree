@@ -25,7 +25,12 @@ print_deps() {
 	while read -r port
 	do
 		dir=$("$libdir/upkg-port-dir" "$port")
-		printf '%s\n' "${dir:-unknown}"
+		if [[ $dir ]]
+		then
+			printf '%s\n' "$dir"
+		else
+			printf 'WARNING: Port "%s" not found\n' "$port" >&2
+		fi
 	done < <(
 		{
 			print_header "Depends on" "$pkgfile"

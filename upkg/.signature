@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8l2NP5ePlKUluVokOqdlYbsplfSAWCzkze9C2u/PXxr7g3Jd/7PUWD/kKkRLEEJA8luQWuG78uj5BlpvbzWapwc=
-SHA256 (Pkgfile) = 4986cc2dae91cd9cad87421b30c52225f69250f877c8c1763a861387b73a664c
+RWTcI5d5qAlZ8p4a2Vh3n0kw+BP3WnUSWDVCiONsAnUp/ry4hgyuYNVOVe4gde3UVLDQitQFrYofq6F3tLLx66F0ETXh/09wmgo=
+SHA256 (Pkgfile) = cabecf6fe2c58de363287d88e43f031afd8963de718dad539d9d6b849e57c720
 SHA256 (.footprint) = 0e0c7ca7454ae123a1a730b3a3ac19eb8299a80193286d4ea3b50d80b4401a4d
 SHA256 (uports) = 90553b27f0a6e9bcdb1e3248515ce6bf60e92f14aeccbd081b5dd098d69a1bb9
 SHA256 (uports-init) = b146a0a813f72ac68610846e9de3bedf5358a78fc0b166070bd552c9d51b1e39
@@ -14,7 +14,7 @@ SHA256 (upkg-collections) = 397f93b09b94e05db28f89f771ddbc298bb5b51bd0da2c75db8d
 SHA256 (upkg-depinst) = e216a4cd4249bea1cbc24939b822b12a0db248d7bedfefb51ba5070bb6fd5f39
 SHA256 (upkg-deporder) = bf6de34918066aa1d59e23597ee5be8ff2ceefbe105237ed9919f07a77088e2b
 SHA256 (upkg-depsearch) = c6f270183a9fc94f5e5c8391adafd2c7f31abab6fd4d086934b8b3aa9e242f4b
-SHA256 (upkg-deptree) = 6cfe097f9c729bfb3f157ccf2e8295778cae9f1b80b58cf8d3c88b7cc07a5a0d
+SHA256 (upkg-deptree) = 90e2e22dd85d8ad0f1ffa18c6ec5ec9537f0df9524c2ab6f4f511721523ef306
 SHA256 (upkg-diff) = ed5f230b72de52bbd914334d0e41022de4f3e7d170d0937f594deeefd5de8648
 SHA256 (upkg-dl-list) = ab8002b96ef90d344cc74c1958556460017f4cb3f02cb37e4260fdb67ba748f8
 SHA256 (upkg-dsearch) = 374ed7b79d255dabd7435ceb5aa5524ddcea01aa6d8b27a1dc097a0af6d7d88c
@@ -22,7 +22,7 @@ SHA256 (upkg-fsearch) = 2cae0e4d72b86c68e43bf92f1180163aae507bafc262f91c0589e7f8
 SHA256 (upkg-info) = fc84efa42ab8eddebf5687939cc54f0dd7a60b7845754b978b0a4791c0234d7f
 SHA256 (upkg-install) = d30f7f3bba7e45321861d9602edb0c16cb8c9285bff5eaee00def968aa763a63
 SHA256 (upkg-keep) = f79aafc007241192afac3f98abb68182e97070851545f9ebbc5f7b1c6dc84970
-SHA256 (upkg-mk) = 41fd4fccd184be14261a54677d21cb0389ebb21ae21b963a34f94c57a4028787
+SHA256 (upkg-mk) = 61715ba463a84cd9e513287980c9e42c14f3898ece31a88191fe5df81e28578a
 SHA256 (upkg-port-dir) = dbb6122ea4a290d55ea33b6902b789f946004f058f2abeb7f74587964004250d
 SHA256 (upkg-rm) = 18eee296a942230666208ff60242210ae778e1120e8fe618613a3e0e9815c96b
 SHA256 (upkg-search) = 937546a9e2c38c317d8df8fc79e7e80c3eb8dd5df0a10acb13d9de76a9841ef4

@@ -8,6 +8,7 @@ readonly     build_dir="$HOME/.cache/upkg/build"
 readonly      last_dir="$HOME/.local/upkg/last"
 readonly       log_dir="$HOME/.local/upkg/log"
 readonly footprint_dir="$HOME/.local/upkg/footprint"
+readonly   scripts_dir="$HOME/.local/upkg/scripts"
 
 main() {
 	case $1 in
@@ -154,6 +155,8 @@ upkg_verify() {
 upkg_ask() {
 	upkg_prompt_port_changes_and_confirm "$@" || exit 1
 	upkg_save_port_dir                        || exit 1
+	upkg_ask_port_script pre-install
+	upkg_ask_port_script post-install
 }
 
 upkg_prompt_port_changes_and_confirm() {
@@ -173,11 +176,23 @@ upkg_save_port_dir() {
 	rsync -acq --delete "$port_dir/" "$last_dir/$port_name/"
 }
 
-upkg_user_build_ok() {
-	[[ ! -f .footprint ]] && return 0
-	[[ $EUID == 0      ]] && return 0
+upkg_ask_port_script() {
+	[[ ! -e $1                               ]] && return 1
+	[[   -e "$scripts_dir/$port_name.$1.no"  ]] && return 1
+	[[   -e "$scripts_dir/$port_name.$1.yes" ]] && return 0
 
-	awk '$1 ~ /s/ || $2 != "root/root" { exit 1 }' .footprint
+	local script=$(readlink -f "$1")
+
+	cat "$script"
+
+	if upkg_accept_NO "Execute '$script' ?"
+	then
+		touch "$scripts_dir/$port_name.$1.no"
+		return 1
+	else
+		touch "$scripts_dir/$port_name.$1.yes"
+		return 0
+	fi
 }
 
 upkg_build() {
@@ -266,6 +281,13 @@ upkg_up_to_date() {
 	return 0
 }
 
+upkg_user_build_ok() {
+	[[ ! -f .footprint ]] && return 0
+	[[ $EUID == 0      ]] && return 0
+
+	awk '$1 ~ /s/ || $2 != "root/root" { exit 1 }' .footprint
+}
+
 upkg_download_package() { # override me from /etc/pkgmk.conf
 	false
 }
@@ -303,8 +325,11 @@ upkg_bsdtar_pack_all() { # override me from /etc/pkgmk.conf for parallel process
 }
 
 upkg_run_script() {
-	[[ ! -e $1 ]] \
-		&& return 0
+	upkg_ask_port_script $1 || {
+		[[ -e $1 ]] \
+			&& warning "Ignore '$1'"
+		return 0
+	}
 
 	local script=$(readlink -f "$1")
 
