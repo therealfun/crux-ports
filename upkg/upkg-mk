@@ -157,6 +157,7 @@ upkg_ask() {
 	upkg_save_port_dir                        || exit 1
 	upkg_ask_port_script pre-install
 	upkg_ask_port_script post-install
+	return 0
 }
 
 upkg_prompt_port_changes_and_confirm() {
