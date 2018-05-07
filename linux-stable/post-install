@@ -168,8 +168,9 @@ fi
 mv /lib/modules/tmp/$nextRelease   $nextModules || exit 1
 
 initrd=/boot/initrd
-if [ $(which umkinitramfs) != "" ]; then
-	umkinitramfs $initrd.tmp $nextRelease || exit 1
+umkinitramfs=$(which umkinitramfs)
+if [ -n "$umkinitramfs" ]; then
+	$umkinitramfs $initrd.tmp $nextRelease || exit 1
 else
 	rm $initrd.tmp
 fi
