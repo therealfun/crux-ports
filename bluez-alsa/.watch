@@ -1,2 +1,3 @@
 wget "https://github.com/Arkq/bluez-alsa/commits/master" -q -O-    \
-	| sed -n '0,/.*\/commit\/\([a-f0-9]*\)".*/ s//\1 commit/p'
+	| sed -n '0,/.*\/commit\/\([a-f0-9]*\)".*/ s//\1 commit/p' \
+	| sed s/a958a34a9439cecc8c9b1d7062b475e4d87f1b35/88aefeea56b7ea20668796c2c7a8312bf595eef4/

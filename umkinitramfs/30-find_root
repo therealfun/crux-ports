@@ -8,8 +8,8 @@ do
 	root=*)
 		dev=${i#root=}
 		case $dev in
-			UUID=* ) rootdev="/dev/disk/by-uuid/${dev#UUID=}"  ;;
-			LABEL=*) rootdev="/dev/disk/by-label/${dev#LABEL=}" ;;
+			UUID=*)  rootdev=$(findfs "$dev") ;;
+			LABEL=*) rootdev=$(findfs "$dev") ;;
 			/dev/*)  rootdev=$dev ;;
 		esac
 		;;

@@ -51,7 +51,7 @@ logs=( .update.* )
 (( ! ${#logs[@]} )) || {
 	git add -A
 	{ echo "$(date)"; echo; for log in "${logs[@]}"; do echo ">>> ${log#.update.} <<<"; cat "$log"; done ; } \
-		| { tee --output-error >(git commit -q -a -F -) || exit 1; }
+		| { tee --output-error >(git commit -q -a -F -); }
 	git_func tag uports-$(date +%s)
 	rm .update.*
 }

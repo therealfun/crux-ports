@@ -178,22 +178,29 @@ upkg_save_port_dir() {
 }
 
 upkg_ask_port_script() {
-	[[ ! -e $1                               ]] && return 1
-	[[   -e "$scripts_dir/$port_name.$1.no"  ]] && return 1
-	[[   -e "$scripts_dir/$port_name.$1.yes" ]] && return 0
+	[[ ! -e $1 ]] \
+		&& return 1
+
+	local checksum=$(sha256sum "$1" | awk '{print $1}')
+
+	[[ -e "$scripts_dir/$port_name.$1.$checksum" ]] \
+		&& return 0
 
 	local script=$(readlink -f "$1")
 
-	cat "$script"
-
-	if upkg_accept_NO "Execute '$script' ?"
+	if [[ -e "$scripts_dir/$port_name.$1.last" ]]
 	then
-		touch "$scripts_dir/$port_name.$1.no"
-		return 1
+		diff -u "$scripts_dir/$port_name.$1.last" "$script"
+		echo -n "Script changed. "
 	else
-		touch "$scripts_dir/$port_name.$1.yes"
-		return 0
+		cat "$script"
 	fi
+
+	upkg_accept_NO "Execute '$script' ?" \
+		&& return 1
+	
+	touch           "$scripts_dir/$port_name.$1.$checksum"
+	cp    "$script" "$scripts_dir/$port_name.$1.last"
 }
 
 upkg_build() {
