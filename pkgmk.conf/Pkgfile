@@ -5,7 +5,7 @@
 # Nice to have: axel lbzip2 patchelf pigz plzip pxz
 
 name=pkgmk.conf
-version=1.81
+version=1.82
 release=1
 
 source=(

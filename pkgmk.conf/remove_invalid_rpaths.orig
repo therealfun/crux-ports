@@ -8,9 +8,8 @@
 #	https://crux.nu/bugs/index.php?do=details&task_id=1587
 
 find_executables() {
-	find $PKG -type f -printf '%P\n'                  \
-	| sed -e "s|^|$PKG|"                              \
-	| xargs -r -L10 -P20                              \
+	find $PKG -type f -print0                         \
+	| xargs -0 -r -L10 -P20                           \
 		file --no-buffer --separator '>'          \
 		-e apptype -e ascii -e encoding -e tokens \
 		-e cdf -e compress -e tar -e text         \

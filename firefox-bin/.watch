@@ -1,0 +1,2 @@
+wget 'https://www.mozilla.org/en-US/' -q -O- \
+	| sed -n '0,/.*data-latest-firefox="\([^"]*\)".*/ s//\1/p'

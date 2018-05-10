@@ -44,15 +44,15 @@ upkg_setup() {
 
 	local dest="$build_dir/$port_name"
 
-	( printf '%s\n' "$dest" "$last_dir" "$log_dir" "$footprint_dir" "$scripts_dir" \
-			| xargs -L1 -I{}                                              \
-				sh -c 'test -d "{}" || { set -x; mkdir -p "{}" ; }' ) \
+	( printf '%s\0' "$dest" "$last_dir" "$log_dir" "$footprint_dir" "$scripts_dir" \
+			| xargs -0 -n1 -I{}                                            \
+				sh -c 'test -d "{}" || { set -x; mkdir -p "{}" ; }' )  \
 		|| abort "Mkdir failed"
 
 	cd "$dest" || exit 1
 
 	( shopt -s nullglob dotglob; printf '%s\0' "$port_dir"/* ) \
-	| xargs -0 -r -L1 -P$N -I{} ln -sf '{}'                    \
+	| xargs -0 -r -n1 -P$N -I{} ln -sf '{}'                    \
 		|| abort "Symlinking failed: '$port_dir' -> '$dest'"
 
 	while read -rd '' link
@@ -413,7 +413,8 @@ upkg_strip_files() {
 	find pkg -type f -printf '%P\n' \
 	| $filter                       \
 	| sed -e 's|^|pkg/|'            \
-	| xargs -r -L10 -P$N            \
+	| tr '\n' '\0'                  \
+	| xargs -0 -r -n10 -P$N         \
 		file --no-buffer --separator '>'          \
 		-e apptype -e ascii -e encoding -e tokens \
 		-e cdf -e compress -e tar -e text         \
@@ -431,17 +432,17 @@ upkg_strip_files() {
 }
 
 upkg_compress_manpages() {
-	find pkg -type f -path '*/man/man*/*' \
-	| grep -v '.gz$'                      \
-	| xargs -r -L1 -P$N -I{}              \
+	find pkg -type f -path '*/man/man*/*' -print0 \
+	| grep -z -v '.gz$'                           \
+	| xargs -0 -r -n1 -P$N -I{}                   \
 		sh -xc "gzip -9 '{}'"
 
 # behave like pkgmk (see FS#1645), because gnupg (and maybe others) has an improper symlink
 #	(( $? )) \
 #		&& return 1
 
-	find pkg -xtype l -path '*/man/man*/*'                      \
-	| xargs -r -n1 -P$N -I{}                                    \
+	find pkg -xtype l -path '*/man/man*/*' -print0              \
+	| xargs -0 -r -n1 -P$N -I{}                                 \
 		sh -xc "ln -sf \"\$(readlink -n '{}').gz\" '{}.gz'"
 
 	(( $? )) \
