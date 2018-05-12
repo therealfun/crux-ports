@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8mqtaWIRfOV33Sd7LGv7URMzyOPchT7OFIfgkhx9ST3iHjxvqBkYGdUHzycpIUamvRryXNI5x1A3Gk2inxvb4Q4=
-SHA256 (Pkgfile) = 52e32bc41d55b0da9185e06ecb6cd313dde45eaa9569985f8ed503aa763c5f96
+RWTcI5d5qAlZ8g935yZV8wPt///hxC+mwm4Q/iyPnVmqnrsMu6GvS8267WpegTBDjcgzz6Def8AZOfAvsNcekMXZxvv9gBJW/Qs=
+SHA256 (Pkgfile) = d71012209ebe39fdfb631128ad9fbac3e5b215ee0efa16b4cc7427f262c40726
 SHA256 (.footprint) = 1aaf3773157ed55a80b8e386e70ebbbf6e26bb1e05389888b110c35688f37196
-SHA256 (nss-mdns-0.14.1.tar.gz) = a2094101b735cade45048764ea594bdae2bfa9399837f3c852a5b264416e9c8c
-SHA256 (.watch) = 8f66976b75159d13d0c4bdcd9ffb00a981f6bb3bb4de5ae4ef1e3000708751b9
+SHA256 (nss-mdns-0.10.tar.gz) = 1e683c2e7c3921814706d62fbbd3e9cbf493a75fa00255e0e715508d8134fa6d
+SHA256 (.watch) = 2563afeccb25e99d456869323c69cdc831d0bc9eb1124d3f8c2ff4a5cd9c03ef

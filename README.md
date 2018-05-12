@@ -28,7 +28,7 @@ Name | Version | Description
 [linux-stable](https://www.kernel.org/) | 4.16.8 | Latest stable Linux kernel
 [linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.16 | Linux kernel tools
 [notmuch](https://notmuchmail.org/) | 0.26.2 | Mail indexer based on xapian
-[nss-mdns-no-avahi](https://github.com/lathiat/nss-mdns) | 0.14.1 | NSS module for mDNS hostname resolution
+[nss-mdns-no-avahi](http://0pointer.de/lennart/projects/nss-mdns/) | 0.10 | NSS module for mDNS hostname resolution
 [oprt](https://github.com/therealfun/oprt) | 1.99.2 | Next generation port utilities
 [pax-utils](https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities) | 1.2.2 | Utilities for peforming security checks
 [pdftk](https://www.pdflabs.com/tools/pdftk-server/) | 2.02 | Tool for manipulating PDF documents

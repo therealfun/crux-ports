@@ -1,11 +1,14 @@
 # Description: NSS module for mDNS hostname resolution
-# URL:         https://github.com/lathiat/nss-mdns
+# URL:         http://0pointer.de/lennart/projects/nss-mdns/
 # Maintainer:  fun, just.the.real.fun at gmail dot com
+#
+# Not using https://github.com/lathiat/nss-mdns because the 0.11 version
+# removed the legacy mode and now nss-mdns needs the avahi daemon.
 
 name=nss-mdns-no-avahi
-version=0.14.1
+version=0.10
 release=1
-source=(https://github.com/lathiat/nss-mdns/releases/download/v$version/nss-mdns-$version.tar.gz .watch)
+source=(http://0pointer.de/lennart/projects/nss-mdns/nss-mdns-$version.tar.gz .watch)
 
 build() {
 	cd */
