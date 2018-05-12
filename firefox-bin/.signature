@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8uqF8K2/S7ICoIlnh+nGn3I38Liqg78ln3uV0Z+d2kvRHtch9J7vdICXXQO0WQUfJgtFejAxuM49spD1Hcm+7Q4=
-SHA256 (Pkgfile) = 48c67bfa28a864409b891615415bab120ed573b029e3ea19e0582b6bcf804b4c
-SHA256 (.footprint) = 4272c50271b721f4acf10af5dc7c26aeb9a36ad4d939efb4dddd86d2523cca4a
+RWTcI5d5qAlZ8mHhCNkzH3NU/84MEP5APX6ZZFSerxoyrwPsVm+/6CD5I2e7iNpCBntJS3t4hZ6dy/CZmkQkQeEZX8JduCgayAQ=
+SHA256 (Pkgfile) = 07182f5e0a50ab49c6084e75b4fcc23a4dc87cb56d9392c50b4cec020baa9e9c
+SHA256 (.footprint) = 0cf44da12be342bce019f4e85067c77b3f138c6ebdb046361bac4c13dcc91465
 SHA256 (firefox-60.0.tar.bz2) = 185808361d70600150f3f63047fa214d86218df0ba6f3a3611f8fb23cd28b8b1
 SHA256 (.watch) = a1a3924da21f741b7aaa6d2869707575f45d2ee1fecb42d66b14fe693904220a

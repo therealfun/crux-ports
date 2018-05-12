@@ -1,3 +1,6 @@
+drwxr-xr-x	root/root	etc/
+drwxr-xr-x	root/root	etc/revdep.d/
+-rw-r--r--	root/root	etc/revdep.d/firefox-bin
 drwxr-xr-x	root/root	opt/
 drwxr-xr-x	root/root	opt/firefox/
 -rw-r--r--	root/root	opt/firefox/Throbber-small.gif

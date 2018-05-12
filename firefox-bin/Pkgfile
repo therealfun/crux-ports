@@ -5,10 +5,11 @@
 
 name=firefox-bin
 version=60.0
-release=1
+release=2
 source=(https://ftp.mozilla.org/pub/firefox/releases/$version/linux-x86_64/en-US/firefox-$version.tar.bz2 .watch)
 
 build() {
-	mkdir -p   $PKG/opt
+	mkdir -p   $PKG/opt $PKG/etc/revdep.d
 	mv firefox $PKG/opt
+	echo /opt/firefox > $PKG/etc/revdep.d/firefox-bin
 }
