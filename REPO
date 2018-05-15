@@ -91,10 +91,10 @@ f:685f88a70c7b2a583b76724d57bebb53:bcc/README
 f:d352a5c5e829a1b03e0b21dd4c45ba92:bcc/.signature
 f:3afdb1fc368846c0ee0ab8f9d8134b34:bcc/.watch
 f:f50bed441ee3907631e5bcce0a370134:bluez-alsa/bluealsa.rc
-f:1acea6fc555c585f04b490765df0af2e:bluez-alsa/.footprint
-f:de91e3ce754cbbe845bfb9a0eb1391b8:bluez-alsa/Pkgfile
-f:b176c1ba36cf3d820b6350456e1d6e81:bluez-alsa/.signature
-f:ef11af54b3253191bbc192b013d2000f:bluez-alsa/.watch
+f:171ce68439d28e1e87807fb8eab29b23:bluez-alsa/.footprint
+f:69cc5f3971b4ff83135beb8bcfe626fb:bluez-alsa/Pkgfile
+f:5f39b4d13f43539120175b2bfc81df37:bluez-alsa/.signature
+f:12948f40b1c9ea42125a4a343895c27b:bluez-alsa/.watch
 f:cf4e3ac93fa007ccf2d494653754bed7:bubblewrap/.footprint
 f:5de9759b539c3ef298b784a6592133e2:bubblewrap/Pkgfile
 f:8fa1bb4db58eebb6fb02255b8990143d:bubblewrap/post-install
@@ -441,8 +441,8 @@ f:66833c7477617e3ce4a562148e7823c3:uthash/.watch
 f:dcdf7ebd16aa3ab695e1bb91d48c6505:windowmaker-dockapps/.footprint
 f:b16f3d03bae7dba1cb164e3127d03282:windowmaker-dockapps/Pkgfile
 f:46b8c55ed52fb7dd621276b0a5cad047:windowmaker-dockapps/README
-f:5da460fcd648e046e4da05d47d8e761a:windowmaker-dockapps/.signature
-f:646c306d524cc9c9f581ff77a6166489:windowmaker-dockapps/.watch
+f:5080b017999dd7d3949fd48fb5c17231:windowmaker-dockapps/.signature
+f:e4b096cbf0b1a150ebebfcb914c861fc:windowmaker-dockapps/.watch
 f:586437225b95dc104037733bd8a969f8:windowmaker/.footprint
 f:0d8ef28ead2516915da11cea5117f3d8:windowmaker/Pkgfile
 f:af7355f023128b6ae8d5a15fbaedcc17:windowmaker/.signature

@@ -8,7 +8,7 @@ Name | Version | Description
 [axel](https://github.com/eribertomota/axel) | 2.16.1 | Command line download accelerator
 [bash-headers](https://www.gnu.org/software/bash) | 4.4 | Bash header files
 [bcc](https://github.com/iovisor/bcc) | 0.5.0 | BPF Compiler Collection
-[bluez-alsa](https://github.com/Arkq/bluez-alsa) | 1.2.0.20180424 | Bluetooth Audio ALSA Backend
+[bluez-alsa](https://github.com/Arkq/bluez-alsa) | 1.2.0.20180514 | Bluetooth Audio ALSA Backend
 [bubblewrap](https://github.com/projectatomic/bubblewrap) | 0.2.1 | Unprivileged sandboxing tool
 [clockspeed](https://cr.yp.to/clockspeed.html) | 0.62 | Adjust the speed of the system clock
 [docker-tray](http://icculus.org/openbox/2/docker/) | 1.5 | System tray
