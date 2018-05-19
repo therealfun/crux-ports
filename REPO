@@ -92,8 +92,8 @@ f:d352a5c5e829a1b03e0b21dd4c45ba92:bcc/.signature
 f:3afdb1fc368846c0ee0ab8f9d8134b34:bcc/.watch
 f:f50bed441ee3907631e5bcce0a370134:bluez-alsa/bluealsa.rc
 f:171ce68439d28e1e87807fb8eab29b23:bluez-alsa/.footprint
-f:69cc5f3971b4ff83135beb8bcfe626fb:bluez-alsa/Pkgfile
-f:5f39b4d13f43539120175b2bfc81df37:bluez-alsa/.signature
+f:82d59962caa2e736affcd373f4e6d56a:bluez-alsa/Pkgfile
+f:4ca8f7dadf892b5b36f01c4696db53a8:bluez-alsa/.signature
 f:12948f40b1c9ea42125a4a343895c27b:bluez-alsa/.watch
 f:cf4e3ac93fa007ccf2d494653754bed7:bubblewrap/.footprint
 f:5de9759b539c3ef298b784a6592133e2:bubblewrap/Pkgfile
@@ -126,8 +126,8 @@ f:f5dec5027a0ae959b859e8b580caea4e:ffms2/Pkgfile
 f:dbf239f1e3afb0cfbfb33a6f86bcd152:ffms2/.signature
 f:4ceb1ac324711aa092595b0c8a09b3ca:ffms2/.watch
 f:10e9d8835afddb8697e04749f681bd81:firefox-bin/.footprint
-f:671fcbe38d6f52bdc5d35e29d52977b4:firefox-bin/Pkgfile
-f:eb2a1d4441dbc5d050994a017404442d:firefox-bin/.signature
+f:d0d336c18c6e6cb3b525cdfb42eca569:firefox-bin/Pkgfile
+f:007120d1697a2b0587c6dd0be39e1433:firefox-bin/.signature
 f:c5488dc409bf42d92ecb3c8ca1af117c:firefox-bin/.watch
 f:e742b0a8dbef204007df50e84d1ba7eb:func/.footprint
 f:cb28b9202946d74780df8a0189025c9e:func/Pkgfile
@@ -167,10 +167,10 @@ f:0f84b2ebf5e668008e0bdd010b54ad32:libdockapp/Pkgfile
 f:cf4dab8568a2322c6ef2efd1cc17fabd:libdockapp/.signature
 f:f69a4a365a8bcb2c3b73ac20bcfc686c:libdockapp/.watch
 f:6f29b2a15589c21967eb6c2bc2969b2a:linux-stable/.footprint
-f:0a1cacd3683d0546d574c5b2a36d0954:linux-stable/Pkgfile
+f:b0b4713cc636d0965c26df08c0b8a85a:linux-stable/Pkgfile
 f:696c3af1e90ac746f9470ce6d3e738e8:linux-stable/post-install
 f:f28473bdfbe587a50959250dd13a9fd5:linux-stable/README
-f:cb4f0462ae248cf399e72979b1008fd1:linux-stable/.signature
+f:1fc089bfbc282c3995cdc7c8788248b6:linux-stable/.signature
 f:93a62c6836c14c32a3a6d8a34e4705b8:linux-stable/.watch
 f:43063a77000a6d90e54210f49443d32d:linux-tools/.footprint
 f:3ed08381ad429595c2e3b3ff6144ee89:linux-tools/Pkgfile
@@ -394,9 +394,9 @@ f:05cf4362eb3c0316dee025b66c611df3:umkinitramfs/README
 f:90ec9393a704347465c14f5aadc05799:umkinitramfs/.signature
 f:a3bfe6f59ff9d8cc3461ee54fc062cbb:umkinitramfs/umkinitramfs
 f:5ab40d86583a87130fe98a16230b8b02:uncrustify/.footprint
-f:19a610f71b95a50bfac29a88c6552c06:uncrustify/Pkgfile
+f:502f0f75d2107943948eac36e5fdee61:uncrustify/Pkgfile
 f:d018e4c3feee041190e3e619ad809801:uncrustify/README
-f:a095793c0dde563c9b3becd7be00311c:uncrustify/.signature
+f:c8d07743b2a1a4cf61e8ea4570b8e206:uncrustify/.signature
 f:13437e16f89080a9a92b6859db85f9d0:uncrustify/.watch
 f:faa8bddec85e3373c7bc594832dfb417:unionfs-fuse/access.patch
 f:d40eb191ccca672837289fe0b210195d:unionfs-fuse/.footprint

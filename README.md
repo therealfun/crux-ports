@@ -8,14 +8,14 @@ Name | Version | Description
 [axel](https://github.com/eribertomota/axel) | 2.16.1 | Command line download accelerator
 [bash-headers](https://www.gnu.org/software/bash) | 4.4 | Bash header files
 [bcc](https://github.com/iovisor/bcc) | 0.5.0 | BPF Compiler Collection
-[bluez-alsa](https://github.com/Arkq/bluez-alsa) | 1.2.0.20180514 | Bluetooth Audio ALSA Backend
+[bluez-alsa](https://github.com/Arkq/bluez-alsa) | 1.2.0.20180516 | Bluetooth Audio ALSA Backend
 [bubblewrap](https://github.com/projectatomic/bubblewrap) | 0.2.1 | Unprivileged sandboxing tool
 [clockspeed](https://cr.yp.to/clockspeed.html) | 0.62 | Adjust the speed of the system clock
 [docker-tray](http://icculus.org/openbox/2/docker/) | 1.5 | System tray
 [edac-utils](https://github.com/grondo/edac-utils) | 0.18 | Userspace helper for kernel EDAC drivers
 [erlang-man](https://www.erlang.org/) | 20.3 | Erlang manuals
 [ffms2](https://github.com/FFMS/ffms2) | 2.23 | Wrapper library around FFmpeg/libav
-[firefox-bin](https://www.mozilla.com/firefox/) | 60.0 | The Mozilla Firefox browser
+[firefox-bin](https://www.mozilla.com/firefox/) | 60.0.1 | The Mozilla Firefox browser
 [func](https://github.com/therealfun/func) | 2.7.5 | Fun containers
 [gaupol](https://otsaloma.io/gaupol/) | 1.4 | Subtitle editor
 [gitfiles](https://github.com/mariusae/gitfiles) | 20160912 | Browse Git repositories inside Acme
@@ -25,7 +25,7 @@ Name | Version | Description
 [lbzip2](https://github.com/kjn/lbzip2) | 2.5 | Parallel bzip2
 [leapsecs](https://cr.yp.to/libtai.html) | 20161231 | Leap-second table used by djb programs
 [libdockapp](https://www.dockapps.net/) | 0.7.2 | DockApp Development Standard Library
-[linux-stable](https://www.kernel.org/) | 4.16.8 | Latest stable Linux kernel
+[linux-stable](https://www.kernel.org/) | 4.16.9 | Latest stable Linux kernel
 [linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.16 | Linux kernel tools
 [notmuch](https://notmuchmail.org/) | 0.26.2 | Mail indexer based on xapian
 [nss-mdns-no-avahi](http://0pointer.de/lennart/projects/nss-mdns/) | 0.10 | NSS module for mDNS hostname resolution
@@ -54,7 +54,7 @@ Name | Version | Description
 [uchardet](https://www.freedesktop.org/wiki/Software/uchardet/) | 0.0.6.20180121 | Encoding detector library
 [udis86](https://github.com/vmt/udis86/) | 1.7.2.20141225 | Minimalistic disassembler library
 [umkinitramfs](https://github.com/therealfun/crux-ports/tree/master/umkinitramfs) | 0.3 | Simple initramfs generator
-[uncrustify](http://uncrustify.sf.net/) | 0.66.1 | Source code beautifier for C, C++, C#, ObjectiveC, D
+[uncrustify](http://uncrustify.sf.net/) | 0.67 | Source code beautifier for C, C++, C#, ObjectiveC, D
 [unionfs-fuse](https://github.com/rpodgorny/unionfs-fuse) | 2.0 | Union filesystem using FUSE
 [upkg](https://github.com/therealfun/crux-ports/upkg) | 0.73 | Smaller/fancier prt-get/pkgmk/ports replacements
 [uthash](https://troydhanson.github.io/uthash) | 2.0.2 | Hash library
