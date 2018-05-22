@@ -167,10 +167,10 @@ f:0f84b2ebf5e668008e0bdd010b54ad32:libdockapp/Pkgfile
 f:cf4dab8568a2322c6ef2efd1cc17fabd:libdockapp/.signature
 f:f69a4a365a8bcb2c3b73ac20bcfc686c:libdockapp/.watch
 f:6f29b2a15589c21967eb6c2bc2969b2a:linux-stable/.footprint
-f:b0b4713cc636d0965c26df08c0b8a85a:linux-stable/Pkgfile
+f:dd64e889f2c509fceb5db6dfcc6773e3:linux-stable/Pkgfile
 f:696c3af1e90ac746f9470ce6d3e738e8:linux-stable/post-install
 f:f28473bdfbe587a50959250dd13a9fd5:linux-stable/README
-f:1fc089bfbc282c3995cdc7c8788248b6:linux-stable/.signature
+f:9e65bad8d32e139dc0cfd678a5e818fc:linux-stable/.signature
 f:93a62c6836c14c32a3a6d8a34e4705b8:linux-stable/.watch
 f:43063a77000a6d90e54210f49443d32d:linux-tools/.footprint
 f:3ed08381ad429595c2e3b3ff6144ee89:linux-tools/Pkgfile
