@@ -61,7 +61,7 @@ sub expand_url
 
 	return expand_string($raw, $content, $vars) if not $raw =~ m{^
 		(?<pre> .+? [^\$] )
-		{ (?<brace> .*? , .*) }
+		\{ (?<brace> .*? , .*) \}
 		(?<post> .* )
 	$}x;
 

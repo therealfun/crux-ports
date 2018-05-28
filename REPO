@@ -68,7 +68,7 @@ f:a5e229ebdd25fcb469ef055bbefa39e5:aegisub/.footprint
 f:1d1568b8a0c42058d284a402ed4e0701:aegisub/git_version.h
 f:eee6530098c1f660e47ae1ba3848f2b0:aegisub/Pkgfile
 f:a3157e8233610a1765778b1ab554e419:aegisub/.signature
-f:14d3962daddbaa4c5e824e6f7185f650:aegisub/.watch
+f:6449db2116471345c2a96452ebfe6846:aegisub/.watch
 f:181d162dc8adea5027af80e07070b0d5:audit/.footprint
 f:0315c78bf5b04c7590b0858b4a2a9d27:audit/Pkgfile
 f:a7513305661419a3f010453e67738c01:audit/.signature
@@ -167,10 +167,10 @@ f:0f84b2ebf5e668008e0bdd010b54ad32:libdockapp/Pkgfile
 f:cf4dab8568a2322c6ef2efd1cc17fabd:libdockapp/.signature
 f:f69a4a365a8bcb2c3b73ac20bcfc686c:libdockapp/.watch
 f:6f29b2a15589c21967eb6c2bc2969b2a:linux-stable/.footprint
-f:dd64e889f2c509fceb5db6dfcc6773e3:linux-stable/Pkgfile
+f:ab4d01f15b835276ab47b0ff3295dfc2:linux-stable/Pkgfile
 f:696c3af1e90ac746f9470ce6d3e738e8:linux-stable/post-install
 f:f28473bdfbe587a50959250dd13a9fd5:linux-stable/README
-f:9e65bad8d32e139dc0cfd678a5e818fc:linux-stable/.signature
+f:971118419e2ec5ad18bd2f28f6781b57:linux-stable/.signature
 f:93a62c6836c14c32a3a6d8a34e4705b8:linux-stable/.watch
 f:43063a77000a6d90e54210f49443d32d:linux-tools/.footprint
 f:3ed08381ad429595c2e3b3ff6144ee89:linux-tools/Pkgfile
@@ -406,7 +406,7 @@ f:bb8e8137da8c008f44c6abea4f47ad0c:unionfs-fuse/.watch
 f:7cc86b0cc9b521dd08d24e683eb97053:upkg/.footprint
 f:9fde35436e48e1cf401f90d1199b3253:upkg/git.driver
 f:c374a42bc090b0a9702939ef9aae30b8:upkg/httpup.driver
-f:c0c4e131ee09470c869503dae605510a:upkg/Pkgfile
+f:c67880ab1de371b169e997e82e70d90f:upkg/Pkgfile
 f:1b66ac784cb193bf00a429da53e42952:upkg/pkgmk.conf.sample
 f:dfb2826f73a22183a21dfd69b983844c:upkg/README
 f:5f11facd3d0067dbc5982f84ba2ae480:upkg/rsync.driver
@@ -419,7 +419,7 @@ f:24d9769ca4a7dc9c02b1f532ea7ce032:upkg/upkg-deporder
 f:85078298352000bc717cbca44cef2930:upkg/upkg-depsearch
 f:4483827e92ab92b8e189aed3b3731187:upkg/upkg-deptree
 f:4e84fb13fdd7014dfa090b1cd91fe84a:upkg/upkg-diff
-f:0183a5a3de5fe49bf240933316bf87f4:upkg/upkg-dl-list
+f:aeedaf38c421894ff897807bea2f6221:upkg/upkg-dl-list
 f:c2a6958130949211f826ed77682f1776:upkg/upkg-dsearch
 f:3669047aa2c2fc20b710a4579677a561:upkg/upkg-fsearch
 f:4cbe8eaab475f7a62ef462deefbfc6fe:upkg/upkg-info
