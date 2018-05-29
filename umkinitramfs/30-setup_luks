@@ -14,9 +14,19 @@ do
 		param=${i#luksdev=}
 		dev=${param%:*}
 		name=${param#*:}
+
+		read conlev < /proc/sys/kernel/printk
+		echo 0 > /proc/sys/kernel/printk
+
 		echo "Running cryptsetup open $dev $name"
-		cryptsetup open --type luks "$dev" "$name" \
-			|| error "cryptsetup failed"
+		cryptsetup open --type luks "$dev" "$name"
+		err=$?
+
+		echo $conlev > /proc/sys/kernel/printk
+
+		if [ $err != "0" ]; then
+			error "cryptsetup failed"
+		fi
 		set -- "$@" "/dev/mapper/$name"
 		;;
 	esac

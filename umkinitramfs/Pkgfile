@@ -4,7 +4,7 @@
 # Depends on:   busybox
 
 name=umkinitramfs
-version=0.3
+version=0.4
 release=1
 source=(umkinitramfs post-install
 	00-init 10-copy_modules 10-copy_firmware 10-copy_binaries
