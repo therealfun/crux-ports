@@ -1,6 +1,6 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8hY+wgOZUbm/OFJJBlxksw4xg6H8DOQcaZ1hdVG3iUVqmSBpcTwpBQrtiJ+79hNTh3L7c7Ey3zqROwuLH/sOPAA=
-SHA256 (Pkgfile) = 991dc17c76677c47f15d23cadb75d5a500d3d636592ed22b608c1481f6a8811f
+RWTcI5d5qAlZ8gPGT7tqEfmlqQAAWxT4NahHX2gC6LygcZ6F6AcI06qUWcNTmYZ7nniMmabEvy9sAttXGGBYi6RxC8+5c9chiQY=
+SHA256 (Pkgfile) = 53f6435474d85936e20bcc3ef3099ff00bed09c8468de9fb1704ddbdd1022cc1
 SHA256 (.footprint) = 2c0bdbcdb11d7e7017e474787bdc4ac5c6d4e1b52f031ae2bd0b383ae115bb6e
-SHA256 (git-2.17.0.tar.xz) = e916e5e95e81dbeafa7aac5d719c01108b5c814eb90b746695afa1afedf955c7
+SHA256 (git-2.17.1.tar.xz) = 79136e7aa83abae4d8a25c8111f113d3c5a63aeb5fd93cc72c26d49c6d5ba65e
 SHA256 (.watch) = ef831baee6cf68873db83973fe464f643199b6c08b4567457f8f208098a5867f

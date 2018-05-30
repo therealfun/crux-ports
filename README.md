@@ -19,13 +19,13 @@ Name | Version | Description
 [func](https://github.com/therealfun/func) | 2.7.5 | Fun containers
 [gaupol](https://otsaloma.io/gaupol/) | 1.4 | Subtitle editor
 [gitfiles](https://github.com/mariusae/gitfiles) | 20160912 | Browse Git repositories inside Acme
-[git](https://git-scm.com/) | 2.17.0 | Distributed version control system
+[git](https://git-scm.com/) | 2.17.1 | Distributed version control system
 [gmime3](https://developer.gnome.org/gmime/) | 3.2.0 | C/C++ library for MIME messages
 [indent](https://www.gnu.org/software/indent) | 2.2.10 | C source code indentation
 [lbzip2](https://github.com/kjn/lbzip2) | 2.5 | Parallel bzip2
 [leapsecs](https://cr.yp.to/libtai.html) | 20161231 | Leap-second table used by djb programs
 [libdockapp](https://www.dockapps.net/) | 0.7.2 | DockApp Development Standard Library
-[linux-stable](https://www.kernel.org/) | 4.16.12 | Latest stable Linux kernel
+[linux-stable](https://www.kernel.org/) | 4.16.13 | Latest stable Linux kernel
 [linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.16 | Linux kernel tools
 [notmuch](https://notmuchmail.org/) | 0.26.2 | Mail indexer based on xapian
 [nss-mdns-no-avahi](http://0pointer.de/lennart/projects/nss-mdns/) | 0.10 | NSS module for mDNS hostname resolution
@@ -53,7 +53,7 @@ Name | Version | Description
 [trace-cmd](https://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git) | 2.7 | Ftrace tools
 [uchardet](https://www.freedesktop.org/wiki/Software/uchardet/) | 0.0.6.20180121 | Encoding detector library
 [udis86](https://github.com/vmt/udis86/) | 1.7.2.20141225 | Minimalistic disassembler library
-[umkinitramfs](https://github.com/therealfun/crux-ports/tree/master/umkinitramfs) | 0.3 | Simple initramfs generator
+[umkinitramfs](https://github.com/therealfun/crux-ports/tree/master/umkinitramfs) | 0.4 | Simple initramfs generator
 [uncrustify](http://uncrustify.sf.net/) | 0.67 | Source code beautifier for C, C++, C#, ObjectiveC, D
 [unionfs-fuse](https://github.com/rpodgorny/unionfs-fuse) | 2.0 | Union filesystem using FUSE
 [upkg](https://github.com/therealfun/crux-ports/upkg) | 0.74 | Smaller/fancier prt-get/pkgmk/ports replacements
