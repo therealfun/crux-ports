@@ -144,8 +144,8 @@ drwxr-xr-x	root/root	usr/lib/perf-core/tests/shell/lib/
 -rwxr-xr-x	root/root	usr/lib/perf-core/tests/shell/lib/probe.sh
 -rwxr-xr-x	root/root	usr/lib/perf-core/tests/shell/lib/probe_vfs_getname.sh
 -rwxr-xr-x	root/root	usr/lib/perf-core/tests/shell/probe_vfs_getname.sh
+-rwxr-xr-x	root/root	usr/lib/perf-core/tests/shell/record+probe_libc_inet_pton.sh
 -rwxr-xr-x	root/root	usr/lib/perf-core/tests/shell/record+script_probe_vfs_getname.sh
--rwxr-xr-x	root/root	usr/lib/perf-core/tests/shell/trace+probe_libc_inet_pton.sh
 -rwxr-xr-x	root/root	usr/lib/perf-core/tests/shell/trace+probe_vfs_getname.sh
 drwxr-xr-x	root/root	usr/lib/traceevent/
 drwxr-xr-x	root/root	usr/lib/traceevent/plugins/
@@ -196,6 +196,7 @@ drwxr-xr-x	root/root	usr/share/man/man1/
 -rw-r--r--	root/root	usr/share/man/man1/perf-timechart.1.gz
 -rw-r--r--	root/root	usr/share/man/man1/perf-top.1.gz
 -rw-r--r--	root/root	usr/share/man/man1/perf-trace.1.gz
+-rw-r--r--	root/root	usr/share/man/man1/perf-version.1.gz
 -rw-r--r--	root/root	usr/share/man/man1/perf.1.gz
 drwxr-xr-x	root/root	usr/share/perf-core/
 drwxr-xr-x	root/root	usr/share/perf-core/strace/

@@ -25,13 +25,12 @@ Name | Version | Description
 [lbzip2](https://github.com/kjn/lbzip2) | 2.5 | Parallel bzip2
 [leapsecs](https://cr.yp.to/libtai.html) | 20161231 | Leap-second table used by djb programs
 [libdockapp](https://www.dockapps.net/) | 0.7.2 | DockApp Development Standard Library
-[linux-stable](https://www.kernel.org/) | 4.16.13 | Latest stable Linux kernel
-[linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.16 | Linux kernel tools
+[linux-stable](https://www.kernel.org/) | 4.17 | Latest stable Linux kernel
+[linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.17 | Linux kernel tools
 [notmuch](https://notmuchmail.org/) | 0.26.2 | Mail indexer based on xapian
 [nss-mdns-no-avahi](http://0pointer.de/lennart/projects/nss-mdns/) | 0.10 | NSS module for mDNS hostname resolution
 [oprt](https://github.com/therealfun/oprt) | 1.99.2 | Next generation port utilities
 [pax-utils](https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities) | 1.2.2 | Utilities for peforming security checks
-[pdftk](https://www.pdflabs.com/tools/pdftk-server/) | 2.02 | Tool for manipulating PDF documents
 [pdq](https://pdq.sf.net/) | 2.2.7 | Flexible print subsystem
 [pkgmk.conf](https://github.com/therealfun/crux-ports/tree/master/pkgmk.conf) | 1.82 | Plugins for pkgmk
 [plan9fonts](https://github.com/rtrn/plan9fonts) | 20130716 | Various fonts, converted to plan9 subf
@@ -40,9 +39,9 @@ Name | Version | Description
 [png2ico](https://github.com/dkfans/png2ico) | 20030114 | PNG to ICO converter
 [port-on-rails](https://github.com/therealfun/crux-ports/tree/master/port-on-rails) | 2.1 | On-the-fly pkgmk patches
 [ports-contrib](https://github.com/therealfun/crux-ports/ports-contrib) | 1.86 | Extra CRUX repositories
-[proot](https://proot-me.github.io/) | 20180206 | Chroot, mount --bind and binfmt_misc without privilege and setup
+[proot](https://proot-me.github.io/) | 20180601 | Chroot, mount --bind and binfmt_misc without privilege and setup
 [pxz](https://github.com/jnovy/pxz) | 20151029 | Parallel lzma
-[py3gobject](https://wiki.gnome.org/Projects/PyGObject) | 3.28.2 | Python3 bindings for GObject
+[py3gobject](https://wiki.gnome.org/Projects/PyGObject) | 3.28.3 | Python3 bindings for GObject
 [redo-apenwarr](https://github.com/apenwarr/redo) | 0.11 | Redo build system (python, Avery Pennarun)
 [redo-c](https://github.com/chneukirchen/redo-c) | 20170330 | Redo build system (C, Christian Neukirchen)
 [redo-jdebp](http://jdebp.eu./Softwares/redo/) | 1.4 | Redo build system (C++, Jonathan de Boyne Pollard)

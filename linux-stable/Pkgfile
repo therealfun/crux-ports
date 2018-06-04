@@ -5,18 +5,18 @@
 # Nice to have: gnupg umkinitramfs
 
 name=linux-stable
-version=4.16.13
+version=4.17
 release=1
 source=(
-	https://www.kernel.org/pub/linux/kernel/v4.x/linux-${version%.*}.tar.xz
-	https://www.kernel.org/pub/linux/kernel/v4.x/linux-${version%.*}.tar.sign
-	https://www.kernel.org/pub/linux/kernel/v4.x/patch-$version.xz
-	https://www.kernel.org/pub/linux/kernel/v4.x/patch-$version.sign
+	https://www.kernel.org/pub/linux/kernel/v4.x/linux-${version:0:4}.tar.xz
+	https://www.kernel.org/pub/linux/kernel/v4.x/linux-${version:0:4}.tar.sign
+#	https://www.kernel.org/pub/linux/kernel/v4.x/patch-$version.xz
+#	https://www.kernel.org/pub/linux/kernel/v4.x/patch-$version.sign
 	post-install .watch
 )
 
 build() {
-	linux=linux-${version%.*}
+	linux=linux-${version:0:4}
 	extraVer=-auto-$release
 	prevK=$(uname -r)
 	prevSRC=

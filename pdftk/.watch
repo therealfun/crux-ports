@@ -1,2 +1,0 @@
-wget "https://www.pdflabs.com/tools/pdftk-server/" -q -O-  \
-	| sed -n '0,/.*\/tools\/pdftk-the-pdf-toolkit\/pdftk-\([^-]*\)-src\.zip.*/ s//\1/p'

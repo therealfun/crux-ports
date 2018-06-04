@@ -4,9 +4,9 @@
 # Depends on:  talloc uthash
 
 name=proot
-version=20180206
+version=20180601
 release=1
-commit=886a78b5d0ecc2f632e093c1947f1f5e81a64295
+commit=fb9503240eeaa3114b29b8742feb2bda6edccde8
 source=(https://github.com/proot-me/PRoot/archive/$commit/proot-$version.tar.gz .watch)
 
 build() {
