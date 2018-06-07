@@ -50,7 +50,10 @@ sanityze_rpath() {
 		local -a new=()
 		for path in "${old[@]}"
 		do
-			[[ $path =~ $re ]] && new+=( "$path" )
+			[[ $path =~ $re ]] && {
+				read -r path < <(readlink -m "$path")
+				new+=( "$path" )
+			}
 		done
 
 		(( ${#old[@]} == ${#new[@]} )) && continue

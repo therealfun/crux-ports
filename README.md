@@ -15,7 +15,7 @@ Name | Version | Description
 [edac-utils](https://github.com/grondo/edac-utils) | 0.18 | Userspace helper for kernel EDAC drivers
 [erlang-man](https://www.erlang.org/) | 20.3 | Erlang manuals
 [ffms2](https://github.com/FFMS/ffms2) | 2.23 | Wrapper library around FFmpeg/libav
-[firefox-bin](https://www.mozilla.com/firefox/) | 60.0.1 | The Mozilla Firefox browser
+[firefox-bin](https://www.mozilla.com/firefox/) | 60.0.2 | The Mozilla Firefox browser
 [func](https://github.com/therealfun/func) | 2.7.5 | Fun containers
 [gaupol](https://otsaloma.io/gaupol/) | 1.4 | Subtitle editor
 [gitfiles](https://github.com/mariusae/gitfiles) | 20160912 | Browse Git repositories inside Acme
@@ -30,9 +30,9 @@ Name | Version | Description
 [notmuch](https://notmuchmail.org/) | 0.26.2 | Mail indexer based on xapian
 [nss-mdns-no-avahi](http://0pointer.de/lennart/projects/nss-mdns/) | 0.10 | NSS module for mDNS hostname resolution
 [oprt](https://github.com/therealfun/oprt) | 1.99.2 | Next generation port utilities
-[pax-utils](https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities) | 1.2.2 | Utilities for peforming security checks
+[pax-utils](https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities) | 1.2.3 | Utilities for peforming security checks
 [pdq](https://pdq.sf.net/) | 2.2.7 | Flexible print subsystem
-[pkgmk.conf](https://github.com/therealfun/crux-ports/tree/master/pkgmk.conf) | 1.82 | Plugins for pkgmk
+[pkgmk.conf](https://github.com/therealfun/crux-ports/tree/master/pkgmk.conf) | 1.83 | Plugins for pkgmk
 [plan9fonts](https://github.com/rtrn/plan9fonts) | 20130716 | Various fonts, converted to plan9 subf
 [plan9port](https://9fans.github.io/plan9port/) | 20180327 | Plan 9 from User Space
 [plzip](https://www.nongnu.org/lzip/plzip.html) | 1.7 | Parallel lzip

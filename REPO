@@ -125,8 +125,8 @@ f:f5dec5027a0ae959b859e8b580caea4e:ffms2/Pkgfile
 f:dbf239f1e3afb0cfbfb33a6f86bcd152:ffms2/.signature
 f:4ceb1ac324711aa092595b0c8a09b3ca:ffms2/.watch
 f:10e9d8835afddb8697e04749f681bd81:firefox-bin/.footprint
-f:d0d336c18c6e6cb3b525cdfb42eca569:firefox-bin/Pkgfile
-f:007120d1697a2b0587c6dd0be39e1433:firefox-bin/.signature
+f:9614c51c40b4decb9612f4f854593225:firefox-bin/Pkgfile
+f:17d5d0d6222f112e5324b23589ef6197:firefox-bin/.signature
 f:c5488dc409bf42d92ecb3c8ca1af117c:firefox-bin/.watch
 f:e742b0a8dbef204007df50e84d1ba7eb:func/.footprint
 f:cb28b9202946d74780df8a0189025c9e:func/Pkgfile
@@ -190,8 +190,8 @@ f:96b180835b9dab68db5fb7858a46ffc8:oprt/Pkgfile
 f:9e4fe4ee58a61e02a9612e4630d1be30:oprt/README
 f:45300caae9f29920b56f117122140618:oprt/.signature
 f:8de9f7c3b29b112ad715a7a54c15d192:pax-utils/.footprint
-f:c8aa8070043cb0736f584f7bf5c5f957:pax-utils/Pkgfile
-f:82f1cf041ca2cfe56187bd0402023472:pax-utils/.signature
+f:b228db2031544efafeb0ea32b8953083:pax-utils/Pkgfile
+f:af6bda950ff123e4733a0268d8a6c7b7:pax-utils/.signature
 f:52ae0bacf9243fc8b8abb252b616c623:pax-utils/.watch
 f:9d2cbd6b23197e9aec2672792c7978a6:pdq/.footprint
 f:982787415288de5e852cf0c9f893637c:pdq/Pkgfile
@@ -216,11 +216,11 @@ f:fad2e8ac5d4ec7714dd985f16ba72ff5:pkgmk.conf/hardening-check.bin
 f:4ac7d645c69387cff744b494b5f38bd1:pkgmk.conf/hardening.orig
 f:70bb9ce9ae357ed964ba4efc8565df97:pkgmk.conf/keep_work_if_failed.orig
 f:a8d8bb3d1f3463bdc612e04e0728a4ae:pkgmk.conf/parallel_make.orig
-f:38320443b85fe35cd5120b66297ca046:pkgmk.conf/Pkgfile
+f:b979b0c4005ab8f8428703ffc8175e41:pkgmk.conf/Pkgfile
 f:3ccdda67a7ebe138614b3e541ffd7143:pkgmk.conf/post-install
 f:6255cabb527ea9d074bb0dea75efa3ce:pkgmk.conf/README
-f:b20ee2c7da4d71dc27575eb46aa70b73:pkgmk.conf/remove_invalid_rpaths.orig
-f:511f5bcca0654fbdcc5bc8b976ae13fd:pkgmk.conf/.signature
+f:a1aafbc7843e17b191ca18f03a22ed28:pkgmk.conf/remove_invalid_rpaths.orig
+f:850588335add6b99205deee5c0058f24:pkgmk.conf/.signature
 f:3f77b24a8e77c5eb95ce59ff13cfc826:pkgmk.conf/z-command-line-priority.orig
 f:057f23bc64ca12c9853e966cd13b126c:plan9fonts/.footprint
 f:7a3392a143d1fff7c915266c94bfd6f2:plan9fonts/Pkgfile

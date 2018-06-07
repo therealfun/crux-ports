@@ -4,7 +4,7 @@
 # Depends on:  libpcap libseccomp
 
 name=pax-utils
-version=1.2.2
+version=1.2.3
 release=1
 source=(https://github.com/gentoo/pax-utils/archive/v$version/pax-utils-$version.tar.gz .watch)
 

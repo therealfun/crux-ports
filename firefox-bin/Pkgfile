@@ -4,7 +4,7 @@
 # Depends on:   
 
 name=firefox-bin
-version=60.0.1
+version=60.0.2
 release=1
 source=(https://ftp.mozilla.org/pub/firefox/releases/$version/linux-x86_64/en-US/firefox-$version.tar.bz2 .watch)
 
