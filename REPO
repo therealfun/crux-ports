@@ -91,8 +91,8 @@ f:d352a5c5e829a1b03e0b21dd4c45ba92:bcc/.signature
 f:3afdb1fc368846c0ee0ab8f9d8134b34:bcc/.watch
 f:f50bed441ee3907631e5bcce0a370134:bluez-alsa/bluealsa.rc
 f:171ce68439d28e1e87807fb8eab29b23:bluez-alsa/.footprint
-f:82d59962caa2e736affcd373f4e6d56a:bluez-alsa/Pkgfile
-f:4ca8f7dadf892b5b36f01c4696db53a8:bluez-alsa/.signature
+f:4c9fadc8c546494f1e4843ccea8be6b2:bluez-alsa/Pkgfile
+f:84bcb69c17c4c2a1285669fce36b4239:bluez-alsa/.signature
 f:12948f40b1c9ea42125a4a343895c27b:bluez-alsa/.watch
 f:cf4e3ac93fa007ccf2d494653754bed7:bubblewrap/.footprint
 f:5de9759b539c3ef298b784a6592133e2:bubblewrap/Pkgfile
@@ -245,7 +245,7 @@ f:821f200f4f6c0bf2e9ae2dc464b15814:port-on-rails/.footprint
 f:fd248a90e27fa6cca2762ee9d2a858c9:port-on-rails/Pkgfile
 f:c00ed44cefead7127fca074f1a1387d1:port-on-rails/README
 f:a25c5231e3c0748365086179ebee330e:port-on-rails/.signature
-f:95058ac300e324f42d174ec39ced4b8d:ports-contrib/extra/6c37.git
+f:7c1d78c86cc869d6b33ec903d9283339:ports-contrib/extra/6c37.git
 f:a7ff064b5b060979f05c8122dac885e2:ports-contrib/extra/acidbear.git
 f:c015801d0cfae246c88c9052779845bd:ports-contrib/extra/alan.pub
 f:ad71b865cc67329888b961bf1b661f16:ports-contrib/extra/alexmat.git
@@ -303,13 +303,13 @@ f:23ccb2233412c8f2e20e0817f8b1d1a9:ports-contrib/extra/xfce.git
 f:55104c303c2162e6062df290fd9db897:ports-contrib/extra/xfce.pub
 f:89e5c9fdf15dc76259298729280a066b:ports-contrib/extra/z3bra.pub
 f:6c3055c86b2cc65df7844045b4c05479:ports-contrib/.footprint
-f:0d705d3da787224b7ff853f763c7054c:ports-contrib/Pkgfile
+f:00e97d4754d1074f8679da00499aad9e:ports-contrib/Pkgfile
 f:b91a9588f85620a33380bc6a14e0bb33:ports-contrib/portdb-dl
 f:45fc26299822798b86e7cfbd00b58629:ports-contrib/portdb-pack
 f:f775b738b89c16a52d4cf2780f0c5497:ports-contrib/ports.archive
 f:944caecf5ed1c2ee7882ea8fa30ff3c2:ports-contrib/post-install
 f:4688251489a3bff6ef5b5429014943fd:ports-contrib/README
-f:1281426d822d7713b3f5e7bd5be91288:ports-contrib/.signature
+f:92fe524d2785e8d67e93fc05cfa5e354:ports-contrib/.signature
 f:81cf3d4d688cdabf79811eca74d422e3:proot/.footprint
 f:3a635943fec2b0f1a958da1696543d34:proot/Pkgfile
 f:ef13fc288d041c0550d66af8503c9c88:proot/.signature

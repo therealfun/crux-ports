@@ -8,7 +8,7 @@ Name | Version | Description
 [axel](https://github.com/eribertomota/axel) | 2.16.1 | Command line download accelerator
 [bash-headers](https://www.gnu.org/software/bash) | 4.4 | Bash header files
 [bcc](https://github.com/iovisor/bcc) | 0.5.0 | BPF Compiler Collection
-[bluez-alsa](https://github.com/Arkq/bluez-alsa) | 1.2.0.20180516 | Bluetooth Audio ALSA Backend
+[bluez-alsa](https://github.com/Arkq/bluez-alsa) | 1.2.0.20180607 | Bluetooth Audio ALSA Backend
 [bubblewrap](https://github.com/projectatomic/bubblewrap) | 0.2.1 | Unprivileged sandboxing tool
 [clockspeed](https://cr.yp.to/clockspeed.html) | 0.62 | Adjust the speed of the system clock
 [docker-tray](http://icculus.org/openbox/2/docker/) | 1.5 | System tray
@@ -38,7 +38,7 @@ Name | Version | Description
 [plzip](https://www.nongnu.org/lzip/plzip.html) | 1.7 | Parallel lzip
 [png2ico](https://github.com/dkfans/png2ico) | 20030114 | PNG to ICO converter
 [port-on-rails](https://github.com/therealfun/crux-ports/tree/master/port-on-rails) | 2.1 | On-the-fly pkgmk patches
-[ports-contrib](https://github.com/therealfun/crux-ports/ports-contrib) | 1.86 | Extra CRUX repositories
+[ports-contrib](https://github.com/therealfun/crux-ports/ports-contrib) | 1.87 | Extra CRUX repositories
 [proot](https://proot-me.github.io/) | 20180601 | Chroot, mount --bind and binfmt_misc without privilege and setup
 [pxz](https://github.com/jnovy/pxz) | 20151029 | Parallel lzma
 [py3gobject](https://wiki.gnome.org/Projects/PyGObject) | 3.28.3 | Python3 bindings for GObject
