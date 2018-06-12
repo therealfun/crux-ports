@@ -20,7 +20,10 @@ drwxr-xr-x	root/root	usr/lib/ports-contrib/
 -rw-r--r--	root/root	usr/lib/ports-contrib/asie.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/baguette.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/baguette.httpup.inactive
+-rw-r--r--	root/root	usr/lib/ports-contrib/balddotcat.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/bitpuffin.httpup
+-rw-r--r--	root/root	usr/lib/ports-contrib/bri.git
+-rw-r--r--	root/root	usr/lib/ports-contrib/bri.pub
 -rw-r--r--	root/root	usr/lib/ports-contrib/brianlfs.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/c9.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/cbailey.httpup
@@ -94,6 +97,7 @@ drwxr-xr-x	root/root	usr/lib/ports-contrib/
 -rw-r--r--	root/root	usr/lib/ports-contrib/romster.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/romster.pub
 -rw-r--r--	root/root	usr/lib/ports-contrib/rtomj.git
+-rw-r--r--	root/root	usr/lib/ports-contrib/spacedog.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/stayradiated.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/stdevel.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/swhitton.httpup

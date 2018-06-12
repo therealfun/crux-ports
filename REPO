@@ -251,6 +251,9 @@ f:c015801d0cfae246c88c9052779845bd:ports-contrib/extra/alan.pub
 f:ad71b865cc67329888b961bf1b661f16:ports-contrib/extra/alexmat.git
 f:49a060281551bcac2adf75411f97ebcd:ports-contrib/extra/alexta.git
 f:57235cf8751434f49246f04a267e4761:ports-contrib/extra/baguette.git
+f:c73a9421dc6a284164e82216b3905a37:ports-contrib/extra/balddotcat.git
+f:da8e8b175b0e935e5c8a264d34ad3339:ports-contrib/extra/bri.git
+f:0190e9da6ff627ffb1804ac9cce7a986:ports-contrib/extra/bri.pub
 f:4ad9603ef76e69524c991fd8e2aa8198:ports-contrib/extra/c9.git
 f:19c6d941593a8b33a0f13a6c0e04a5de:ports-contrib/extra/cbailey.pub
 f:26bf2b1d607943fe2c883277c702f8ea:ports-contrib/extra/chruxzzz.git
@@ -289,6 +292,7 @@ f:a8137152ed18c2ab21e9c300e5ba8263:ports-contrib/extra/prologic.httpup
 f:01cd33454cddb4b8b4f1af1580c7edd3:ports-contrib/extra/pshevtsov.git
 f:be0c1fa933341b23d2564a0fee1618e7:ports-contrib/extra/romster.pub
 f:d663cef5d9c3d5f1a18630abf198d25d:ports-contrib/extra/rtomj.git
+f:cce41ba0429bdf42639d76c12c0c5a2d:ports-contrib/extra/spacedog.git
 f:d56c81b4d675177220e64f73265913cb:ports-contrib/extra/stayradiated.git
 f:1cc280cdf951ad262493ccef8bd884aa:ports-contrib/extra/tb.git
 f:9f22d7e954c0ba8d8fa4c0117733c245:ports-contrib/extra/teatime.git
@@ -302,14 +306,14 @@ f:b3377d8a87331a7c08c5e480fac99202:ports-contrib/extra/xcko.pub
 f:23ccb2233412c8f2e20e0817f8b1d1a9:ports-contrib/extra/xfce.git
 f:55104c303c2162e6062df290fd9db897:ports-contrib/extra/xfce.pub
 f:89e5c9fdf15dc76259298729280a066b:ports-contrib/extra/z3bra.pub
-f:8dab8e90abe5f88699dce16450d02740:ports-contrib/.footprint
-f:00e97d4754d1074f8679da00499aad9e:ports-contrib/Pkgfile
+f:84b10bb3ffd07cc96bc4a8fc1c12dbbd:ports-contrib/.footprint
+f:7bf47aa83e3cc65be3c8fb213fa8bc80:ports-contrib/Pkgfile
 f:b91a9588f85620a33380bc6a14e0bb33:ports-contrib/portdb-dl
 f:45fc26299822798b86e7cfbd00b58629:ports-contrib/portdb-pack
-f:e8fccc452cd65f138f4a47b9c371b174:ports-contrib/ports.archive
+f:1b039a95eb21fc34d092683387565cf2:ports-contrib/ports.archive
 f:944caecf5ed1c2ee7882ea8fa30ff3c2:ports-contrib/post-install
 f:4688251489a3bff6ef5b5429014943fd:ports-contrib/README
-f:b3fdacacf4ee8668008db6641e0d4ee9:ports-contrib/.signature
+f:bd23a81d9bf568fa0b974911719c6b11:ports-contrib/.signature
 f:81cf3d4d688cdabf79811eca74d422e3:proot/.footprint
 f:3a635943fec2b0f1a958da1696543d34:proot/Pkgfile
 f:ef13fc288d041c0550d66af8503c9c88:proot/.signature

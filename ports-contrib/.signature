@@ -1,8 +1,8 @@
 untrusted comment: verify with /etc/ports/therealfun.pub
-RWTcI5d5qAlZ8q836P3fJFLUE1S7/x3XiYAgn1oFo8N38MxolNd+WC4zoe1keeVQcoGZTippm9QpbxLuPReJr/Y78Vn+C5DJFQk=
-SHA256 (Pkgfile) = 9cc7719af131fe147e842f1e3d75c752ae35978bdb8794b0233ebad2a3d75581
-SHA256 (.footprint) = 8e401201172fd84f8dce83ce70225f7f83f1f85f82a4b3b004ef4b467c9f11ff
+RWTcI5d5qAlZ8tsZi5qJKEBpf91fqfRC29BPaM5gYskW3EeArZ1HC/ZBBzVeZz0tF4sdr34p95+sDfAkImWHIp8banSuz46U8gg=
+SHA256 (Pkgfile) = 44b25456a08bfb393dec69b9475f4f0058592acaac99a0af6e1fb84140f0883b
+SHA256 (.footprint) = 849ee1b1454ac24f094380dc22b48773901be2064e1b37f7e018e39e5a1efa0e
 SHA256 (portdb-dl) = 3632ffac3aec3132e50320bb1467e883d38122347898ac9ae0e50e64ae4f2019
 SHA256 (portdb-pack) = 491c2a43189c474c3644228bc5f1f302ebad81807def1d64bc5efcad6e57314e
-SHA256 (ports.archive) = ddf721bb104e45107abba4d13d1857ff74e1f15a7fe27748375e8035c1ca5311
+SHA256 (ports.archive) = 79546ffeb5e1e993c73204b42f50df29b7c1b5dbab3bc346257ea22c24d470cc
 SHA256 (post-install) = e7126ad4335d7ef73b33bf7cb0f431ec60debcbe3e6b8b9bad3225f00d12603e

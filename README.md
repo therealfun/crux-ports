@@ -38,7 +38,7 @@ Name | Version | Description
 [plzip](https://www.nongnu.org/lzip/plzip.html) | 1.7 | Parallel lzip
 [png2ico](https://github.com/dkfans/png2ico) | 20030114 | PNG to ICO converter
 [port-on-rails](https://github.com/therealfun/crux-ports/tree/master/port-on-rails) | 2.1 | On-the-fly pkgmk patches
-[ports-contrib](https://github.com/therealfun/crux-ports/ports-contrib) | 1.87 | Extra CRUX repositories
+[ports-contrib](https://github.com/therealfun/crux-ports/ports-contrib) | 1.88 | Extra CRUX repositories
 [proot](https://proot-me.github.io/) | 20180601 | Chroot, mount --bind and binfmt_misc without privilege and setup
 [pxz](https://github.com/jnovy/pxz) | 20151029 | Parallel lzma
 [py3gobject](https://wiki.gnome.org/Projects/PyGObject) | 3.28.3 | Python3 bindings for GObject
