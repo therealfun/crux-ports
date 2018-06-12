@@ -5,9 +5,9 @@
 #                             sbc >= 1.2
 
 name=bluez-alsa
-version=1.2.0.20180607
+version=1.2.0.20180611
 release=1
-commit=71dd119341d56db71e7e6e6940b85a4a0aa6d472
+commit=e59fa446de4c5787b57a9d1dc8f79ac41065c48b
 source=(https://github.com/Arkq/$name/archive/$commit/bluez-alsa-$version.tar.gz bluealsa.rc .watch)
 
 build() {

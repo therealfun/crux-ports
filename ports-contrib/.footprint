@@ -68,7 +68,6 @@ drwxr-xr-x	root/root	usr/lib/ports-contrib/
 -rw-r--r--	root/root	usr/lib/ports-contrib/lounqe.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/lxqt.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/lxqt.httpup.inactive
--rw-r--r--	root/root	usr/lib/ports-contrib/maraku.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/maraku.pub
 -rw-r--r--	root/root	usr/lib/ports-contrib/mate.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/mate.httpup.inactive
@@ -108,7 +107,6 @@ drwxr-xr-x	root/root	usr/lib/ports-contrib/
 -rw-r--r--	root/root	usr/lib/ports-contrib/timcow.httpup.inactive
 -rw-r--r--	root/root	usr/lib/ports-contrib/timcow.pub
 -rw-r--r--	root/root	usr/lib/ports-contrib/timcowchip.pub
--rw-r--r--	root/root	usr/lib/ports-contrib/vico.httpup
 -rw-r--r--	root/root	usr/lib/ports-contrib/virtualisation.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/wawrzek.git
 -rw-r--r--	root/root	usr/lib/ports-contrib/wildefyr.git

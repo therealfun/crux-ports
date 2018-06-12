@@ -8,7 +8,7 @@ Name | Version | Description
 [axel](https://github.com/eribertomota/axel) | 2.16.1 | Command line download accelerator
 [bash-headers](https://www.gnu.org/software/bash) | 4.4 | Bash header files
 [bcc](https://github.com/iovisor/bcc) | 0.5.0 | BPF Compiler Collection
-[bluez-alsa](https://github.com/Arkq/bluez-alsa) | 1.2.0.20180607 | Bluetooth Audio ALSA Backend
+[bluez-alsa](https://github.com/Arkq/bluez-alsa) | 1.2.0.20180611 | Bluetooth Audio ALSA Backend
 [bubblewrap](https://github.com/projectatomic/bubblewrap) | 0.2.1 | Unprivileged sandboxing tool
 [clockspeed](https://cr.yp.to/clockspeed.html) | 0.62 | Adjust the speed of the system clock
 [docker-tray](http://icculus.org/openbox/2/docker/) | 1.5 | System tray
@@ -55,7 +55,7 @@ Name | Version | Description
 [umkinitramfs](https://github.com/therealfun/crux-ports/tree/master/umkinitramfs) | 0.4 | Simple initramfs generator
 [uncrustify](http://uncrustify.sf.net/) | 0.67 | Source code beautifier for C, C++, C#, ObjectiveC, D
 [unionfs-fuse](https://github.com/rpodgorny/unionfs-fuse) | 2.0 | Union filesystem using FUSE
-[upkg](https://github.com/therealfun/crux-ports/upkg) | 0.74 | Smaller/fancier prt-get/pkgmk/ports replacements
+[upkg](https://github.com/therealfun/crux-ports/upkg) | 0.75 | Smaller/fancier prt-get/pkgmk/ports replacements
 [uthash](https://troydhanson.github.io/uthash) | 2.0.2 | Hash library
 [windowmaker-dockapps](https://www.dockapps.net/) | 20180410 | Window Maker dockapps
 [windowmaker](https://windowmaker.org) | 0.95.8 | Fast, feature rich, and easy to use window manager

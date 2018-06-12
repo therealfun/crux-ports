@@ -3,7 +3,7 @@
 PORTS_DIR=/usr/ports
 shopt -s nullglob
 
-grep -Eil  -e "${1?nothing to search for}" "$PORTS_DIR"/*/*/Pkgfile \
+grep -Eil  -e "^#\\s*description:.*\\<${1?nothing to search for}" "$PORTS_DIR"/*/*/Pkgfile \
 | sed      -e 's|/Pkgfile||'                                        \
 | xargs -r -L1 -I{} sh -c "
 	'${BASH_SOURCE%/*}/upkg-info' '{}'
