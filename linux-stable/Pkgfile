@@ -5,13 +5,13 @@
 # Nice to have: gnupg umkinitramfs
 
 name=linux-stable
-version=4.17
+version=4.17.1
 release=1
 source=(
 	https://www.kernel.org/pub/linux/kernel/v4.x/linux-${version:0:4}.tar.xz
 	https://www.kernel.org/pub/linux/kernel/v4.x/linux-${version:0:4}.tar.sign
-#	https://www.kernel.org/pub/linux/kernel/v4.x/patch-$version.xz
-#	https://www.kernel.org/pub/linux/kernel/v4.x/patch-$version.sign
+	https://www.kernel.org/pub/linux/kernel/v4.x/patch-$version.xz
+	https://www.kernel.org/pub/linux/kernel/v4.x/patch-$version.sign
 	post-install .watch
 )
 
