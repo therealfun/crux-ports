@@ -15,6 +15,9 @@ source=(
 	post-install .watch
 )
 
+# https://sources.debian.org/data/main/l/linux/unstable/debian/config/config
+# https://sources.debian.org/data/main/l/linux/unstable/debian/config/amd64/config
+
 build() {
 	linux=linux-${version:0:4}
 	extraVer=-auto-$release

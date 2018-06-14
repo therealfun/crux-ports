@@ -5,7 +5,7 @@
 # Nice to have: docutils
 
 name=notmuch
-version=0.26.2
+version=0.27
 release=1
 source=(https://notmuchmail.org/releases/notmuch-$version.tar.gz .watch)
 

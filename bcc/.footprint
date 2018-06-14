@@ -19,16 +19,16 @@ drwxr-xr-x	root/root	usr/include/bcc/compat/linux/
 -rw-r--r--	root/root	usr/include/bcc/table_storage.h
 drwxr-xr-x	root/root	usr/lib/
 lrwxrwxrwx	root/root	usr/lib/libbcc.so -> libbcc.so.0
-lrwxrwxrwx	root/root	usr/lib/libbcc.so.0 -> libbcc.so.0.5.0
--rwxr-xr-x	root/root	usr/lib/libbcc.so.0.5.0
+lrwxrwxrwx	root/root	usr/lib/libbcc.so.0 -> libbcc.so.0.6.0
+-rwxr-xr-x	root/root	usr/lib/libbcc.so.0.6.0
 lrwxrwxrwx	root/root	usr/lib/libbpf.so -> libbpf.so.0
-lrwxrwxrwx	root/root	usr/lib/libbpf.so.0 -> libbpf.so.0.5.0
--rwxr-xr-x	root/root	usr/lib/libbpf.so.0.5.0
+lrwxrwxrwx	root/root	usr/lib/libbpf.so.0 -> libbpf.so.0.6.0
+-rwxr-xr-x	root/root	usr/lib/libbpf.so.0.6.0
 drwxr-xr-x	root/root	usr/lib/pkgconfig/
 -rw-r--r--	root/root	usr/lib/pkgconfig/libbcc.pc
 drwxr-xr-x	root/root	usr/lib/python3.6/
 drwxr-xr-x	root/root	usr/lib/python3.6/site-packages/
--rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc-0.5.0-py3.6.egg-info
+-rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc-0.6.0-py3.6.egg-info
 drwxr-xr-x	root/root	usr/lib/python3.6/site-packages/bcc/
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/__init__.py
 drwxr-xr-x	root/root	usr/lib/python3.6/site-packages/bcc/__pycache__/
@@ -36,11 +36,13 @@ drwxr-xr-x	root/root	usr/lib/python3.6/site-packages/bcc/__pycache__/
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/__pycache__/libbcc.cpython-36.pyc
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/__pycache__/perf.cpython-36.pyc
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/__pycache__/table.cpython-36.pyc
+-rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/__pycache__/tcp.cpython-36.pyc
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/__pycache__/usdt.cpython-36.pyc
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/__pycache__/utils.cpython-36.pyc
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/libbcc.py
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/perf.py
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/table.py
+-rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/tcp.py
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/usdt.py
 -rw-r--r--	root/root	usr/lib/python3.6/site-packages/bcc/utils.py
 drwxr-xr-x	root/root	usr/share/
@@ -101,6 +103,7 @@ lrwxrwxrwx	root/root	usr/share/bcc/tools/doc/cobjnew_example.txt -> lib/uobjnew_
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/funcslower_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/gethostlatency_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/hardirqs_example.txt
+-rw-r--r--	root/root	usr/share/bcc/tools/doc/inject_example.txt
 lrwxrwxrwx	root/root	usr/share/bcc/tools/doc/javacalls_example.txt -> lib/ucalls_example.txt
 lrwxrwxrwx	root/root	usr/share/bcc/tools/doc/javaflow_example.txt -> lib/uflow_example.txt
 lrwxrwxrwx	root/root	usr/share/bcc/tools/doc/javagc_example.txt -> lib/ugc_example.txt
@@ -145,6 +148,7 @@ lrwxrwxrwx	root/root	usr/share/bcc/tools/doc/rubyobjnew_example.txt -> lib/uobjn
 lrwxrwxrwx	root/root	usr/share/bcc/tools/doc/rubystat_example.txt -> lib/ustat_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/runqlat_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/runqlen_example.txt
+-rw-r--r--	root/root	usr/share/bcc/tools/doc/runqslower_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/slabratetop_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/softirqs_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/solisten_example.txt
@@ -156,8 +160,11 @@ lrwxrwxrwx	root/root	usr/share/bcc/tools/doc/rubystat_example.txt -> lib/ustat_e
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/tcpaccept_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/tcpconnect_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/tcpconnlat_example.txt
+-rw-r--r--	root/root	usr/share/bcc/tools/doc/tcpdrop_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/tcplife_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/tcpretrans_example.txt
+-rw-r--r--	root/root	usr/share/bcc/tools/doc/tcpstates_example.txt
+-rw-r--r--	root/root	usr/share/bcc/tools/doc/tcpsubnet_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/tcptop_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/tcptracer_example.txt
 -rw-r--r--	root/root	usr/share/bcc/tools/doc/tplist_example.txt
@@ -181,6 +188,7 @@ lrwxrwxrwx	root/root	usr/share/bcc/tools/doc/rubystat_example.txt -> lib/ustat_e
 -rwxr-xr-x	root/root	usr/share/bcc/tools/funcslower
 -rwxr-xr-x	root/root	usr/share/bcc/tools/gethostlatency
 -rwxr-xr-x	root/root	usr/share/bcc/tools/hardirqs
+-rwxr-xr-x	root/root	usr/share/bcc/tools/inject
 -rwxr-xr-x	root/root	usr/share/bcc/tools/javacalls
 -rwxr-xr-x	root/root	usr/share/bcc/tools/javaflow
 -rwxr-xr-x	root/root	usr/share/bcc/tools/javagc
@@ -244,6 +252,7 @@ drwxr-xr-x	root/root	usr/share/bcc/tools/old/
 -rwxr-xr-x	root/root	usr/share/bcc/tools/rubystat
 -rwxr-xr-x	root/root	usr/share/bcc/tools/runqlat
 -rwxr-xr-x	root/root	usr/share/bcc/tools/runqlen
+-rwxr-xr-x	root/root	usr/share/bcc/tools/runqslower
 -rwxr-xr-x	root/root	usr/share/bcc/tools/slabratetop
 -rwxr-xr-x	root/root	usr/share/bcc/tools/softirqs
 -rwxr-xr-x	root/root	usr/share/bcc/tools/solisten
@@ -255,8 +264,11 @@ drwxr-xr-x	root/root	usr/share/bcc/tools/old/
 -rwxr-xr-x	root/root	usr/share/bcc/tools/tcpaccept
 -rwxr-xr-x	root/root	usr/share/bcc/tools/tcpconnect
 -rwxr-xr-x	root/root	usr/share/bcc/tools/tcpconnlat
+-rwxr-xr-x	root/root	usr/share/bcc/tools/tcpdrop
 -rwxr-xr-x	root/root	usr/share/bcc/tools/tcplife
 -rwxr-xr-x	root/root	usr/share/bcc/tools/tcpretrans
+-rwxr-xr-x	root/root	usr/share/bcc/tools/tcpstates
+-rwxr-xr-x	root/root	usr/share/bcc/tools/tcpsubnet
 -rwxr-xr-x	root/root	usr/share/bcc/tools/tcptop
 -rwxr-xr-x	root/root	usr/share/bcc/tools/tcptracer
 -rwxr-xr-x	root/root	usr/share/bcc/tools/tplist
@@ -303,6 +315,7 @@ lrwxrwxrwx	root/root	usr/share/man/man8/cobjnew.8.gz -> uobjnew.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/funcslower.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/gethostlatency.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/hardirqs.8.gz
+-rw-r--r--	root/root	usr/share/man/man8/inject.8.gz
 lrwxrwxrwx	root/root	usr/share/man/man8/javacalls.8.gz -> ucalls.8.gz
 lrwxrwxrwx	root/root	usr/share/man/man8/javaflow.8.gz -> uflow.8.gz
 lrwxrwxrwx	root/root	usr/share/man/man8/javagc.8.gz -> ugc.8.gz
@@ -340,6 +353,7 @@ lrwxrwxrwx	root/root	usr/share/man/man8/rubyobjnew.8.gz -> uobjnew.8.gz
 lrwxrwxrwx	root/root	usr/share/man/man8/rubystat.8.gz -> ustat.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/runqlat.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/runqlen.8.gz
+-rw-r--r--	root/root	usr/share/man/man8/runqslower.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/slabratetop.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/softirqs.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/sslsniff.8.gz
@@ -350,8 +364,11 @@ lrwxrwxrwx	root/root	usr/share/man/man8/rubystat.8.gz -> ustat.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/tcpaccept.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/tcpconnect.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/tcpconnlat.8.gz
+-rw-r--r--	root/root	usr/share/man/man8/tcpdrop.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/tcplife.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/tcpretrans.8.gz
+-rw-r--r--	root/root	usr/share/man/man8/tcpstates.8.gz
+-rw-r--r--	root/root	usr/share/man/man8/tcpsubnet.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/tcptop.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/tcptracer.8.gz
 -rw-r--r--	root/root	usr/share/man/man8/tplist.8.gz

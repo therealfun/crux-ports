@@ -5,16 +5,11 @@
 # Nice to have: luajit iperf
 
 name=bcc
-version=0.5.0
-release=2
-source=(https://github.com/iovisor/bcc/archive/v$version/bcc-$version.tar.gz .watch
-	# drop this when version > 0.5.0
-	https://github.com/iovisor/bcc/commit/c0d1694e28336cbe4a57f420dd33c5e3bfaa2df9.patch
-)
+version=0.6.0
+release=1
+source=(https://github.com/iovisor/bcc/archive/v$version/bcc-$version.tar.gz .watch)
 
 build() {
-	patch -d */ -p1 < $SRC/c0d1694e28336cbe4a57f420dd33c5e3bfaa2df9.patch
-
 	# no tests
 	ed -s */CMakeLists.txt <<-EOF
 		/add_subdirectory(tests)/d
@@ -22,7 +17,7 @@ build() {
 		w
 	EOF
 
-	# with DESTDIR=$PKG some are still installed directly to /usr
+	# with DESTDIR=$PKG some files are still installed to /usr
 	# and we need to fix src/python/setup.py.in too
 	opts=(
 		-DREVISION=$version

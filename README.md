@@ -7,7 +7,7 @@ Name | Version | Description
 [autossh](http://www.harding.motd.ca/autossh/) | 1.4f | Automatically restart SSH sessions and tunnels
 [axel](https://github.com/eribertomota/axel) | 2.16.1 | Command line download accelerator
 [bash-headers](https://www.gnu.org/software/bash) | 4.4 | Bash header files
-[bcc](https://github.com/iovisor/bcc) | 0.5.0 | BPF Compiler Collection
+[bcc](https://github.com/iovisor/bcc) | 0.6.0 | BPF Compiler Collection
 [bluez-alsa](https://github.com/Arkq/bluez-alsa) | 1.2.0.20180611 | Bluetooth Audio ALSA Backend
 [bubblewrap](https://github.com/projectatomic/bubblewrap) | 0.2.1 | Unprivileged sandboxing tool
 [clockspeed](https://cr.yp.to/clockspeed.html) | 0.62 | Adjust the speed of the system clock
@@ -27,7 +27,7 @@ Name | Version | Description
 [libdockapp](https://www.dockapps.net/) | 0.7.2 | DockApp Development Standard Library
 [linux-stable](https://www.kernel.org/) | 4.17.1 | Latest stable Linux kernel
 [linux-tools](https://perf.wiki.kernel.org/index.php/Main_Page) | 4.17 | Linux kernel tools
-[notmuch](https://notmuchmail.org/) | 0.26.2 | Mail indexer based on xapian
+[notmuch](https://notmuchmail.org/) | 0.27 | Mail indexer based on xapian
 [nss-mdns-no-avahi](http://0pointer.de/lennart/projects/nss-mdns/) | 0.10 | NSS module for mDNS hostname resolution
 [oprt](https://github.com/therealfun/oprt) | 1.99.2 | Next generation port utilities
 [pax-utils](https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities) | 1.2.3 | Utilities for peforming security checks
